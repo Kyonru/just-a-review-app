@@ -1,41 +1,19 @@
 import React, {Component} from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
 
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
+import ScreenContainer from 'src/components/screen-container/index';
+import SingleReviewList from 'src/containers/review-list/single';
 
 import styles from './styles';
+import {MockReviewList} from 'src/data/mock/index';
 
-class Main extends Component {
-  renderCard = () => {
-    return (
-      <Card>
-        <Card.Title
-          title="This is an example"
-          subtitle="I hope this is useful"
-          left={props => <Avatar.Icon {...props} icon="folder" />}
-        />
-        <Card.Content>
-          <Title>Nicer title</Title>
-          <Paragraph>I like trains</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-        <Card.Actions>
-          <Button>Take Snapshot</Button>
-        </Card.Actions>
-      </Card>
-    );
-  };
-
+class MainScreen extends Component {
   render() {
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.scrollView}>
-          {this.renderCard()}
-        </SafeAreaView>
-      </>
+      <ScreenContainer containerStyle={styles.container}>
+        <SingleReviewList data={MockReviewList} />
+      </ScreenContainer>
     );
   }
 }
 
-export default Main;
+export default MainScreen;

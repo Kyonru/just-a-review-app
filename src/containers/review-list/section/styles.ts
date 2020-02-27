@@ -4,6 +4,6 @@ export default StyleSheet.create<{
   container: ViewStyle;
 }>({
   container: {
-    padding: 20,
+    flex: 1,
   },
 });

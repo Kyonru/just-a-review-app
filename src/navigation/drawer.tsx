@@ -6,10 +6,10 @@ const DrawerCreator = createDrawerNavigator();
 
 export default () => {
   return (
-    <DrawerCreator.Navigator initialRouteName="Main">
+    <DrawerCreator.Navigator initialRouteName="app.drawer.main">
       <DrawerCreator.Screen
-        options={{gestureEnabled: false}}
-        name="Main"
+        options={{gestureEnabled: false, title: 'Inbox'}}
+        name="app.drawer.main"
         component={main}
       />
     </DrawerCreator.Navigator>
