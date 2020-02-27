@@ -1,13 +1,17 @@
+import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import App from 'src/main';
 import {Provider as PaperProvider} from 'react-native-paper';
+import {NavigationContainer} from '@react-navigation/native';
+import Drawer from 'src/navigation/drawer';
 
 export default class GlobalAppComponent extends Component {
   render() {
     return (
-      <PaperProvider>
-        <App />
-      </PaperProvider>
+      <NavigationContainer>
+        <PaperProvider>
+          <Drawer />
+        </PaperProvider>
+      </NavigationContainer>
     );
   }
 }
