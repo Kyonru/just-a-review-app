@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList} from 'react-native';
 
 import {Review} from 'src/@types';
 import ReviewListItem from 'src/components/review/list-item/index';
 
 import {BaseReviewListProps} from '../props';
-import styles from '../styles';
+import ListSeparator from 'src/components/separator/index';
 
 class SingleReviewList extends Component<Props> {
   renderCard = ({item}: {item: Review}) => {
@@ -13,7 +13,7 @@ class SingleReviewList extends Component<Props> {
   };
 
   renderSeparator = () => {
-    return <View style={styles.separator} />;
+    return <ListSeparator />;
   };
 
   render() {

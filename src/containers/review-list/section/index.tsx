@@ -1,34 +1,47 @@
 import React, {Component} from 'react';
-import {SectionList} from 'react-native';
+import {SectionList, SectionListData, View} from 'react-native';
+import {List} from 'react-native-paper';
 
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
+import {Review} from 'src/@types';
+import ReviewListItem from 'src/components/review/list-item';
+import ListSeparator from 'src/components/separator';
 
-// import styles from './styles';
+import styles from './styles';
+import {BaseReviewListProps} from '../props';
 
-class ReviewList extends Component {
-  renderCard = () => {
+class SectionReviewList extends Component<Props> {
+  renderCard = ({item}: {item: Review}) => {
+    return <ReviewListItem data={item} />;
+  };
+
+  renderHeader = ({section}: {section: SectionListData<Review>}) => {
     return (
-      <Card>
-        <Card.Title
-          title="This is an example"
-          subtitle="I hope this is useful"
-          left={props => <Avatar.Icon {...props} icon="folder" />}
-        />
-        <Card.Content>
-          <Title>Nicer title</Title>
-          <Paragraph>I like trains</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-        <Card.Actions>
-          <Button>Take Snapshot</Button>
-        </Card.Actions>
-      </Card>
+      <View style={styles.sectionTitle}>
+        <List.Subheader>{section.title}</List.Subheader>
+      </View>
     );
   };
 
+  renderSeparator = () => {
+    return <ListSeparator />;
+  };
+
   render() {
-    return <SectionList sections={[]} renderItem={() => <Button>a</Button>} />;
+    return (
+      <SectionList
+        sections={this.props.data}
+        keyExtractor={(item, index) => `${item.title}${item.type}${index}`}
+        renderSectionHeader={this.renderHeader}
+        renderItem={this.renderCard}
+        ItemSeparatorComponent={this.renderSeparator}
+        SectionSeparatorComponent={this.renderSeparator}
+      />
+    );
   }
 }
 
-export default ReviewList;
+interface Props extends BaseReviewListProps {
+  data: SectionListData<Review>[];
+}
+
+export default SectionReviewList;

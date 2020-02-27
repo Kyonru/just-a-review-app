@@ -1,5 +1,6 @@
-import {ReviewType} from 'src/@types/index';
-export const MockReviewList = [
+import {ReviewType, Review} from 'src/@types/index';
+
+export const MockReviewList: Review[] = [
   {
     title: 'Daily Review',
     description: 'This is a mock review',
@@ -41,3 +42,10 @@ export const MockReviewList = [
     log: [],
   },
 ];
+
+export const MockDatedReviewLists: {[key: string]: Review[]} = {
+  '2020-02-27': MockReviewList.slice(0, 1),
+  '2020-02-28': MockReviewList.slice(2, 4),
+  '2020-02-29': MockReviewList.slice(3),
+  '2020-03-15': MockReviewList.slice(0),
+};
