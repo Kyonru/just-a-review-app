@@ -1,9 +1,11 @@
 import {StyleSheet, ViewStyle} from 'react-native';
+import colors from 'src/theme/colors';
 
 export default StyleSheet.create<{
   container: ViewStyle;
 }>({
   container: {
-    padding: 20,
+    flex: 1,
+    backgroundColor: colors.white,
   },
 });

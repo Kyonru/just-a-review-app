@@ -1,41 +1,43 @@
 import React, {Component} from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
 
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
+import ScreenContainer from 'src/components/screen-container/index';
+import FABButton from 'src/components/button/fab';
+import SectionReviewList from 'src/containers/review-list/section';
+
+import {getSectionsFromReviewDates} from 'src/utils/reviews';
+import {MockDatedReviewLists} from 'src/data/mock/index';
 
 import styles from './styles';
+import colors from 'src/theme/colors';
 
-class Main extends Component {
-  renderCard = () => {
-    return (
-      <Card>
-        <Card.Title
-          title="This is an example"
-          subtitle="I hope this is useful"
-          left={props => <Avatar.Icon {...props} icon="folder" />}
-        />
-        <Card.Content>
-          <Title>Nicer title</Title>
-          <Paragraph>I like trains</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-        <Card.Actions>
-          <Button>Take Snapshot</Button>
-        </Card.Actions>
-      </Card>
-    );
-  };
-
+class MainScreen extends Component {
   render() {
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.scrollView}>
-          {this.renderCard()}
-        </SafeAreaView>
-      </>
+      <ScreenContainer containerStyle={styles.container}>
+        <SectionReviewList
+          data={getSectionsFromReviewDates(MockDatedReviewLists)}
+        />
+        <FABButton
+          options={[
+            {
+              icon: 'cellphone',
+              label: 'in App',
+              onPress: () => console.warn('Pressed in App'),
+              color: colors.white,
+              style: {backgroundColor: colors.pistonBlue},
+            },
+            {
+              icon: 'comment',
+              label: 'Google Form',
+              onPress: () => console.warn('Pressed Google Form'),
+              color: colors.white,
+              style: {backgroundColor: colors.shamrock},
+            },
+          ]}
+        />
+      </ScreenContainer>
     );
   }
 }
 
-export default Main;
+export default MainScreen;
