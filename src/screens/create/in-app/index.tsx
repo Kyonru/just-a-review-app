@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
-import {FAB, TextInput} from 'react-native-paper';
+import {View, Text} from 'react-native';
+import {Checkbox, FAB, TextInput} from 'react-native-paper';
+import DraggableFlatList from 'react-native-draggable-flatlist';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Dropdown from 'src/components/dropdown';
 import ScreenContainer from 'src/components/screen-container';
@@ -11,8 +13,11 @@ import colors from 'src/theme/colors';
 import {ReviewTypesAsOptions} from 'src/data/review';
 
 import styles from './styles';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {createQuestion} from 'src/utils/questions';
+import {getReviewTypeColor} from 'src/theme/helpers';
 
-class CreateInAppReview extends Component {
+class CreateInAppReview extends Component<any> {
   state = {
     name: '',
     type: ReviewType.weekly,
@@ -22,13 +27,63 @@ class CreateInAppReview extends Component {
     time: '',
   };
 
+  onSave = () => {
+    this.props.navigation.pop();
+  };
+
   onSelect = (value: string) => {
     this.setState({
       type: value,
     });
   };
 
-  onAddQuestion = () => {};
+  onAddQuestion = () => {
+    this.setState({
+      questions: [
+        ...this.state.questions,
+        createQuestion(this.state.currentQuestion),
+      ],
+      currentQuestion: '',
+    });
+  };
+
+  renderQuestion = ({item, drag, isActive}: any) => {
+    return (
+      <TouchableOpacity
+        style={
+          isActive
+            ? styles.activeQuestionRowContainer
+            : styles.questionRowContainer
+        }
+        onLongPress={drag}>
+        <View style={styles.questionRow}>
+          <View style={styles.questionContainer}>
+            <Icon
+              style={styles.questionLeftIcon}
+              color={'black'}
+              name="drag-handle"
+              size={28}
+            />
+
+            <Text
+              style={styles.question}
+              textBreakStrategy="simple"
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {item.q}
+            </Text>
+          </View>
+
+          <Checkbox
+            status={item.required ? 'checked' : 'unchecked'}
+            onPress={() => {
+              this.setState({checked: !item.required});
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   render() {
     return (
@@ -61,6 +116,21 @@ class CreateInAppReview extends Component {
           />
           <FAB small icon="plus" onPress={this.onAddQuestion} />
         </View>
+        <View style={styles.listContainer}>
+          <DraggableFlatList
+            data={this.state.questions}
+            renderItem={this.renderQuestion}
+            keyExtractor={(item, index) => `draggable-item-${index}`}
+            onDragEnd={({data}) => this.setState({questions: data})}
+          />
+        </View>
+        <FAB
+          disabled={!this.state.questions.length}
+          style={styles.fab}
+          icon="check"
+          onPress={this.onSave}
+          theme={{colors: {accent: getReviewTypeColor(this.state.type)}}}
+        />
       </ScreenContainer>
     );
   }
