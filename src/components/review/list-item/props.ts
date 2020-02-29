@@ -1,4 +1,4 @@
-import {Review} from 'src/@types';
+import { Review } from 'src/@types';
 
 export interface ReviewListItemProps {
   data: Review;

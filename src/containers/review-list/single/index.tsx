@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {FlatList} from 'react-native';
+import React, { Component } from 'react';
+import { FlatList } from 'react-native';
 
-import {Review} from 'src/@types';
+import { Review } from 'src/@types';
 import ReviewListItem from 'src/components/review/list-item/index';
 
-import {BaseReviewListProps} from '../props';
 import ListSeparator from 'src/components/separator/index';
+import { BaseReviewListProps } from '../props';
 
 class SingleReviewList extends Component<Props> {
-  renderCard = ({item}: {item: Review}) => {
+  renderCard = ({ item }: { item: Review }) => {
     return <ReviewListItem data={item} />;
   };
 
@@ -17,10 +17,11 @@ class SingleReviewList extends Component<Props> {
   };
 
   render() {
+    const { data } = this.props;
     return (
       <FlatList
         ItemSeparatorComponent={this.renderSeparator}
-        data={this.props.data}
+        data={data}
         renderItem={this.renderCard}
         keyExtractor={(item, index) => `${item.title}${item.type}${index}`}
       />

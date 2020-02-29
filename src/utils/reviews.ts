@@ -1,7 +1,7 @@
 import moment from 'moment';
-import {SectionListData} from 'react-native';
+import { SectionListData } from 'react-native';
 
-import {Review} from 'src/@types';
+import { Review } from 'src/@types';
 
 export const getSectionsFromReviewDates = (reviewObject: {
   [key: string]: Review[];

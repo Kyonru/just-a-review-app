@@ -1,14 +1,19 @@
-import React, {Component} from 'react';
-import {Card, Title, Paragraph} from 'react-native-paper';
+import React, { Component } from 'react';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
-import {getReviewTypeColor} from 'src/theme/helpers';
-import {ReviewType} from 'src/@types';
+import { getReviewTypeColor } from 'src/theme/helpers';
+import { ReviewType } from 'src/@types';
 
-import {ReviewListItemProps} from './props';
+import { ReviewListItemProps } from './props';
 import styles from './styles';
 
 class ReviewListItem extends Component<ReviewListItemProps> {
   style: any;
+
+  constructor(props: ReviewListItemProps) {
+    super(props);
+    this.style = this.getStyle(props.data.type);
+  }
 
   getStyle = (type: ReviewType) => {
     return {
@@ -17,17 +22,13 @@ class ReviewListItem extends Component<ReviewListItemProps> {
     };
   };
 
-  constructor(props: ReviewListItemProps) {
-    super(props);
-    this.style = this.getStyle(props.data.type);
-  }
-
   render() {
+    const { onPress, data } = this.props;
     return (
-      <Card onPress={this.props.onPress} style={this.style}>
+      <Card onPress={onPress} style={this.style}>
         <Card.Content style={styles.card}>
-          <Title>{this.props.data.title}</Title>
-          <Paragraph>{(this.props.data.questions || []).length}</Paragraph>
+          <Title>{data.title}</Title>
+          <Paragraph>{(data.questions || []).length}</Paragraph>
         </Card.Content>
       </Card>
     );

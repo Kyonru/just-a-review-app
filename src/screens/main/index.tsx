@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import ScreenContainer from 'src/components/screen-container';
 import FABButton from 'src/components/button/fab';
 import SectionReviewList from 'src/containers/review-list/section';
 
-import {getSectionsFromReviewDates} from 'src/utils/reviews';
-import {MockDatedReviewLists} from 'src/data/mock';
+import { getSectionsFromReviewDates } from 'src/utils/reviews';
+import { MockDatedReviewLists } from 'src/data/mock';
 
-import styles from './styles';
 import colors from 'src/theme/colors';
-import {SCREEN_NAMES} from 'src/navigation/constants';
+import { SCREEN_NAMES } from 'src/navigation/constants';
+import styles from './styles';
 
 class MainScreen extends Component<any> {
   unsubscribeFocus: any;
@@ -19,11 +19,12 @@ class MainScreen extends Component<any> {
   };
 
   componentDidMount() {
-    this.unsubscribeFocus = this.props.navigation.addListener('focus', () => {
-      this.setState({showFAB: true});
+    const { navigation } = this.props;
+    this.unsubscribeFocus = navigation.addListener('focus', () => {
+      this.setState({ showFAB: true });
     });
-    this.unsubscribeFocus = this.props.navigation.addListener('blur', () => {
-      this.setState({showFAB: false});
+    this.unsubscribeFocus = navigation.addListener('blur', () => {
+      this.setState({ showFAB: false });
     });
   }
 
@@ -40,27 +41,28 @@ class MainScreen extends Component<any> {
   };
 
   render() {
+    const { showFAB } = this.state;
     return (
       <ScreenContainer containerStyle={styles.container}>
         <SectionReviewList
           data={getSectionsFromReviewDates(MockDatedReviewLists)}
         />
         <FABButton
-          isVisible={this.state.showFAB}
+          isVisible={showFAB}
           options={[
             {
               icon: 'cellphone',
               label: 'in App',
               onPress: this.openCreateInApp,
               color: colors.white,
-              style: {backgroundColor: colors.pistonBlue},
+              style: { backgroundColor: colors.pistonBlue },
             },
             {
               icon: 'comment',
               label: 'Google Form',
               onPress: this.openCreateGoogleForm,
               color: colors.white,
-              style: {backgroundColor: colors.shamrock},
+              style: { backgroundColor: colors.shamrock },
             },
           ]}
         />

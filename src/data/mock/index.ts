@@ -1,4 +1,4 @@
-import {ReviewType, Review} from 'src/@types/index';
+import { ReviewType, Review } from 'src/@types/index';
 
 export const MockReviewList: Review[] = [
   {
@@ -43,7 +43,7 @@ export const MockReviewList: Review[] = [
   },
 ];
 
-export const MockDatedReviewLists: {[key: string]: Review[]} = {
+export const MockDatedReviewLists: { [key: string]: Review[] } = {
   '2020-02-27': MockReviewList.slice(0, 1),
   '2020-02-28': MockReviewList.slice(2, 4),
   '2020-02-29': MockReviewList.slice(3),
