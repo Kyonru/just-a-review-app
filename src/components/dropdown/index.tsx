@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {TouchableOpacity, Platform, Picker, View, Text} from 'react-native';
-import {Modal, Portal, withTheme, Button} from 'react-native-paper';
+import React, { Component } from 'react';
+import { TouchableOpacity, Platform, Picker, View, Text } from 'react-native';
+import { Modal, Portal, withTheme, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { capitalize } from 'src/utils/strings';
 import styles from './styles';
-import {DropdownProps} from './props';
-import {capitalize} from 'src/utils/strings';
+import { DropdownProps } from './props';
 
 class Dropdown extends Component<DropdownProps & any> {
   state = {
@@ -25,34 +25,35 @@ class Dropdown extends Component<DropdownProps & any> {
   };
 
   onSelectionChange = (value: string) => {
-    this.props.onSelect(value);
+    const { onSelect } = this.props;
+    onSelect(value);
   };
 
   renderIOS = () => {
+    const { theme, selectedValue } = this.props;
+    const { isModalOpen } = this.state;
     return (
       <>
         <TouchableOpacity onPress={this.onShowModal}>
           <View
             style={[
               styles.pickerIOSHeader,
-              {borderColor: this.props.theme.colors.placeholder},
-            ]}>
-            <Text>{capitalize(this.props.selectedValue)}</Text>
-            <Icon
-              color={this.props.theme.colors.accent}
-              name="menu-down"
-              size={16}
-            />
+              { borderColor: theme.colors.placeholder },
+            ]}
+          >
+            <Text>{capitalize(selectedValue)}</Text>
+            <Icon color={theme.colors.accent} name="menu-down" size={16} />
           </View>
         </TouchableOpacity>
         <Portal>
-          <Modal visible={this.state.isModalOpen} onDismiss={this.onHideModal}>
+          <Modal visible={isModalOpen} onDismiss={this.onHideModal}>
             <View style={styles.pickerIOS}>
               {this.renderPicker()}
               <Button
                 style={styles.button}
                 mode="contained"
-                onPress={this.onHideModal}>
+                onPress={this.onHideModal}
+              >
                 Ok
               </Button>
             </View>
@@ -69,17 +70,19 @@ class Dropdown extends Component<DropdownProps & any> {
   };
 
   renderPicker = () => {
+    const { selectedValue, options } = this.props;
     return (
       <Picker
-        selectedValue={this.props.selectedValue}
+        selectedValue={selectedValue}
         style={styles.picker}
-        onValueChange={this.onSelectionChange}>
-        {this.props.options.map(this.renderOption)}
+        onValueChange={this.onSelectionChange}
+      >
+        {options.map(this.renderOption)}
       </Picker>
     );
   };
 
-  renderOption = ({label, value}: {label: string; value: string}) => {
+  renderOption = ({ label, value }: { label: string; value: string }) => {
     return <Picker.Item key={`${label}${value}`} label={label} value={value} />;
   };
 

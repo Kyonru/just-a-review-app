@@ -1,4 +1,4 @@
-import {StyleSheet, ViewStyle, TextStyle, Platform} from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, Platform } from 'react-native';
 import colors from 'src/theme/colors';
 
 export default StyleSheet.create<{
@@ -17,16 +17,16 @@ export default StyleSheet.create<{
   container: {
     padding: 20,
   },
-  questionInput: {flex: 1, paddingRight: 16},
-  questionInputContainer: {flexDirection: 'row', alignItems: 'center'},
-  listContainer: {flex: 1, paddingTop: 16},
+  questionInput: { flex: 1, paddingRight: 16 },
+  questionInputContainer: { flexDirection: 'row', alignItems: 'center' },
+  listContainer: { flex: 1, paddingTop: 16 },
   question: {
     fontWeight: 'bold',
     color: colors.black,
     fontSize: 20,
     flex: 1,
   },
-  questionLeftIcon: {marginRight: 16},
+  questionLeftIcon: { marginRight: 16 },
   questionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -39,7 +39,7 @@ export default StyleSheet.create<{
     alignItems: 'center',
   },
   activeQuestionRowContainer: {
-    shadowOffset: {width: 1, height: 1},
+    shadowOffset: { width: 1, height: 1 },
     shadowColor: '#000000',
     shadowOpacity: 0.4,
     elevation: 1,

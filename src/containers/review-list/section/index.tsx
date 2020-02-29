@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import {SectionList, SectionListData, View} from 'react-native';
-import {List} from 'react-native-paper';
+import React, { Component } from 'react';
+import { SectionList, SectionListData, View } from 'react-native';
+import { List } from 'react-native-paper';
 
-import {Review} from 'src/@types';
+import { Review } from 'src/@types';
 import ReviewListItem from 'src/components/review/list-item';
 import ListSeparator from 'src/components/separator';
 
 import styles from './styles';
-import {BaseReviewListProps} from '../props';
+import { BaseReviewListProps } from '../props';
 
 class SectionReviewList extends Component<Props> {
-  renderCard = ({item}: {item: Review}) => {
+  renderCard = ({ item }: { item: Review }) => {
     return <ReviewListItem data={item} />;
   };
 
-  renderHeader = ({section}: {section: SectionListData<Review>}) => {
+  renderHeader = ({ section }: { section: SectionListData<Review> }) => {
     return (
       <View style={styles.sectionTitle}>
         <List.Subheader>{section.title}</List.Subheader>
@@ -27,9 +27,10 @@ class SectionReviewList extends Component<Props> {
   };
 
   render() {
+    const { data } = this.props;
     return (
       <SectionList
-        sections={this.props.data}
+        sections={data}
         keyExtractor={(item, index) => `${item.title}${item.type}${index}`}
         renderSectionHeader={this.renderHeader}
         renderItem={this.renderCard}

@@ -1,4 +1,4 @@
-import {StyleSheet, ViewStyle, Platform} from 'react-native';
+import { StyleSheet, ViewStyle, Platform } from 'react-native';
 
 export default StyleSheet.create<{
   separator: ViewStyle;
@@ -8,14 +8,14 @@ export default StyleSheet.create<{
   pickerIOSHeader: ViewStyle;
   pickerAndroidHeader: ViewStyle;
 }>({
-  separator: {height: 20},
+  separator: { height: 20 },
   picker: {
     width: '100%',
     ...Platform.select({
       android: {
         height: 56,
       },
-      ios: {height: 250},
+      ios: { height: 250 },
     }),
   },
   pickerIOS: {
@@ -32,7 +32,7 @@ export default StyleSheet.create<{
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  button: {width: '85%', alignSelf: 'center'},
+  button: { width: '85%', alignSelf: 'center' },
   pickerAndroidHeader: {
     borderRadius: 5,
     borderWidth: 1,

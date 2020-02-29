@@ -1,7 +1,7 @@
-import {StyleSheet, ViewStyle} from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 export default StyleSheet.create<{
   separator: ViewStyle;
 }>({
-  separator: {height: 20},
+  separator: { height: 20 },
 });

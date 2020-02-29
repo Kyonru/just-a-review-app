@@ -1,4 +1,4 @@
-import {ReviewQuestion} from 'src/@types';
+import { ReviewQuestion } from 'src/@types';
 
 export const createQuestion = (
   question: string,

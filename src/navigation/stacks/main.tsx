@@ -1,15 +1,15 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const StackCreator = createStackNavigator();
-
-import {SCREEN_NAMES} from 'src/navigation/constants';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 
 import NavHeader from 'src/components/nav-header';
 
 import App from 'src/screens/main';
 import CreateInApp from 'src/screens/create/in-app';
 import CreateGoogleForm from 'src/screens/create/google-form';
+
+const StackCreator = createStackNavigator();
 
 export default () => {
   return (

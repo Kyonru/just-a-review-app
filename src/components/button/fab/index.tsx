@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {FAB, Portal} from 'react-native-paper';
+import React, { Component } from 'react';
+import { FAB, Portal } from 'react-native-paper';
 
 class FABButton extends Component<{
   options: any;
@@ -10,14 +10,16 @@ class FABButton extends Component<{
   };
 
   render() {
+    const { isVisible, options } = this.props;
+    const { open } = this.state;
     return (
       <Portal>
         <FAB.Group
-          visible={this.props.isVisible}
-          open={this.state.open}
-          icon={this.state.open ? 'close' : 'plus'}
-          actions={this.props.options}
-          onStateChange={({open}) => this.setState({open})}
+          visible={isVisible}
+          open={open}
+          icon={open ? 'close' : 'plus'}
+          actions={options}
+          onStateChange={({ open: isOpen }) => this.setState({ open: isOpen })}
         />
       </Portal>
     );
