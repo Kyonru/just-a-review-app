@@ -1,5 +1,6 @@
 export default {
   white: '#FFFFFF',
+  black: '#000000',
   daily: '#BBDEFB',
   weekly: '#F0F4C3',
   monthly: '#FFCCBC',
