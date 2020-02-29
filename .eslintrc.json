@@ -34,5 +34,5 @@
     }]
 
   },
-  "ignorePatterns": ["__tests__/"]
+  "ignorePatterns": ["__tests__/", "__tests__/setup/"]
 }
