@@ -33,14 +33,14 @@ export const MockReviewList: Review[] = [
     questions: [],
     log: [],
   },
-  {
-    title: 'Custom Review',
-    description: 'This is a mock review',
-    time: new Date(2020, 10, 10),
-    type: ReviewType.custom,
-    questions: [],
-    log: [],
-  },
+  // {
+  //   title: 'Custom Review',
+  //   description: 'This is a mock review',
+  //   time: new Date(2020, 10, 10),
+  //   type: ReviewType.custom,
+  //   questions: [],
+  //   log: [],
+  // },
 ];
 
 export const MockDatedReviewLists: { [key: string]: Review[] } = {

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/indent */
+import moment from 'moment';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Checkbox, FAB, TextInput } from 'react-native-paper';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -7,41 +9,113 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Dropdown from 'src/components/dropdown';
 import ScreenContainer from 'src/components/screen-container';
 import ListSeparator from 'src/components/separator';
+import DatePicker from 'src/components/date-picker';
 
-import { ReviewType } from 'src/@types';
-import colors from 'src/theme/colors';
+import { ReviewType, ReviewQuestion, DayOfTheWeek } from 'src/@types';
+
+import { daysOfTheWeek } from 'src/data/date';
 import { ReviewTypesAsOptions } from 'src/data/review';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { createQuestion } from 'src/utils/questions';
+import colors from 'src/theme/colors';
 import { getReviewTypeColor } from 'src/theme/helpers';
+import { createQuestion } from 'src/utils/questions';
+// import { createReview } from 'src/utils/reviews';
+
 import styles from './styles';
 
-class CreateInAppReview extends Component<any> {
+class CreateInAppReview extends Component<
+  { navigation: any },
+  {
+    name: string;
+    type: ReviewType;
+    questions: ReviewQuestion[];
+    currentQuestion: string;
+    date: Date;
+    day: DayOfTheWeek;
+    time: Date;
+    monthlyDay: number | string;
+  }
+> {
   state = {
     name: '',
     type: ReviewType.weekly,
     questions: [],
     currentQuestion: '',
-    // day: '',
-    // time: '',
+    date: new Date(),
+    day: DayOfTheWeek.monday,
+    time: new Date(),
+    monthlyDay: 1,
   };
 
   onSave = () => {
+    // const { name, type, questions, date, day, time, monthlyDay } = this.state;
+    // // console.log(
+    // //   createReview({ name, type, questions, date, day, time, monthlyDay }),
+    // // );
     this.props.navigation.pop();
   };
 
-  onSelect = (value: string) => {
+  onTypeSelect = (value: string) => {
     this.setState({
-      type: value,
+      type: value as ReviewType,
     });
+  };
+
+  onDaySelect = (value: string) => {
+    this.setState({
+      day: value as DayOfTheWeek,
+    });
+  };
+
+  onMonthlyDayChange = (newDay: string) => {
+    if (newDay === '') {
+      this.setState({
+        monthlyDay: newDay,
+      });
+      return;
+    }
+    let day = parseInt(newDay, 10) || 1;
+    if (day > 31) {
+      day = 31;
+    }
+    if (day <= 0) {
+      day = 1;
+    }
+
+    this.setState({
+      monthlyDay: day,
+    });
+  };
+
+  defaultMonthlyDay = () => {
+    const { monthlyDay } = this.state;
+    if ((monthlyDay as any) === '') {
+      this.setState({ monthlyDay: 1 });
+    }
   };
 
   onAddQuestion = () => {
     const { questions, currentQuestion } = this.state;
+    if (!currentQuestion) {
+      return;
+    }
     this.setState({
       questions: [...questions, createQuestion(currentQuestion)],
       currentQuestion: '',
+    });
+  };
+
+  onCheckQuestion = (item: ReviewQuestion) => () => {
+    const { questions } = this.state;
+    const index = questions.findIndex(
+      (value: ReviewQuestion) => value.id === item.id,
+    );
+
+    this.setState({
+      questions: [
+        ...questions.slice(0, index),
+        { ...item, required: !item.required },
+        ...questions.slice(index + 1),
+      ],
     });
   };
 
@@ -53,6 +127,7 @@ class CreateInAppReview extends Component<any> {
             ? styles.activeQuestionRowContainer
             : styles.questionRowContainer
         }
+        onPress={this.onCheckQuestion(item)}
         onLongPress={drag}
       >
         <View style={styles.questionRow}>
@@ -76,13 +151,95 @@ class CreateInAppReview extends Component<any> {
 
           <Checkbox
             status={item.required ? 'checked' : 'unchecked'}
-            onPress={() => {
-              // this.setState({ checked: !item.required });
-            }}
+            onPress={this.onCheckQuestion(item)}
           />
         </View>
       </TouchableOpacity>
     );
+  };
+
+  renderExtraInputs = () => {
+    const { type, date, day, time, monthlyDay } = this.state;
+    const fields: any[] = [];
+    if (type === ReviewType.yearly) {
+      fields.push(
+        <>
+          <DatePicker
+            key="dateTimePicker"
+            label="Date"
+            testID="dateTimePicker"
+            timeZoneOffsetInMinutes={0}
+            value={moment.utc(date).toDate()}
+            is24Hour
+            display="default"
+            onChange={(event, newDate) => {
+              this.setState({ date: newDate! });
+            }}
+            displayValue={moment.utc(date).format('ll')}
+            maximumDate={moment(date)
+              .endOf('year')
+              .toDate()}
+            minimumDate={moment(date)
+              .startOf('year')
+              .toDate()}
+          />
+          <ListSeparator />
+        </>,
+      );
+    }
+    if (type === ReviewType.monthly) {
+      fields.push(
+        <>
+          <TextInput
+            key="monthlyDayInput"
+            mode="outlined"
+            selectionColor={colors.lynch}
+            label="Review Day"
+            value={`${monthlyDay}`}
+            keyboardType="number-pad"
+            onChangeText={this.onMonthlyDayChange}
+            theme={{ colors: { primary: colors.lynch } }}
+            onBlur={this.defaultMonthlyDay}
+          />
+          <ListSeparator />
+        </>,
+      );
+    }
+    if (type === ReviewType.weekly) {
+      fields.push(
+        <>
+          <Dropdown
+            key="dayPicker"
+            label="Day"
+            options={daysOfTheWeek}
+            onSelect={this.onDaySelect}
+            selectedValue={day}
+          />
+          <ListSeparator />
+        </>,
+      );
+    }
+
+    fields.push(
+      <>
+        <DatePicker
+          key="dateTimePicker"
+          label="Date"
+          mode="time"
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={time}
+          is24Hour
+          display="clock"
+          onChange={(event, newTime) => {
+            this.setState({ time: newTime! });
+          }}
+          displayValue={moment.utc(time).format('LT')}
+        />
+        <ListSeparator />
+      </>,
+    );
+    return fields;
   };
 
   render() {
@@ -90,9 +247,9 @@ class CreateInAppReview extends Component<any> {
     return (
       <ScreenContainer containerStyle={styles.container}>
         <Dropdown
-          label="Email"
+          label="Review Type"
           options={ReviewTypesAsOptions}
-          onSelect={this.onSelect}
+          onSelect={this.onTypeSelect}
           selectedValue={type}
         />
         <ListSeparator />
@@ -105,6 +262,7 @@ class CreateInAppReview extends Component<any> {
           theme={{ colors: { primary: colors.lynch } }}
         />
         <ListSeparator />
+        {this.renderExtraInputs()}
         <View style={styles.questionInputContainer}>
           <TextInput
             style={styles.questionInput}
@@ -117,7 +275,12 @@ class CreateInAppReview extends Component<any> {
             }
             theme={{ colors: { primary: colors.lynch } }}
           />
-          <FAB small icon="plus" onPress={this.onAddQuestion} />
+          <FAB
+            small
+            icon="plus"
+            disabled={!currentQuestion}
+            onPress={this.onAddQuestion}
+          />
         </View>
         <View style={styles.listContainer}>
           <DraggableFlatList
