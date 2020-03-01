@@ -36,8 +36,8 @@ class MainScreen extends Component<any> {
     this.props.navigation.push(SCREEN_NAMES.createInApp);
   };
 
-  openCreateGoogleForm = () => {
-    this.props.navigation.push(SCREEN_NAMES.createGoogleForm);
+  openCreateFromExternal = () => {
+    this.props.navigation.push(SCREEN_NAMES.createExternalForm);
   };
 
   render() {
@@ -58,9 +58,9 @@ class MainScreen extends Component<any> {
               style: { backgroundColor: colors.pistonBlue },
             },
             {
-              icon: 'comment',
-              label: 'Google Form',
-              onPress: this.openCreateGoogleForm,
+              icon: 'link',
+              label: 'External',
+              onPress: this.openCreateFromExternal,
               color: colors.white,
               style: { backgroundColor: colors.shamrock },
             },

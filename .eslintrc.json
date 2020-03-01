@@ -1,5 +1,9 @@
 {
-  "extends": ["airbnb-typescript", "plugin:prettier/recommended", "prettier/react"],
+  "extends": [
+    "airbnb-typescript",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
   "rules": {
@@ -20,19 +24,30 @@
     ],
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
-    "react/destructuring-assignment": ["warn", "always", {
-      "ignoreClassFields": true
-    }],
-    "react/prefer-stateless-function": ["warn", {
-      "ignorePureComponents": true
-    }],
-    "react/jsx-props-no-spreading": ["warn", {
-      "html": "enforce",
-      "custom": "ignore",
-      "explicitSpread": "enforce",
-      "exceptions": []
-    }]
-
+    "react/destructuring-assignment": [
+      "warn",
+      "always",
+      {
+        "ignoreClassFields": true
+      }
+    ],
+    "react/prefer-stateless-function": [
+      "warn",
+      {
+        "ignorePureComponents": true
+      }
+    ],
+    "react/jsx-props-no-spreading": [
+      "warn",
+      {
+        "html": "enforce",
+        "custom": "ignore",
+        "explicitSpread": "enforce",
+        "exceptions": []
+      }
+    ],
+    "indent": "off",
+    "@typescript-eslint/indent": ["warn", 2]
   },
   "ignorePatterns": ["__tests__/", "__tests__/setup/"]
 }

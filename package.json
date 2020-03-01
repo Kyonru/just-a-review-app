@@ -10,6 +10,7 @@
     "lint": "eslint './src/**/*.ts?(x)'"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^2.2.2",
     "@react-native-community/masked-view": "^0.1.6",
     "@react-navigation/drawer": "^5.1.0",
     "@react-navigation/native": "^5.0.8",
@@ -28,13 +29,15 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.1.0",
     "react-native-vector-icons": "^6.6.0",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "uuid": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^0.0.7",
     "@types/react-native-vector-icons": "^6.4.5",
+    "@types/uuid": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "babel-jest": "^25.1.0",
     "eslint": "^6.8.0",

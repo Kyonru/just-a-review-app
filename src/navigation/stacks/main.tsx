@@ -7,7 +7,7 @@ import NavHeader from 'src/components/nav-header';
 
 import App from 'src/screens/main';
 import CreateInApp from 'src/screens/create/in-app';
-import CreateGoogleForm from 'src/screens/create/google-form';
+import CreateExternalForm from 'src/screens/create/external-form';
 
 const StackCreator = createStackNavigator();
 
@@ -41,8 +41,8 @@ export default () => {
           },
           title: 'Add review',
         }}
-        name={SCREEN_NAMES.createGoogleForm}
-        component={CreateGoogleForm}
+        name={SCREEN_NAMES.createExternalForm}
+        component={CreateExternalForm}
       />
     </StackCreator.Navigator>
   );
