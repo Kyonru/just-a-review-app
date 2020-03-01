@@ -5,13 +5,18 @@ import { List } from 'react-native-paper';
 import { Review } from 'src/@types';
 import ReviewListItem from 'src/components/review/list-item';
 import ListSeparator from 'src/components/separator';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 
 import styles from './styles';
 import { BaseReviewListProps } from '../props';
 
 class SectionReviewList extends Component<Props> {
+  openDetails = (review: Review) => () => {
+    this.props.navigation.push(SCREEN_NAMES.reviewDetails, { review });
+  };
+
   renderCard = ({ item }: { item: Review }) => {
-    return <ReviewListItem data={item} />;
+    return <ReviewListItem onPress={this.openDetails(item)} data={item} />;
   };
 
   renderHeader = ({ section }: { section: SectionListData<Review> }) => {
@@ -43,6 +48,7 @@ class SectionReviewList extends Component<Props> {
 
 interface Props extends BaseReviewListProps {
   data: SectionListData<Review>[];
+  navigation: any;
 }
 
 export default SectionReviewList;
