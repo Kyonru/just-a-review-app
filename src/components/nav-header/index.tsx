@@ -28,6 +28,25 @@ class AppHeader extends Component<Props> {
     );
   };
 
+  renderRight = () => {
+    const { scene } = this.props;
+
+    if (!scene.route.params) {
+      return null;
+    }
+
+    const right = (scene.route.params as any).headerRightIcon;
+    const rightOnPress = (scene.route.params as any).headerRightOnPress;
+
+    if (right) {
+      return (
+        <Appbar.Action color="#000000" icon={right} onPress={rightOnPress} />
+      );
+    }
+
+    return null;
+  };
+
   render() {
     const { scene } = this.props;
     return (
@@ -37,6 +56,7 @@ class AppHeader extends Component<Props> {
           color="#000000"
           title={scene.descriptor.options.title}
         />
+        {this.renderRight()}
       </Appbar.Header>
     );
   }

@@ -6,7 +6,24 @@ export const MockReviewList: Review[] = [
     description: 'This is a mock review',
     time: new Date(2020, 10, 10),
     type: ReviewType.daily,
-    questions: [],
+    questions: [
+      {
+        id: '12A',
+        q:
+          'How does this look with a larger question, maybe longer that the average question this app is waiting?',
+        required: true,
+      },
+      {
+        id: '34',
+        q: 'How does it looks with a medium sized question?',
+        required: false,
+      },
+      {
+        id: '1',
+        q: 'What about a short one?',
+        required: true,
+      },
+    ],
     log: [],
   },
   {

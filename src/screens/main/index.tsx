@@ -42,10 +42,12 @@ class MainScreen extends Component<any> {
 
   render() {
     const { showFAB } = this.state;
+    const { navigation } = this.props;
     return (
       <ScreenContainer containerStyle={styles.container}>
         <SectionReviewList
           data={getSectionsFromReviewDates(MockDatedReviewLists)}
+          navigation={navigation}
         />
         <FABButton
           isVisible={showFAB}
