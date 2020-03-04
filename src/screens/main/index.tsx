@@ -14,6 +14,8 @@ import styles from './styles';
 class MainScreen extends Component<any> {
   unsubscribeFocus: any;
 
+  unsubscribeBlur: any;
+
   state = {
     showFAB: true,
   };
@@ -23,13 +25,14 @@ class MainScreen extends Component<any> {
     this.unsubscribeFocus = navigation.addListener('focus', () => {
       this.setState({ showFAB: true });
     });
-    this.unsubscribeFocus = navigation.addListener('blur', () => {
+    this.unsubscribeBlur = navigation.addListener('blur', () => {
       this.setState({ showFAB: false });
     });
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   openCreateInApp = () => {
