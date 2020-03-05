@@ -20,6 +20,7 @@ export const getSectionsFromReviewDates = (reviewObject: {
     title: moment(date)
       .calendar()
       .split(' ')[0],
+    value: moment(date).format('YYYY-MM-DD'),
     data: reviewObject[date],
   }));
 };

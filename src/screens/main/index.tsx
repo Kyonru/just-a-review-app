@@ -1,17 +1,26 @@
+/* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import ScreenContainer from 'src/components/screen-container';
 import FABButton from 'src/components/button/fab';
 import SectionReviewList from 'src/containers/review-list/section';
 
-import { getSectionsFromReviewDates } from 'src/utils/reviews';
-import { MockDatedReviewLists } from 'src/data/mock';
-
 import colors from 'src/theme/colors';
 import { SCREEN_NAMES } from 'src/navigation/constants';
+
+import {
+  ReviewsMainScreenAppState,
+  ReviewsMainScreenAppProps,
+  mapStateToProps,
+  mapDispatchToProps,
+} from './props';
 import styles from './styles';
 
-class MainScreen extends Component<any> {
+class MainScreen extends Component<
+  ReviewsMainScreenAppProps,
+  ReviewsMainScreenAppState
+> {
   unsubscribeFocus: any;
 
   unsubscribeBlur: any;
@@ -45,13 +54,10 @@ class MainScreen extends Component<any> {
 
   render() {
     const { showFAB } = this.state;
-    const { navigation } = this.props;
+    const { navigation, reviews } = this.props;
     return (
       <ScreenContainer containerStyle={styles.container}>
-        <SectionReviewList
-          data={getSectionsFromReviewDates(MockDatedReviewLists)}
-          navigation={navigation}
-        />
+        <SectionReviewList data={reviews} navigation={navigation} />
         <FABButton
           isVisible={showFAB}
           options={[
@@ -76,4 +82,4 @@ class MainScreen extends Component<any> {
   }
 }
 
-export default MainScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
