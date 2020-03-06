@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Checkbox, FAB, TextInput } from 'react-native-paper';
 import DraggableFlatList from 'react-native-draggable-flatlist';
@@ -18,23 +19,17 @@ import { ReviewTypesAsOptions } from 'src/data/review';
 import colors from 'src/theme/colors';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { createQuestion } from 'src/utils/questions';
-// import { createReview } from 'src/utils/reviews';
+import { createReview } from 'src/utils/reviews';
 
+import {
+  CreateInAppState,
+  CreateInAppProps,
+  mapStateToProps,
+  mapDispatchToProps,
+} from './props';
 import styles from './styles';
 
-class CreateInAppReview extends Component<
-  { navigation: any },
-  {
-    name: string;
-    type: ReviewType;
-    questions: ReviewQuestion[];
-    currentQuestion: string;
-    date: Date;
-    day: DayOfTheWeek;
-    time: Date;
-    monthlyDay: number | string;
-  }
-> {
+class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   state = {
     name: '',
     type: ReviewType.weekly,
@@ -47,11 +42,20 @@ class CreateInAppReview extends Component<
   };
 
   onSave = () => {
-    // const { name, type, questions, date, day, time, monthlyDay } = this.state;
-    // // console.log(
-    // //   createReview({ name, type, questions, date, day, time, monthlyDay }),
-    // // );
-    this.props.navigation.pop();
+    const { name, type, questions, date, day, time, monthlyDay } = this.state;
+    const { navigation, addReview } = this.props;
+    addReview(
+      createReview({
+        name,
+        type,
+        questions,
+        date,
+        day,
+        time,
+        monthlyDay,
+      }),
+    );
+    navigation.pop();
   };
 
   onTypeSelect = (value: string) => {
@@ -302,4 +306,4 @@ class CreateInAppReview extends Component<
   }
 }
 
-export default CreateInAppReview;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateInAppReview);
