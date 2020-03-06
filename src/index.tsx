@@ -9,7 +9,7 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import { PersistGate } from 'redux-persist/es/integration/react';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import Drawer from 'src/navigation/drawer';
 import theme from 'src/theme';
