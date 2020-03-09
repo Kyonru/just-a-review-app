@@ -12,7 +12,9 @@ export default StyleSheet.create<{
   title: TextStyle;
   firstPage: ViewStyle;
 }>({
-  container: {},
+  container: {
+    paddingBottom: 8,
+  },
   card: { flex: 1, padding: 4 },
   viewPager: {
     flex: 1,

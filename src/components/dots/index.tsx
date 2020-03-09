@@ -12,7 +12,8 @@ function Dots(props: { count: number; active: number }) {
   return (
     <View style={styles.dotsContainer}>
       {dots.map((dot, index) => (
-        <Dot active={index === active} />
+        // eslint-disable-next-line react/no-array-index-key
+        <Dot key={`${index}`} active={index === active} />
       ))}
     </View>
   );

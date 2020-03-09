@@ -10,13 +10,19 @@ import ScreenContainer from 'src/components/screen-container';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { SCREEN_NAMES } from 'src/navigation/constants';
-import { ReviewType } from 'src/@types';
+import { Review, ReviewType } from 'src/@types';
+import { convertMinutesToAverageTime } from 'src/utils/time';
+import { getReviewAverageTime } from 'src/utils/reviews';
 
 import styles from './styles';
 
 const { timing } = Animated;
 
-class ReviewDetails extends Component<any> {
+class ReviewDetails extends Component<{
+  review: Review;
+  navigation: any;
+  route: any;
+}> {
   y = new Animated.Value(20);
 
   x = new Animated.Value(1);
@@ -57,12 +63,15 @@ class ReviewDetails extends Component<any> {
   };
 
   renderDetails = () => {
+    const { route } = this.props;
+    const { params } = route;
+    const { review } = params;
     return (
       <View key="1" style={styles.firstPage}>
-        <Headline style={styles.title}>First page</Headline>
+        <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
           Average time:{'\n'}
-          10h 10m
+          {convertMinutesToAverageTime(getReviewAverageTime(review))}
         </Caption>
 
         <TouchableOpacity onPress={this.openProcess}>

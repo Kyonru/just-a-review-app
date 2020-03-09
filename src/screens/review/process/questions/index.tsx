@@ -22,27 +22,58 @@ class ReviewProcessQuestions extends Component<any> {
     currentPage: 0,
   };
 
+  counter: number = 0;
+
+  onBlurListener: any;
+
+  onFocusListener: any;
+
   constructor(props: any) {
     super(props);
 
-    setInterval(() => {
+    this.startCounter();
+    this.setButtons();
+
+    this.onFocusListener = props.navigation.addListener('focus', this.onFocus);
+    this.onBlurListener = props.navigation.addListener('blur', this.onBlur);
+  }
+
+  componentWillUnmount() {
+    this.onBlur();
+    this.onFocusListener();
+    this.onBlurListener();
+  }
+
+  onFocus = () => {
+    this.setButtons();
+    clearInterval(this.counter);
+    this.counter = 0;
+    this.startCounter();
+  };
+
+  onBlur = () => {
+    clearInterval(this.counter);
+    this.counter = 0;
+  };
+
+  onFinish = () => {
+    const { navigation } = this.props;
+    const { review, questions, duration } = this.state;
+
+    navigation.push(SCREEN_NAMES.reviewProcessEnd, {
+      duration,
+      review: { ...review, questions },
+    });
+  };
+
+  startCounter = () => {
+    this.counter = setInterval(() => {
       const { duration } = this.state;
-      props.navigation.setOptions({
+      this.props.navigation.setOptions({
         title: convertMinutesToHourString(duration),
       });
       this.setState({ duration: duration + 1 });
     }, 1000);
-
-    this.setButtons();
-  }
-
-  onFinish = () => {
-    const { navigation } = this.props;
-    const { review, questions } = this.state;
-
-    navigation.push(SCREEN_NAMES.reviewProcessEnd, {
-      review: { ...review, questions },
-    });
   };
 
   setButtons = () => {

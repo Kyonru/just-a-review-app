@@ -14,6 +14,23 @@ export const convertMinutesToHourString = (mins: number): string => {
   return `${hours}:${minutes}`;
 };
 
+export const convertMinutesToAverageTime = (mins?: number): string => {
+  if (!mins) {
+    return '00m 00s';
+  }
+
+  let hours = `${parseInt(`${mins / 60}`, 10)}`;
+  let minutes = `${mins % 60}`;
+
+  if (hours.length < 2) {
+    hours = `0${hours}`;
+  }
+  if (minutes.length < 2) {
+    minutes = `0${minutes}`;
+  }
+  return `${hours}m ${minutes}s`;
+};
+
 export const getNextDayOfWeek = (day: DayOfTheWeek) => {
   const dayDate = moment().day(day);
 
