@@ -77,6 +77,7 @@ export const convertReviewToLog = (
   review: Review,
   duration: number,
 ): ReviewLog => ({
+  id: uuidv4(),
   duration,
   questions: review.questions,
   date: new Date(),
@@ -84,7 +85,7 @@ export const convertReviewToLog = (
 
 export const getReviewAverageTime = (review: Review): number =>
   Math.round(
-    (review.logs.reduce((sum, curr) => sum + curr.duration, 0) /
-      review.logs.length) *
+    ((review.logs || []).reduce((sum, curr) => sum + curr.duration, 0) /
+      (review.logs || []).length) *
       100,
   ) / 100;

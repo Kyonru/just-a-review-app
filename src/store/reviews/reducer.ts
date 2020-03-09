@@ -21,7 +21,7 @@ mapActionToReducer.add(
       (value: Review) => value.id === reviewId,
     );
 
-    const logs = [...(state.reviews[index].logs || []), log];
+    const logs = [log, ...(state.reviews[index].logs || [])];
 
     const reviews = [
       ...state.reviews.slice(0, index),

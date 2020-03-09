@@ -33,7 +33,7 @@ export const createAnswer = (
 };
 
 export const getAnsweredCount = (questions: ReviewQuestion[]) => {
-  return questions.reduce((sum, current) => {
+  return (questions || []).reduce((sum, current) => {
     return current.answer ? sum + 1 : sum;
   }, 0);
 };
