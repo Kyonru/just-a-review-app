@@ -1,9 +1,11 @@
 import moment from 'moment';
 import { SectionListData } from 'react-native';
-import { capitalize } from 'src/utils/strings';
+import { v4 as uuidv4 } from 'uuid';
 
+import { capitalize } from 'src/utils/strings';
 import {
   Review,
+  ReviewLog,
   MonthlyReview,
   YearlyReview,
   WeeklyReview,
@@ -35,13 +37,14 @@ export const createReview = (review: {
   monthlyDay: number;
 }): Review | MonthlyReview | YearlyReview | WeeklyReview => {
   return {
+    id: uuidv4(),
     title:
       review.name === '' ? `${capitalize(review.type)} Review` : review.name,
     description: '',
     time: review.time,
     type: review.type,
     questions: review.questions,
-    log: [],
+    logs: [],
     date: review.date,
     day: review.type === ReviewType.monthly ? review.monthlyDay : review.day,
   };
@@ -57,14 +60,32 @@ export const createExternalReview = (review: {
   monthlyDay: number;
 }): ExternalReview => {
   return {
+    id: uuidv4(),
     title:
       review.name === '' ? `${capitalize(review.type)} Review` : review.name,
     description: '',
     time: review.time,
     type: 'ExternalReview',
     link: review.questions,
-    log: [],
+    logs: [],
     date: review.date,
     day: review.type === ReviewType.monthly ? review.monthlyDay : review.day,
   };
 };
+
+export const convertReviewToLog = (
+  review: Review,
+  duration: number,
+): ReviewLog => ({
+  id: uuidv4(),
+  duration,
+  questions: review.questions,
+  date: new Date(),
+});
+
+export const getReviewAverageTime = (review: Review): number =>
+  Math.round(
+    ((review.logs || []).reduce((sum, curr) => sum + curr.duration, 0) /
+      (review.logs || []).length) *
+      100,
+  ) / 100;

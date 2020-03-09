@@ -23,6 +23,6 @@ export default StyleSheet.create<{
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-  questionsCompleted: { lineHeight: 32, fontSize: 32, fontWeight: 'bold' },
+  questionsCompleted: { lineHeight: 38, fontSize: 32, fontWeight: 'bold' },
   finishButton: { paddingVertical: 8, paddingHorizontal: 16 },
 });

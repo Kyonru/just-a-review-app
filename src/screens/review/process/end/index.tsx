@@ -1,27 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Headline, Caption, Button, Subheading } from 'react-native-paper';
 
 import ScreenContainer from 'src/components/screen-container';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
+import { convertMinutesToAverageTime } from 'src/utils/time';
+import { getAnsweredCount } from 'src/utils/questions';
 
 import styles from './styles';
+import { EndProcessProps, mapStateToProps, mapDispatchToProps } from './props';
 
-function ReviewDetails(props: any) {
-  // const { type, name, link } = this.state;
-  const { route, navigation } = props;
+function EndReviewProcess(props: EndProcessProps) {
+  const { route, navigation, addLog } = props;
+  const { params } = route;
+  const { review, duration } = params;
 
-  const onFinish = () => navigation.popToTop();
+  const onFinish = () => {
+    addLog(review, duration);
+    navigation.popToTop();
+  };
 
   return (
     <ScreenContainer containerStyle={styles.container}>
       <View key="1" style={styles.firstPage}>
         <View>
-          <Headline style={styles.title}>First page</Headline>
-          <Caption style={styles.averageText}>10h 10m</Caption>
+          <Headline style={styles.title}>{review.title}</Headline>
+          <Caption style={styles.averageText}>
+            {convertMinutesToAverageTime(duration)}
+          </Caption>
         </View>
-        <Subheading style={styles.questionsCompleted}>10/10</Subheading>
+        <Subheading style={styles.questionsCompleted}>
+          {getAnsweredCount(review.questions)}/{review.questions.length}
+        </Subheading>
         <Button
           color={getReviewTypeColor(route.params.review.type)}
           mode="contained"
@@ -35,4 +47,4 @@ function ReviewDetails(props: any) {
   );
 }
 
-export default ReviewDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(EndReviewProcess);

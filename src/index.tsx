@@ -21,7 +21,7 @@ export default function GlobalAppComponent() {
   return (
     <Provider store={store}>
       <PersistGate
-        loading={() => <ActivityIndicator animating color={colors.lynch} />}
+        loading={<ActivityIndicator animating color={colors.lynch} />}
         persistor={persistor}
       >
         <NavigationContainer>

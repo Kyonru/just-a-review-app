@@ -17,6 +17,7 @@ export enum DayOfTheWeek {
 }
 
 interface BaseReview {
+  id: string;
   title: string;
   description: string;
   time: Date;
@@ -26,21 +27,22 @@ interface BaseReview {
 }
 
 export interface Review extends BaseReview {
-  log: Review[];
+  logs: ReviewLog[];
   questions: ReviewQuestion[];
   type: ReviewType;
 }
 
 export interface ExternalReview extends BaseReview {
-  log: Date[];
+  logs: Date[];
   type: 'ExternalReview';
   link: string;
 }
 
 export interface ReviewLog {
-  date: number;
+  id: string;
+  date: Date;
   duration: number;
-  questions: ReviewQuestion;
+  questions: ReviewQuestion[];
 }
 
 export interface ReviewQuestion {
