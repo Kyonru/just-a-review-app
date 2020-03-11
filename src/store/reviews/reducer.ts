@@ -9,23 +9,29 @@ const INITIAL_STATE = new ReviewInitialState();
 
 const mapActionToReducer = new ReducerActionMapper<ReviewsState>();
 
-mapActionToReducer.add(ADD_REVIEW, (state, review: Review) => ({
-  ...state,
-  reviews: state.reviews.concat(review),
-}));
+mapActionToReducer.add(
+  ADD_REVIEW,
+  (state, review: Review): ReviewsState => ({
+    ...state,
+    reviews: state.reviews.concat(review),
+  }),
+);
 
 mapActionToReducer.add(
   ADD_LOG,
-  (state, { reviewId, log }: { reviewId: string; log: ReviewLog }) => {
+  (
+    state,
+    { reviewId, log }: { reviewId: string; log: ReviewLog },
+  ): ReviewsState => {
     const index = state.reviews.findIndex(
       (value: Review) => value.id === reviewId,
     );
 
     const logs = [log, ...(state.reviews[index].logs || [])];
 
-    const reviews = [
+    const reviews: Review[] = [
       ...state.reviews.slice(0, index),
-      { ...state.reviews[index], logs },
+      { ...state.reviews[index], logs, lastLog: new Date() },
       ...state.reviews.slice(index + 1),
     ];
 
