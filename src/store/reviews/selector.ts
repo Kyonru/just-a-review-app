@@ -25,22 +25,43 @@ export const getReviewListAsDatedSection = createSelector<
   const sections: { [key: string]: Review[] } = {};
   reviews.forEach((review: Review) => {
     let section = '';
+    let date;
     if (review.type === ReviewType.daily) {
-      section = moment().format('YYYY-MM-DD');
+      date =
+        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
+          ? moment().add(1, 'day')
+          : moment();
+      section = date.format('YYYY-MM-DD');
     }
 
     if (review.type === ReviewType.weekly) {
-      section = getNextDayOfWeek(review.day! as DayOfTheWeek).format(
-        'YYYY-MM-DD',
-      );
+      const reviewDate = getNextDayOfWeek(review.day! as DayOfTheWeek);
+      date =
+        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
+          ? reviewDate.add(1, 'week')
+          : reviewDate;
+
+      section = date.format('YYYY-MM-DD');
     }
 
     if (review.type === ReviewType.monthly) {
-      section = getNextDayOfMonth(review.day! as number).format('YYYY-MM-DD');
+      const reviewDate = getNextDayOfMonth(review.day! as number);
+      date =
+        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
+          ? reviewDate.add(1, 'month')
+          : reviewDate;
+
+      section = reviewDate.format('YYYY-MM-DD');
     }
 
     if (review.type === ReviewType.yearly) {
-      section = getNextDayOfYear(review.date!).format('YYYY-MM-DD');
+      const reviewDate = getNextDayOfYear(review.date!);
+      date =
+        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
+          ? reviewDate.add(1, 'year')
+          : reviewDate;
+
+      section = reviewDate.format('YYYY-MM-DD');
     }
 
     sections[section] = sections[section]

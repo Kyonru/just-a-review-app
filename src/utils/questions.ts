@@ -12,7 +12,9 @@ export const createQuestion = (
   question: string,
   required: boolean = true,
 ): ReviewQuestion => {
-  const q = `${question}${question[question.length - 1] !== '?' ? '?' : ''}`;
+  const q = `${question}${
+    question[question.length - 1].trim() !== '?' ? '?' : ''
+  }`;
   return {
     id: uuidv4(),
     q,
@@ -27,7 +29,7 @@ export const createAnswer = (
   return {
     ...question,
     answer: question.answer
-      ? { ...question.answer, content: answer }
+      ? { ...question.answer, content: answer.trim() }
       : { ...EmptyAnswer, content: answer },
   };
 };

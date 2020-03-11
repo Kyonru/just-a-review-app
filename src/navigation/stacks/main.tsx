@@ -11,6 +11,7 @@ import CreateExternalForm from 'src/screens/create/external-form';
 import ReviewDetails from 'src/screens/review/details';
 import ReviewProcessQuestions from 'src/screens/review/process/questions';
 import ReviewProcessEnd from 'src/screens/review/process/end';
+import ReviewLogDetail from 'src/screens/review/log';
 
 const StackCreator = createStackNavigator();
 
@@ -50,6 +51,13 @@ export default () => {
         }}
         name={SCREEN_NAMES.reviewDetails}
         component={ReviewDetails}
+      />
+      <StackCreator.Screen
+        options={{
+          title: '',
+        }}
+        name={SCREEN_NAMES.reviewLogDetail}
+        component={ReviewLogDetail}
       />
       <StackCreator.Screen
         options={{

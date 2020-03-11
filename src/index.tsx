@@ -10,6 +10,10 @@ import {
 } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import {
+  SafeAreaProvider,
+  initialWindowSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import Drawer from 'src/navigation/drawer';
 import theme from 'src/theme';
@@ -25,9 +29,11 @@ export default function GlobalAppComponent() {
         persistor={persistor}
       >
         <NavigationContainer>
-          <PaperProvider theme={theme}>
-            <Drawer />
-          </PaperProvider>
+          <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
+            <PaperProvider theme={theme}>
+              <Drawer />
+            </PaperProvider>
+          </SafeAreaProvider>
         </NavigationContainer>
       </PersistGate>
     </Provider>

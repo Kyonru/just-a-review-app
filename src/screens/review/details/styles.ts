@@ -1,7 +1,11 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
+import colors from 'src/theme/colors';
+
 export default StyleSheet.create<{
   container: ViewStyle;
+  logItem: ViewStyle;
+  logItemRight: ViewStyle;
   viewPager: ViewStyle;
   swipeUpIndicator: ViewStyle;
   playButton: ViewStyle;
@@ -14,6 +18,12 @@ export default StyleSheet.create<{
   viewPager: {
     flex: 1,
   },
+  logItem: {
+    borderBottomColor: `${colors.lynch}55`,
+    borderBottomWidth: 1,
+    borderRadius: 16,
+  },
+  logItemRight: { alignSelf: 'center', marginRight: 4 },
   swipeUpIndicator: { position: 'absolute', bottom: 20 },
   playButton: {
     height: 100,

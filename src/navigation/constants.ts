@@ -5,6 +5,7 @@ export enum SCREEN_NAMES {
   reviewDetails = 'app.main.reviews.details',
   reviewProcessQuestions = 'app.main.reviews.process.questions',
   reviewProcessEnd = 'app.main.reviews.process.end',
+  reviewLogDetail = 'app.main.reviews.logs.details',
 }
 
 export enum NAVIGATORS {

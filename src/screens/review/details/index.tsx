@@ -80,14 +80,24 @@ class ReviewDetails extends Component<{
     }
   };
 
+  openLogDetail = (item: ReviewLog) => () => {
+    this.props.navigation.push(SCREEN_NAMES.reviewLogDetail, {
+      review: this.props.route.params.review,
+      log: item,
+    });
+  };
+
   renderLogItem = ({ item }: { item: ReviewLog }) => {
     return (
       <List.Item
         title={moment(item.date).calendar()}
         description={`Duration: ${convertMinutesToAverageTime(item.duration)}`}
+        style={styles.logItem}
+        onPress={this.openLogDetail(item)}
         right={() => (
           <Avatar.Text
             size={24}
+            style={styles.logItemRight}
             label={`${getAnsweredCount(item.questions)}`}
             theme={{ colors: { primary: colors.lynch } }}
           />
