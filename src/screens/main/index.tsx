@@ -68,13 +68,13 @@ class MainScreen extends Component<
               color: colors.white,
               style: { backgroundColor: colors.pistonBlue },
             },
-            {
-              icon: 'link',
-              label: 'External',
-              onPress: this.openCreateFromExternal,
-              color: colors.white,
-              style: { backgroundColor: colors.shamrock },
-            },
+            // {
+            //   icon: 'link',
+            //   label: 'External',
+            //   onPress: this.openCreateFromExternal,
+            //   color: colors.white,
+            //   style: { backgroundColor: colors.shamrock },
+            // },
           ]}
         />
       </ScreenContainer>

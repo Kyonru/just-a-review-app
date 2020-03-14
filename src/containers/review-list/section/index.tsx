@@ -6,6 +6,8 @@ import { Review } from 'src/@types';
 import ReviewListItem from 'src/components/review/list-item';
 import ListSeparator from 'src/components/separator';
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import EmptyState from 'src/components/empty-state';
+import resources from 'src/resources';
 
 import styles from './styles';
 import { BaseReviewListProps } from '../props';
@@ -31,8 +33,23 @@ class SectionReviewList extends Component<Props> {
     return <ListSeparator />;
   };
 
+  renderEmpty = () => {
+    return (
+      <EmptyState
+        title="There are no reviews."
+        description="Create a review and it will show up here! ✏️"
+        art={resources.images.emptyStates.start}
+      />
+    );
+  };
+
   render() {
     const { data } = this.props;
+
+    if (!data.length) {
+      return this.renderEmpty();
+    }
+
     return (
       <SectionList
         sections={data}

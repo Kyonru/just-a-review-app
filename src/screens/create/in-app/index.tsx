@@ -167,9 +167,8 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     const fields: any[] = [];
     if (type === ReviewType.yearly) {
       fields.push(
-        <>
+        <View key="dateTimePicker">
           <DatePicker
-            key="dateTimePicker"
             label="Date"
             testID="dateTimePicker"
             timeZoneOffsetInMinutes={0}
@@ -188,14 +187,13 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
               .toDate()}
           />
           <ListSeparator />
-        </>,
+        </View>,
       );
     }
     if (type === ReviewType.monthly) {
       fields.push(
-        <>
+        <View key="monthlyDayInput">
           <TextInput
-            key="monthlyDayInput"
             mode="outlined"
             selectionColor={colors.lynch}
             label="Review Day"
@@ -206,28 +204,26 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             onBlur={this.defaultMonthlyDay}
           />
           <ListSeparator />
-        </>,
+        </View>,
       );
     }
     if (type === ReviewType.weekly) {
       fields.push(
-        <>
+        <View key="dayPicker">
           <Dropdown
-            key="dayPicker"
             label="Day"
             options={daysOfTheWeek}
             onSelect={this.onDaySelect}
             selectedValue={day}
           />
           <ListSeparator />
-        </>,
+        </View>,
       );
     }
 
     fields.push(
-      <>
+      <View key="timePicker">
         <DatePicker
-          key="dateTimePicker"
           label="Date"
           mode="time"
           testID="dateTimePicker"
@@ -241,7 +237,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           displayValue={moment.utc(time).format('LT')}
         />
         <ListSeparator />
-      </>,
+      </View>,
     );
     return fields;
   };

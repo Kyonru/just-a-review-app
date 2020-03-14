@@ -23,6 +23,8 @@ import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getReviewAverageTime } from 'src/utils/reviews';
 import { getAnsweredCount } from 'src/utils/questions';
 import colors from 'src/theme/colors';
+import resources from 'src/resources';
+import EmptyState from 'src/components/empty-state';
 
 import styles from './styles';
 
@@ -87,6 +89,16 @@ class ReviewDetails extends Component<{
     });
   };
 
+  renderEmptyLogList = () => {
+    return (
+      <EmptyState
+        title="No log has been found."
+        description="Complete this review and your logs will show up here!"
+        art={resources.images.emptyStates.meeting}
+      />
+    );
+  };
+
   renderLogItem = ({ item }: { item: ReviewLog }) => {
     return (
       <List.Item
@@ -149,14 +161,19 @@ class ReviewDetails extends Component<{
     const { route } = this.props;
     const { params } = route;
     const { review } = params;
+    if (!review.logs || !review.logs.length) {
+      return this.renderEmptyLogList();
+    }
+
     return (
-      <View key="2">
+      <View style={{ backgroundColor: 'red' }} key="2">
         <FlatList
           ListHeaderComponent={<Title>Review Logs</Title>}
-          ListHeaderComponentStyle={{ padding: 16 }}
+          ListHeaderComponentStyle={styles.listHeaderComponent}
           keyExtractor={item => item.id}
           data={review.logs}
           renderItem={this.renderLogItem}
+          ListEmptyComponent={this.renderEmptyLogList}
         />
       </View>
     );
