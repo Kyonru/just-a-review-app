@@ -20,6 +20,7 @@ import colors from 'src/theme/colors';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { createQuestion } from 'src/utils/questions';
 import { createReview } from 'src/utils/reviews';
+import { withThrottle } from 'src/utils/timers';
 
 import {
   CreateInAppState,
@@ -41,7 +42,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     monthlyDay: 1,
   };
 
-  onSave = () => {
+  onSave = withThrottle(() => {
     const { name, type, questions, date, day, time, monthlyDay } = this.state;
     const { navigation, addReview } = this.props;
     addReview(
@@ -56,7 +57,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       }),
     );
     navigation.pop();
-  };
+  });
 
   onTypeSelect = (value: string) => {
     this.setState({
