@@ -1,28 +1,22 @@
-import moment from 'moment';
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
-import {
-  Avatar,
-  List,
-  Headline,
-  Caption,
-  FAB,
-  Title,
-} from 'react-native-paper';
+import { Headline, Caption, FAB, Title } from 'react-native-paper';
 import Animated, { Easing } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ScreenContainer from 'src/components/screen-container';
+import LogListItem from 'src/components/review/log-item';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { SCREEN_NAMES } from 'src/navigation/constants';
 import { Review, ReviewType, ReviewLog } from 'src/@types';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getReviewAverageTime } from 'src/utils/reviews';
-import { getAnsweredCount } from 'src/utils/questions';
-import colors from 'src/theme/colors';
+import resources from 'src/resources';
+import EmptyState from 'src/components/empty-state';
+import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 
@@ -42,6 +36,12 @@ class ReviewDetails extends Component<{
   shouldAnimateSwipeUp: number = 2;
 
   viewPager = React.createRef<ViewPager>();
+
+  openProcess = withThrottle(() => {
+    this.props.navigation.push(SCREEN_NAMES.reviewProcessQuestions, {
+      review: this.props.route.params.review,
+    });
+  }, 1000);
 
   constructor(props: any) {
     super(props);
@@ -68,12 +68,6 @@ class ReviewDetails extends Component<{
     }, 500);
   }
 
-  openProcess = () => {
-    this.props.navigation.push(SCREEN_NAMES.reviewProcessQuestions, {
-      review: this.props.route.params.review,
-    });
-  };
-
   openLogs = () => {
     if (this.viewPager.current) {
       this.viewPager.current.setPage(1);
@@ -87,23 +81,18 @@ class ReviewDetails extends Component<{
     });
   };
 
-  renderLogItem = ({ item }: { item: ReviewLog }) => {
+  renderEmptyLogList = () => {
     return (
-      <List.Item
-        title={moment(item.date).calendar()}
-        description={`Duration: ${convertMinutesToAverageTime(item.duration)}`}
-        style={styles.logItem}
-        onPress={this.openLogDetail(item)}
-        right={() => (
-          <Avatar.Text
-            size={24}
-            style={styles.logItemRight}
-            label={`${getAnsweredCount(item.questions)}`}
-            theme={{ colors: { primary: colors.lynch } }}
-          />
-        )}
+      <EmptyState
+        title="No log has been found."
+        description="Complete this review and your logs will show up here!"
+        art={resources.images.emptyStates.meeting}
       />
     );
+  };
+
+  renderLogItem = ({ item }: { item: ReviewLog }) => {
+    return <LogListItem data={item} onPress={this.openLogDetail(item)} />;
   };
 
   renderDetails = () => {
@@ -149,14 +138,19 @@ class ReviewDetails extends Component<{
     const { route } = this.props;
     const { params } = route;
     const { review } = params;
+    if (!review.logs || !review.logs.length) {
+      return this.renderEmptyLogList();
+    }
+
     return (
       <View key="2">
         <FlatList
           ListHeaderComponent={<Title>Review Logs</Title>}
-          ListHeaderComponentStyle={{ padding: 16 }}
+          ListHeaderComponentStyle={styles.listHeaderComponent}
           keyExtractor={item => item.id}
           data={review.logs}
           renderItem={this.renderLogItem}
+          ListEmptyComponent={this.renderEmptyLogList}
         />
       </View>
     );

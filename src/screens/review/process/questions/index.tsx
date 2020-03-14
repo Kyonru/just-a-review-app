@@ -11,6 +11,7 @@ import { SCREEN_NAMES } from 'src/navigation/constants';
 import colors from 'src/theme/colors';
 import { createAnswer } from 'src/utils/questions';
 import { convertMinutesToHourString } from 'src/utils/time';
+import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 
@@ -56,7 +57,7 @@ class ReviewProcessQuestions extends Component<any> {
     this.counter = 0;
   };
 
-  onFinish = () => {
+  onFinish = withThrottle(() => {
     const { navigation } = this.props;
     const { review, questions, duration } = this.state;
 
@@ -64,7 +65,7 @@ class ReviewProcessQuestions extends Component<any> {
       duration,
       review: { ...review, questions },
     });
-  };
+  });
 
   startCounter = () => {
     this.counter = setInterval(() => {

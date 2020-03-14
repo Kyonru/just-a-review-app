@@ -1,1 +1,2 @@
-declare module 'redux-persist/es/integration/react';
+declare module 'lodash.debounce';
+declare module 'lodash.throttle';

@@ -8,6 +8,7 @@ import ScreenContainer from 'src/components/screen-container';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getAnsweredCount } from 'src/utils/questions';
+import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 import { EndProcessProps, mapStateToProps, mapDispatchToProps } from './props';
@@ -17,10 +18,10 @@ function EndReviewProcess(props: EndProcessProps) {
   const { params } = route;
   const { review, duration } = params;
 
-  const onFinish = () => {
+  const onFinish = withThrottle(() => {
     addLog(review, duration);
     navigation.popToTop();
-  };
+  });
 
   return (
     <ScreenContainer containerStyle={styles.container}>

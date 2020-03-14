@@ -8,6 +8,7 @@ import SectionReviewList from 'src/containers/review-list/section';
 
 import colors from 'src/theme/colors';
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import { withThrottle } from 'src/utils/timers';
 
 import {
   ReviewsMainScreenAppState,
@@ -29,6 +30,10 @@ class MainScreen extends Component<
     showFAB: true,
   };
 
+  openCreateInApp = withThrottle(() => {
+    this.props.navigation.push(SCREEN_NAMES.createInApp);
+  });
+
   componentDidMount() {
     const { navigation } = this.props;
     this.unsubscribeFocus = navigation.addListener('focus', () => {
@@ -43,10 +48,6 @@ class MainScreen extends Component<
     this.unsubscribeFocus();
     this.unsubscribeBlur();
   }
-
-  openCreateInApp = () => {
-    this.props.navigation.push(SCREEN_NAMES.createInApp);
-  };
 
   openCreateFromExternal = () => {
     this.props.navigation.push(SCREEN_NAMES.createExternalForm);
@@ -68,13 +69,13 @@ class MainScreen extends Component<
               color: colors.white,
               style: { backgroundColor: colors.pistonBlue },
             },
-            {
-              icon: 'link',
-              label: 'External',
-              onPress: this.openCreateFromExternal,
-              color: colors.white,
-              style: { backgroundColor: colors.shamrock },
-            },
+            // {
+            //   icon: 'link',
+            //   label: 'External',
+            //   onPress: this.openCreateFromExternal,
+            //   color: colors.white,
+            //   style: { backgroundColor: colors.shamrock },
+            // },
           ]}
         />
       </ScreenContainer>

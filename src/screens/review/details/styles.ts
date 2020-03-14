@@ -13,8 +13,10 @@ export default StyleSheet.create<{
   averageText: TextStyle;
   title: TextStyle;
   firstPage: ViewStyle;
+  listHeaderComponent: ViewStyle;
 }>({
   container: {},
+  listHeaderComponent: { padding: 16 },
   viewPager: {
     flex: 1,
   },

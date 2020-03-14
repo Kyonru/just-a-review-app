@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Appbar } from 'react-native-paper';
 import { Platform } from 'react-native';
 import { StackHeaderProps } from '@react-navigation/stack';
+import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 
 class AppHeader extends Component<Props> {
-  goBack = () => this.props.navigation.pop();
+  goBack = withThrottle(() => this.props.navigation.pop());
 
   openDrawer = () => (this.props.navigation as any).toggleDrawer();
 
