@@ -13,12 +13,14 @@ import styles from './styles';
 import { BaseReviewListProps } from '../props';
 
 class SectionReviewList extends Component<Props> {
-  openDetails = (review: Review) => () => {
+  openDetails = (review: Review) => {
     this.props.navigation.push(SCREEN_NAMES.reviewDetails, { review });
   };
 
   renderCard = ({ item }: { item: Review }) => {
-    return <ReviewListItem onPress={this.openDetails(item)} data={item} />;
+    return (
+      <ReviewListItem onPress={value => this.openDetails(value)} data={item} />
+    );
   };
 
   renderHeader = ({ section }: { section: SectionListData<Review> }) => {

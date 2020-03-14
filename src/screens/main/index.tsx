@@ -58,7 +58,7 @@ class MainScreen extends Component<
     const { navigation, reviews } = this.props;
     return (
       <ScreenContainer containerStyle={styles.container}>
-        <SectionReviewList data={reviews} navigation={navigation} />
+        <SectionReviewList data={[...reviews]} navigation={navigation} />
         <FABButton
           isVisible={showFAB}
           options={[

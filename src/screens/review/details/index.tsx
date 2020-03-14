@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
@@ -22,11 +23,14 @@ import styles from './styles';
 
 const { timing } = Animated;
 
-class ReviewDetails extends Component<{
-  review: Review;
-  navigation: any;
-  route: any;
-}> {
+class ReviewDetails extends Component<
+  {
+    review: Review;
+    navigation: any;
+    route: any;
+  },
+  any
+> {
   y = new Animated.Value(20);
 
   x = new Animated.Value(1);
@@ -83,11 +87,13 @@ class ReviewDetails extends Component<{
 
   renderEmptyLogList = () => {
     return (
-      <EmptyState
-        title="No log has been found."
-        description="Complete this review and your logs will show up here!"
-        art={resources.images.emptyStates.meeting}
-      />
+      <View key="2">
+        <EmptyState
+          title="No log has been found."
+          description="Complete this review and your logs will show up here!"
+          art={resources.images.emptyStates.meeting}
+        />
+      </View>
     );
   };
 
