@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { PureComponent } from 'react';
-import { ViewProps, View } from 'react-native';
+import {
+  ViewProps,
+  View,
+  Platform,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import DateTimePicker, {
   IOSNativeProps,
   AndroidNativeProps,
+  Event,
 } from '@react-native-community/datetimepicker';
 import { Modal, Portal, Button } from 'react-native-paper';
 
@@ -21,26 +28,62 @@ export class DatePicker extends PureComponent<
 
   toggleModal = () => {
     const { isModalOpen } = this.state;
+    if (!isModalOpen) {
+      Keyboard.dismiss();
+    }
     this.setState({
       isModalOpen: !isModalOpen,
     });
   };
 
+  onChange = (event: Event, value?: Date) => {
+    let date = value;
+
+    if (!date) {
+      date = new Date();
+    }
+    this.setState({
+      isModalOpen: false,
+    });
+
+    if (this.props.onChange) {
+      this.props.onChange(event, date);
+    }
+  };
+
   renderInput = () => {
     const { isModalOpen } = this.state;
+
+    if (Platform.OS === 'android' && isModalOpen) {
+      return <DateTimePicker {...this.props} onChange={this.onChange} />;
+    }
+
+    if (Platform.OS === 'android') {
+      return null;
+    }
+
     return (
       <Portal>
-        <Modal visible={isModalOpen} onDismiss={this.toggleModal}>
-          <View style={styles.picker}>
-            <DateTimePicker {...this.props} />
-            <Button
-              style={styles.button}
-              mode="contained"
-              onPress={this.toggleModal}
-            >
-              Ok
-            </Button>
-          </View>
+        <Modal
+          visible={isModalOpen}
+          onDismiss={this.toggleModal}
+          contentContainerStyle={styles.modal}
+        >
+          <TouchableOpacity
+            style={styles.background}
+            onPress={this.toggleModal}
+          >
+            <View style={styles.picker}>
+              <DateTimePicker {...this.props} onChange={this.onChange} />
+              <Button
+                style={styles.button}
+                mode="contained"
+                onPress={this.toggleModal}
+              >
+                Ok
+              </Button>
+            </View>
+          </TouchableOpacity>
         </Modal>
       </Portal>
     );

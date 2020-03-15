@@ -19,7 +19,7 @@ export default StyleSheet.create<{
   viewPager: {
     flex: 1,
   },
-  answerInput: { flex: 1 },
+  answerInput: { backgroundColor: 'transparent' },
   swipeUpIndicator: { position: 'absolute', bottom: 20 },
   playButton: {
     height: 100,

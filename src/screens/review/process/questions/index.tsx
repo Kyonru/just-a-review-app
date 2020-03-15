@@ -25,6 +25,8 @@ class ReviewProcessQuestions extends Component<any> {
 
   counter: number = 0;
 
+  questionInputs: { [key: number]: React.RefObject<any> } = {};
+
   onBlurListener: any;
 
   onFocusListener: any;
@@ -37,6 +39,12 @@ class ReviewProcessQuestions extends Component<any> {
 
     this.onFocusListener = props.navigation.addListener('focus', this.onFocus);
     this.onBlurListener = props.navigation.addListener('blur', this.onBlur);
+
+    const { questions } = this.state;
+
+    questions.forEach((question: ReviewQuestion, index: number) => {
+      this.questionInputs[index] = React.createRef<typeof TextInput>();
+    });
   }
 
   componentWillUnmount() {
@@ -104,9 +112,14 @@ class ReviewProcessQuestions extends Component<any> {
     this.setState({
       currentPage: e.nativeEvent.position,
     });
+    this.questionInputs[e.nativeEvent.position].current?.focus();
   };
 
-  renderQuestion = (question: ReviewQuestion) => {
+  onInputFocus = (input: number) => () => {
+    this.questionInputs[input].current?.focus();
+  };
+
+  renderQuestion = (question: ReviewQuestion, index: number) => {
     return (
       <View key={question.id} style={styles.firstPage}>
         <Headline style={styles.title}>{question.q}</Headline>
@@ -114,9 +127,11 @@ class ReviewProcessQuestions extends Component<any> {
           {question.required ? 'required' : ''}
         </Caption>
 
-        <Card style={styles.card}>
+        <Card style={styles.card} onPress={this.onInputFocus(index)}>
           <TextInput
+            ref={this.questionInputs[index]}
             multiline
+            underlineColor="transparent"
             style={styles.answerInput}
             value={question.answer?.content}
             onChangeText={this.updateQuestionAnswer(question)}

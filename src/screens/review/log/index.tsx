@@ -33,7 +33,7 @@ function LogQuestion(log: ReviewQuestion) {
     <View key={log.id}>
       <ListSeparator />
       <Title>{log.q}</Title>
-      <Paragraph>{log.answer?.content}</Paragraph>
+      <Paragraph>{log.answer?.content.trim()}</Paragraph>
     </View>
   );
 }

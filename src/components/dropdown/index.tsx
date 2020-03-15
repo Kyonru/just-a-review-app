@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Platform, Picker, View, Text } from 'react-native';
+import {
+  TouchableOpacity,
+  Platform,
+  Picker,
+  View,
+  Text,
+  Keyboard,
+} from 'react-native';
 import { Modal, Portal, withTheme, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -19,6 +26,7 @@ class Dropdown extends Component<DropdownProps & any> {
   };
 
   onShowModal = () => {
+    Keyboard.dismiss();
     this.setState({
       isModalOpen: true,
     });
@@ -46,17 +54,26 @@ class Dropdown extends Component<DropdownProps & any> {
           </View>
         </TouchableOpacity>
         <Portal>
-          <Modal visible={isModalOpen} onDismiss={this.onHideModal}>
-            <View style={styles.pickerIOS}>
-              {this.renderPicker()}
-              <Button
-                style={styles.button}
-                mode="contained"
-                onPress={this.onHideModal}
-              >
-                Ok
-              </Button>
-            </View>
+          <Modal
+            visible={isModalOpen}
+            onDismiss={this.onHideModal}
+            contentContainerStyle={styles.modal}
+          >
+            <TouchableOpacity
+              style={styles.background}
+              onPress={this.onHideModal}
+            >
+              <View style={styles.pickerIOS}>
+                {this.renderPicker()}
+                <Button
+                  style={styles.button}
+                  mode="contained"
+                  onPress={this.onHideModal}
+                >
+                  Ok
+                </Button>
+              </View>
+            </TouchableOpacity>
           </Modal>
         </Portal>
       </>

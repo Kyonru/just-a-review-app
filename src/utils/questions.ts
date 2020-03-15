@@ -29,7 +29,7 @@ export const createAnswer = (
   return {
     ...question,
     answer: question.answer
-      ? { ...question.answer, content: answer.trim() }
+      ? { ...question.answer, content: answer }
       : { ...EmptyAnswer, content: answer },
   };
 };

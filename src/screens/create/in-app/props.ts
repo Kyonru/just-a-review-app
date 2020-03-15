@@ -22,6 +22,7 @@ export interface CreateInAppState {
   day: DayOfTheWeek;
   time: Date;
   monthlyDay: number | string;
+  showFAB: boolean;
 }
 
 export const mapStateToProps = () => ({});

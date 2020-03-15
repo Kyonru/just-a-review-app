@@ -16,6 +16,7 @@ export default StyleSheet.create<{
 }>({
   container: {
     padding: 20,
+    marginTop: 20,
   },
   questionInput: { flex: 1, paddingRight: 16 },
   questionInputContainer: { flexDirection: 'row', alignItems: 'center' },

@@ -25,6 +25,7 @@ interface BaseReview {
   day?: DayOfTheWeek | number;
   date?: Date;
   lastLog?: Date;
+  createdAt?: Date;
 }
 
 export interface Review extends BaseReview {

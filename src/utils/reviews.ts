@@ -47,6 +47,7 @@ export const createReview = (review: {
     logs: [],
     date: review.date,
     day: review.type === ReviewType.monthly ? review.monthlyDay : review.day,
+    createdAt: new Date(),
   };
 };
 

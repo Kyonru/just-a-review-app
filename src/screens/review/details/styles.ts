@@ -8,6 +8,7 @@ export default StyleSheet.create<{
   logItemRight: ViewStyle;
   viewPager: ViewStyle;
   swipeUpIndicator: ViewStyle;
+  swipeDownIndicator: ViewStyle;
   playButton: ViewStyle;
   playButtonContainer: ViewStyle;
   averageText: TextStyle;
@@ -27,6 +28,7 @@ export default StyleSheet.create<{
   },
   logItemRight: { alignSelf: 'center', marginRight: 4 },
   swipeUpIndicator: { position: 'absolute', bottom: 20 },
+  swipeDownIndicator: { alignItems: 'center', justifyContent: 'center' },
   playButton: {
     height: 100,
     width: 100,
