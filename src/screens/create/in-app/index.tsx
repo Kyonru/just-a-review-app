@@ -2,7 +2,14 @@
 import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  EmitterSubscription,
+  Alert,
+} from 'react-native';
 import { Checkbox, FAB, TextInput } from 'react-native-paper';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -36,28 +43,82 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     type: ReviewType.weekly,
     questions: [],
     currentQuestion: '',
-    date: new Date(),
-    day: DayOfTheWeek.monday,
-    time: new Date(),
+    date: moment().toDate(),
+    day: moment()
+      .format('dddd')
+      .toLowerCase() as DayOfTheWeek,
+    time: moment().toDate(),
     monthlyDay: 1,
+    showFAB: true,
   };
 
-  onSave = withThrottle(() => {
-    const { name, type, questions, date, day, time, monthlyDay } = this.state;
-    const { navigation, addReview } = this.props;
-    addReview(
-      createReview({
-        name,
-        type,
-        questions,
-        date,
-        day,
-        time,
-        monthlyDay,
-      }),
+  keyboardDidShowListener?: EmitterSubscription;
+
+  keyboardDidHideListener?: EmitterSubscription;
+
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this.keyboardDidShow,
     );
-    navigation.pop();
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardDidHide,
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener?.remove();
+    this.keyboardDidHideListener?.remove();
+  }
+
+  onSave = withThrottle(() => {
+    const { currentQuestion } = this.state;
+    const { navigation, addReview } = this.props;
+
+    const add = (state: CreateInAppState) => {
+      const { name, type, questions, date, day, time, monthlyDay } = state;
+      addReview(
+        createReview({
+          name,
+          type,
+          questions,
+          date,
+          day,
+          time,
+          monthlyDay: monthlyDay as number,
+        }),
+      );
+      navigation.pop();
+    };
+
+    if (currentQuestion) {
+      Alert.alert(
+        'Wait!',
+        'Did you forgot to add that las question? Want to add it before continue?',
+        [
+          { text: 'No, continue', onPress: () => add(this.state) },
+          { text: 'Wait, cancel' },
+          {
+            text: 'Yes, Add it!',
+            onPress: () => this.onAddQuestion(undefined, add),
+          },
+        ],
+      );
+    }
   });
+
+  keyboardDidShow = () => {
+    this.setState({
+      showFAB: false,
+    });
+  };
+
+  keyboardDidHide = () => {
+    this.setState({
+      showFAB: true,
+    });
+  };
 
   onTypeSelect = (value: string) => {
     this.setState({
@@ -98,15 +159,27 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     }
   };
 
-  onAddQuestion = () => {
+  onAddQuestion = (
+    event?: any,
+    callback?: (state: CreateInAppState) => any,
+  ) => {
     const { questions, currentQuestion } = this.state;
     if (!currentQuestion) {
       return;
     }
-    this.setState({
-      questions: [...questions, createQuestion(currentQuestion)],
-      currentQuestion: '',
-    });
+    this.setState(
+      {
+        questions: [...questions, createQuestion(currentQuestion)],
+        currentQuestion: '',
+      },
+      () =>
+        callback &&
+        callback({
+          ...this.state,
+          questions: [...questions, createQuestion(currentQuestion)],
+          currentQuestion: '',
+        }),
+    );
   };
 
   onCheckQuestion = (item: ReviewQuestion) => () => {
@@ -172,14 +245,13 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           <DatePicker
             label="Date"
             testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={moment.utc(date).toDate()}
+            value={moment(date).toDate()}
             is24Hour
             display="default"
             onChange={(event, newDate) => {
               this.setState({ date: newDate! });
             }}
-            displayValue={moment.utc(date).format('ll')}
+            displayValue={moment(date).format('ll')}
             maximumDate={moment(date)
               .endOf('year')
               .toDate()}
@@ -201,7 +273,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             value={`${monthlyDay}`}
             keyboardType="number-pad"
             onChangeText={this.onMonthlyDayChange}
-            theme={{ colors: { primary: colors.lynch } }}
+            theme={{ colors: { primary: colors.lynch, background: 'white' } }}
             onBlur={this.defaultMonthlyDay}
           />
           <ListSeparator />
@@ -228,14 +300,13 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           label="Date"
           mode="time"
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
           value={time}
           is24Hour
           display="clock"
           onChange={(event, newTime) => {
             this.setState({ time: newTime! });
           }}
-          displayValue={moment.utc(time).format('LT')}
+          displayValue={moment(time).format('LT')}
         />
         <ListSeparator />
       </View>,
@@ -244,7 +315,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   };
 
   render() {
-    const { type, name, currentQuestion, questions } = this.state;
+    const { type, name, currentQuestion, questions, showFAB } = this.state;
     return (
       <ScreenContainer containerStyle={styles.container}>
         <Dropdown
@@ -260,7 +331,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           label="Name"
           value={name}
           onChangeText={reviewName => this.setState({ name: reviewName })}
-          theme={{ colors: { primary: colors.lynch } }}
+          theme={{ colors: { primary: colors.lynch, background: 'white' } }}
         />
         <ListSeparator />
         {this.renderExtraInputs()}
@@ -274,7 +345,8 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             onChangeText={newQuestion =>
               this.setState({ currentQuestion: newQuestion })
             }
-            theme={{ colors: { primary: colors.lynch } }}
+            onSubmitEditing={this.onAddQuestion}
+            theme={{ colors: { primary: colors.lynch, background: 'white' } }}
           />
           <FAB
             small
@@ -292,6 +364,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           />
         </View>
         <FAB
+          visible={showFAB}
           disabled={!questions.length}
           style={styles.fab}
           icon="check"

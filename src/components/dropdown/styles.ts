@@ -4,6 +4,8 @@ export default StyleSheet.create<{
   separator: ViewStyle;
   picker: ViewStyle;
   button: ViewStyle;
+  modal: ViewStyle;
+  background: ViewStyle;
   pickerIOS: ViewStyle;
   pickerIOSHeader: ViewStyle;
   pickerAndroidHeader: ViewStyle;
@@ -18,6 +20,8 @@ export default StyleSheet.create<{
       ios: { height: 250 },
     }),
   },
+  background: { justifyContent: 'flex-end', flex: 1 },
+  modal: { flex: 1 },
   pickerIOS: {
     backgroundColor: 'white',
     height: 300,

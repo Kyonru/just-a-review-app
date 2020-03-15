@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
@@ -22,11 +23,14 @@ import styles from './styles';
 
 const { timing } = Animated;
 
-class ReviewDetails extends Component<{
-  review: Review;
-  navigation: any;
-  route: any;
-}> {
+class ReviewDetails extends Component<
+  {
+    review: Review;
+    navigation: any;
+    route: any;
+  },
+  any
+> {
   y = new Animated.Value(20);
 
   x = new Animated.Value(1);
@@ -68,9 +72,9 @@ class ReviewDetails extends Component<{
     }, 500);
   }
 
-  openLogs = () => {
+  openLogs = (page: number = 1) => {
     if (this.viewPager.current) {
-      this.viewPager.current.setPage(1);
+      this.viewPager.current.setPage(page);
     }
   };
 
@@ -83,11 +87,25 @@ class ReviewDetails extends Component<{
 
   renderEmptyLogList = () => {
     return (
-      <EmptyState
-        title="No log has been found."
-        description="Complete this review and your logs will show up here!"
-        art={resources.images.emptyStates.meeting}
-      />
+      <View key="2">
+        {this.renderSwipeDown()}
+        <EmptyState
+          title="No log has been found."
+          description="Complete this review and your logs will show up here!"
+          art={resources.images.emptyStates.meeting}
+        />
+      </View>
+    );
+  };
+
+  renderSwipeDown = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => this.openLogs(0)}
+        style={styles.swipeDownIndicator}
+      >
+        <Icon name="keyboard-arrow-down" size={38} />
+      </TouchableOpacity>
     );
   };
 
@@ -127,7 +145,12 @@ class ReviewDetails extends Component<{
               },
             ]}
           >
-            <Icon onPress={this.openLogs} name="keyboard-arrow-up" size={38} />
+            <Icon
+              onPress={() => this.openLogs(1)}
+              style={{ padding: 20, paddingHorizontal: 80 }}
+              name="keyboard-arrow-up"
+              size={38}
+            />
           </Animated.View>
         </View>
       </View>
@@ -144,6 +167,7 @@ class ReviewDetails extends Component<{
 
     return (
       <View key="2">
+        {this.renderSwipeDown()}
         <FlatList
           ListHeaderComponent={<Title>Review Logs</Title>}
           ListHeaderComponentStyle={styles.listHeaderComponent}
@@ -160,6 +184,7 @@ class ReviewDetails extends Component<{
     return (
       <ScreenContainer containerStyle={styles.container}>
         <ViewPager
+          scrollEnabled={false}
           ref={this.viewPager}
           style={styles.viewPager}
           initialPage={0}

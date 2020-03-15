@@ -12,7 +12,7 @@ export default StyleSheet.create<{
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: '#9f9f9f',
-    backgroundColor: '#f6f6f6',
+    borderColor: '#00000080',
+    backgroundColor: 'white',
   },
 });

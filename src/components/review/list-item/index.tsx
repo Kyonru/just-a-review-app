@@ -11,7 +11,10 @@ import styles from './styles';
 class ReviewListItem extends Component<ReviewListItemProps> {
   style: any;
 
-  onPress = withThrottle(this.props.onPress, 1000);
+  onPress = withThrottle(
+    () => this.props.onPress!(this.props.data) as any,
+    1000,
+  );
 
   constructor(props: ReviewListItemProps) {
     super(props);

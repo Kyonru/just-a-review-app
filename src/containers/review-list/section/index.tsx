@@ -13,12 +13,14 @@ import styles from './styles';
 import { BaseReviewListProps } from '../props';
 
 class SectionReviewList extends Component<Props> {
-  openDetails = (review: Review) => () => {
+  openDetails = (review: Review) => {
     this.props.navigation.push(SCREEN_NAMES.reviewDetails, { review });
   };
 
   renderCard = ({ item }: { item: Review }) => {
-    return <ReviewListItem onPress={this.openDetails(item)} data={item} />;
+    return (
+      <ReviewListItem onPress={value => this.openDetails(value)} data={item} />
+    );
   };
 
   renderHeader = ({ section }: { section: SectionListData<Review> }) => {
@@ -34,11 +36,13 @@ class SectionReviewList extends Component<Props> {
   };
 
   renderEmpty = () => {
+    const { onPressEmptyState } = this.props;
     return (
       <EmptyState
         title="There are no reviews."
         description="Create a review and it will show up here! ✏️"
         art={resources.images.emptyStates.start}
+        onPress={onPressEmptyState}
       />
     );
   };
@@ -66,6 +70,7 @@ class SectionReviewList extends Component<Props> {
 interface Props extends BaseReviewListProps {
   data: SectionListData<Review>[];
   navigation: any;
+  onPressEmptyState?(): void;
 }
 
 export default SectionReviewList;
