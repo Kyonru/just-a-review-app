@@ -11,15 +11,16 @@ export default StyleSheet.create<{
   averageText: TextStyle;
   title: TextStyle;
   firstPage: ViewStyle;
+  flex: ViewStyle;
 }>({
   container: {
     paddingBottom: 8,
   },
-  card: { flex: 1, padding: 4 },
+  card: { backgroundColor: 'white', flex: 1, padding: 4 },
   viewPager: {
     flex: 1,
   },
-  answerInput: { backgroundColor: 'transparent' },
+  answerInput: { backgroundColor: 'white', paddingBottom: 20 },
   swipeUpIndicator: { position: 'absolute', bottom: 20 },
   playButton: {
     height: 100,
@@ -32,11 +33,12 @@ export default StyleSheet.create<{
   averageText: {
     fontSize: 16,
     lineHeight: 24,
+    paddingBottom: 20,
     textAlign: 'center',
   },
   title: { fontSize: 40, lineHeight: 40 },
   firstPage: {
     padding: 20,
-    flex: 1,
   },
+  flex: { flex: 1 },
 });

@@ -36,11 +36,13 @@ class SectionReviewList extends Component<Props> {
   };
 
   renderEmpty = () => {
+    const { onPressEmptyState } = this.props;
     return (
       <EmptyState
         title="There are no reviews."
         description="Create a review and it will show up here! ✏️"
         art={resources.images.emptyStates.start}
+        onPress={onPressEmptyState}
       />
     );
   };
@@ -68,6 +70,7 @@ class SectionReviewList extends Component<Props> {
 interface Props extends BaseReviewListProps {
   data: SectionListData<Review>[];
   navigation: any;
+  onPressEmptyState?(): void;
 }
 
 export default SectionReviewList;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
-import { Headline, Caption, TextInput, Card } from 'react-native-paper';
+import { Headline, Caption, TextInput, Card, Button } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ScreenContainer from 'src/components/screen-container';
 import Dots from 'src/components/dots';
@@ -24,6 +25,8 @@ class ReviewProcessQuestions extends Component<any> {
   };
 
   counter: number = 0;
+
+  viewPager = React.createRef<ViewPager>();
 
   questionInputs: { [key: number]: React.RefObject<any> } = {};
 
@@ -108,6 +111,10 @@ class ReviewProcessQuestions extends Component<any> {
     });
   };
 
+  changePageTo = (page: number) => () => {
+    this.viewPager.current?.setPage(page);
+  };
+
   selectPage = (e: any) => {
     this.setState({
       currentPage: e.nativeEvent.position,
@@ -120,25 +127,59 @@ class ReviewProcessQuestions extends Component<any> {
   };
 
   renderQuestion = (question: ReviewQuestion, index: number) => {
+    const { questions } = this.state;
     return (
-      <View key={question.id} style={styles.firstPage}>
-        <Headline style={styles.title}>{question.q}</Headline>
-        <Caption style={styles.averageText}>
-          {question.required ? 'required' : ''}
-        </Caption>
+      <KeyboardAwareScrollView
+        key={question.id}
+        style={styles.firstPage}
+        extraScrollHeight={200}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.flex}>
+          <View style={styles.flex}>
+            <Headline style={styles.title}>{question.q}</Headline>
+            <Caption style={styles.averageText}>
+              {question.required ? 'required' : ''}
+            </Caption>
 
-        <Card style={styles.card} onPress={this.onInputFocus(index)}>
-          <TextInput
-            ref={this.questionInputs[index]}
-            multiline
-            underlineColor="transparent"
-            style={styles.answerInput}
-            value={question.answer?.content}
-            onChangeText={this.updateQuestionAnswer(question)}
-            theme={{ colors: { primary: colors.lynch } }}
-          />
-        </Card>
-      </View>
+            <Card style={styles.card} onPress={this.onInputFocus(index)}>
+              <TextInput
+                ref={this.questionInputs[index]}
+                multiline
+                underlineColor="transparent"
+                style={styles.answerInput}
+                value={question.answer?.content}
+                onChangeText={this.updateQuestionAnswer(question)}
+                theme={{ colors: { primary: colors.lynch } }}
+              />
+            </Card>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 20,
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              mode="contained"
+              style={{ marginRight: 8, display: index > 0 ? 'flex' : 'none' }}
+              onPress={this.changePageTo(index - 1)}
+            >
+              {'<'}
+            </Button>
+            <Button
+              style={{
+                display: index !== questions.length - 1 ? 'flex' : 'none',
+              }}
+              mode="contained"
+              onPress={this.changePageTo(index + 1)}
+            >
+              {'>'}
+            </Button>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
     );
   };
 
@@ -149,6 +190,7 @@ class ReviewProcessQuestions extends Component<any> {
         <ViewPager
           style={styles.viewPager}
           initialPage={0}
+          ref={this.viewPager}
           onPageSelected={this.selectPage}
         >
           {questions.map(this.renderQuestion)}
