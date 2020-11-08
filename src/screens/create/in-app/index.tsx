@@ -105,6 +105,8 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           },
         ],
       );
+    } else {
+      add(this.state);
     }
   });
 
