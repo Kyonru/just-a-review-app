@@ -16,10 +16,10 @@ import { EndProcessProps, mapStateToProps, mapDispatchToProps } from './props';
 function EndReviewProcess(props: EndProcessProps) {
   const { route, navigation, addLog } = props;
   const { params } = route;
-  const { review, duration } = params;
+  const { review, duration, startDate } = params;
 
   const onFinish = withThrottle(() => {
-    addLog(review, duration);
+    addLog(review, duration, startDate);
     navigation.popToTop();
   });
 

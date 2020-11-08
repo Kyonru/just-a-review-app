@@ -6,13 +6,17 @@ import { Review } from 'src/@types';
 export interface EndProcessProps {
   navigation: any;
   route: any;
-  addLog: (review: Review, duration: number) => Promise<ReviewsActions>;
+  addLog: (
+    review: Review,
+    duration: number,
+    startDate: string,
+  ) => Promise<ReviewsActions>;
   review: Review;
 }
 
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch<ReviewsActions>) => ({
-  addLog: (review: Review, duration: number) =>
-    addLog(review, duration)(dispatch),
+  addLog: (review: Review, duration: number, startDate: string) =>
+    addLog(review, duration, startDate)(dispatch),
 });

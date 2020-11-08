@@ -10,7 +10,6 @@ import {
 import DateTimePicker, {
   IOSNativeProps,
   AndroidNativeProps,
-  Event,
 } from '@react-native-community/datetimepicker';
 import { Modal, Portal, Button } from 'react-native-paper';
 
@@ -36,7 +35,7 @@ export class DatePicker extends PureComponent<
     });
   };
 
-  onChange = (event: Event, value?: Date) => {
+  onChange = (event: any, value?: Date) => {
     let date = value;
 
     if (!date) {

@@ -10,7 +10,7 @@ import {
   EmitterSubscription,
   Alert,
 } from 'react-native';
-import { Checkbox, FAB, TextInput } from 'react-native-paper';
+import { Checkbox, FAB, TextInput, IconButton } from 'react-native-paper';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -199,6 +199,27 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     });
   };
 
+  onDeleteQuestion = (item: ReviewQuestion) => () => {
+    const action = () => {
+      const { questions } = this.state;
+      const index = questions.findIndex(
+        (value: ReviewQuestion) => value.id === item.id,
+      );
+
+      this.setState({
+        questions: [
+          ...questions.slice(0, index),
+          ...questions.slice(index + 1),
+        ],
+      });
+    };
+
+    Alert.alert('Delete question', "This action can't be undone.", [
+      { text: 'Yes', onPress: action },
+      { text: 'No' },
+    ]);
+  };
+
   renderQuestion = ({ item, drag, isActive }: any) => {
     return (
       <TouchableOpacity
@@ -213,7 +234,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         <View style={styles.questionRow}>
           <View style={styles.questionContainer}>
             <Icon
-              style={styles.questionLeftIcon}
+              style={styles.questionLeftIcon as any}
               color="black"
               name="drag-handle"
               size={28}
@@ -232,6 +253,12 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           <Checkbox
             status={item.required ? 'checked' : 'unchecked'}
             onPress={this.onCheckQuestion(item)}
+          />
+          <IconButton
+            icon="close"
+            color={colors.lynch}
+            size={24}
+            onPress={this.onDeleteQuestion(item)}
           />
         </View>
       </TouchableOpacity>
@@ -305,7 +332,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           value={time}
           is24Hour
           display="clock"
-          onChange={(event, newTime) => {
+          onChange={(event: any, newTime: any) => {
             this.setState({ time: newTime! });
           }}
           displayValue={moment(time).format('LT')}

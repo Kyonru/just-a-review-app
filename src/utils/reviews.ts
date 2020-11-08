@@ -77,11 +77,13 @@ export const createExternalReview = (review: {
 export const convertReviewToLog = (
   review: Review,
   duration: number,
+  startDate: string,
 ): ReviewLog => ({
   id: uuidv4(),
   duration,
   questions: review.questions,
   date: new Date(),
+  startDate,
 });
 
 export const getReviewAverageTime = (review: Review): number =>

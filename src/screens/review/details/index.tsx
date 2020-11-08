@@ -5,7 +5,10 @@ import ViewPager from '@react-native-community/viewpager';
 import { Headline, Caption, FAB, Title } from 'react-native-paper';
 import Animated, { Easing } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 
 import ScreenContainer from 'src/components/screen-container';
 import LogListItem from 'src/components/review/log-item';
@@ -125,17 +128,19 @@ class ReviewDetails extends Component<
           {convertMinutesToAverageTime(getReviewAverageTime(review))}
         </Caption>
 
-        <TouchableOpacity onPress={this.openProcess}>
-          <View style={styles.playButtonContainer}>
-            <FAB
-              style={styles.playButton}
-              icon="play"
-              theme={{
-                colors: { accent: getReviewTypeColor(ReviewType.yearly) },
-              }}
-            />
-          </View>
-        </TouchableOpacity>
+        <TouchableHighlight
+          underlayColor={`${getReviewTypeColor(ReviewType.yearly)}11`}
+          style={{ borderRadius: 100, padding: 20 }}
+          onPress={this.openProcess}
+        >
+          <FAB
+            style={styles.playButton}
+            icon="play"
+            theme={{
+              colors: { accent: getReviewTypeColor(ReviewType.yearly) },
+            }}
+          />
+        </TouchableHighlight>
 
         <View style={styles.swipeUpIndicator}>
           <Animated.View

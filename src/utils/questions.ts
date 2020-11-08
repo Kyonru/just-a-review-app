@@ -1,7 +1,9 @@
-import { ReviewQuestion } from 'src/@types';
+import moment from 'moment';
+
+import { ReviewQuestion, ReviewQuestionAnswer } from 'src/@types';
 import { v4 as uuidv4 } from 'uuid';
 
-const EmptyAnswer = {
+const EmptyAnswer: ReviewQuestionAnswer = {
   content: '',
   image: [],
   files: [],
@@ -26,11 +28,12 @@ export const createAnswer = (
   question: ReviewQuestion,
   answer: string,
 ): ReviewQuestion => {
+  const date = moment.now().toString();
   return {
     ...question,
     answer: question.answer
-      ? { ...question.answer, content: answer }
-      : { ...EmptyAnswer, content: answer },
+      ? { ...question.answer, content: answer, date }
+      : { ...EmptyAnswer, content: answer, date },
   };
 };
 

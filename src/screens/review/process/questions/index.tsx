@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as React from 'react';
 import { Alert, View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
@@ -10,7 +11,7 @@ import Dots from 'src/components/dots';
 import { ReviewQuestion } from 'src/@types';
 import { SCREEN_NAMES } from 'src/navigation/constants';
 import colors from 'src/theme/colors';
-import { createAnswer } from 'src/utils/questions';
+import { createAnswer, getAnsweredCount } from 'src/utils/questions';
 import { convertMinutesToHourString } from 'src/utils/time';
 import { withThrottle } from 'src/utils/timers';
 
@@ -21,6 +22,7 @@ class ReviewProcessQuestions extends React.Component<any> {
     review: this.props.route.params.review,
     questions: this.props.route.params.review.questions,
     duration: 0,
+    startDate: null,
     currentPage: 0,
   };
 
@@ -54,6 +56,10 @@ class ReviewProcessQuestions extends React.Component<any> {
     questions.forEach((question: ReviewQuestion, index: number) => {
       this.questionInputs[index] = React.createRef<typeof TextInput>();
     });
+
+    this.setState({
+      startDate: moment.now().toString(),
+    });
   }
 
   componentWillUnmount() {
@@ -64,13 +70,17 @@ class ReviewProcessQuestions extends React.Component<any> {
   }
 
   onGoingBack = (e: any) => {
+    if (getAnsweredCount(this.state.questions) === 0) {
+      return;
+    }
+
     // Prevent default behavior of leaving the screen
     e.preventDefault();
 
     // Prompt the user before leaving the screen
     Alert.alert(
-      'Discard changes?',
-      'You have unsaved changes. Are you sure to discard them and leave the screen?',
+      'Discard review?',
+      'You are in middle of a review, are you sure you want to leave?',
       [
         { text: "Don't leave", style: 'cancel', onPress: () => {} },
         {
@@ -98,11 +108,12 @@ class ReviewProcessQuestions extends React.Component<any> {
 
   onFinish = withThrottle(() => {
     const { navigation } = this.props;
-    const { review, questions, duration } = this.state;
+    const { review, questions, duration, startDate } = this.state;
 
     navigation.push(SCREEN_NAMES.reviewProcessEnd, {
       duration,
       review: { ...review, questions },
+      startDate,
     });
   });
 
