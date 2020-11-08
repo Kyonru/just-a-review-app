@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
+import * as React from 'react';
+import { Alert, View } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import { Headline, Caption, TextInput, Card, Button } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -16,7 +16,7 @@ import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 
-class ReviewProcessQuestions extends Component<any> {
+class ReviewProcessQuestions extends React.Component<any> {
   state = {
     review: this.props.route.params.review,
     questions: this.props.route.params.review.questions,
@@ -34,6 +34,8 @@ class ReviewProcessQuestions extends Component<any> {
 
   onFocusListener: any;
 
+  onBeforeRemoveListener: any;
+
   constructor(props: any) {
     super(props);
 
@@ -42,6 +44,10 @@ class ReviewProcessQuestions extends Component<any> {
 
     this.onFocusListener = props.navigation.addListener('focus', this.onFocus);
     this.onBlurListener = props.navigation.addListener('blur', this.onBlur);
+    this.onBeforeRemoveListener = props.navigation.addListener(
+      'beforeRemove',
+      this.onGoingBack,
+    );
 
     const { questions } = this.state;
 
@@ -54,7 +60,29 @@ class ReviewProcessQuestions extends Component<any> {
     this.onBlur();
     this.onFocusListener();
     this.onBlurListener();
+    this.onBeforeRemoveListener();
   }
+
+  onGoingBack = (e: any) => {
+    // Prevent default behavior of leaving the screen
+    e.preventDefault();
+
+    // Prompt the user before leaving the screen
+    Alert.alert(
+      'Discard changes?',
+      'You have unsaved changes. Are you sure to discard them and leave the screen?',
+      [
+        { text: "Don't leave", style: 'cancel', onPress: () => {} },
+        {
+          text: 'Discard',
+          style: 'destructive',
+          // If the user confirmed, then we dispatch the action we blocked earlier
+          // This will continue the action that had triggered the removal of the screen
+          onPress: () => this.props.navigation.dispatch(e.data.action),
+        },
+      ],
+    );
+  };
 
   onFocus = () => {
     this.setButtons();
