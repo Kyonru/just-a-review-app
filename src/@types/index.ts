@@ -45,6 +45,7 @@ export interface ReviewLog {
   date: Date;
   duration: number;
   questions: ReviewQuestion[];
+  startDate: string;
 }
 
 export interface ReviewQuestion {
@@ -59,6 +60,7 @@ export interface ReviewQuestionAnswer {
   image: string[];
   files: string[];
   voiceNotes: string[];
+  date?: string;
 }
 
 export interface WeeklyReview extends Review {

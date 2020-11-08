@@ -19,14 +19,14 @@ export function addReview(review: Review) {
   };
 }
 
-export function addLog(review: Review, duration: number) {
+export function addLog(review: Review, duration: number, startDate: string) {
   return async (
     dispatch: Dispatch<ReviewsActions>,
   ): Promise<ReviewsActions> => {
     return dispatch(
       createReduxAction<AddLog>(ADD_REVIEW_LOG, {
         reviewId: review.id,
-        log: convertReviewToLog(review, duration),
+        log: convertReviewToLog(review, duration, startDate),
       }),
     );
   };
