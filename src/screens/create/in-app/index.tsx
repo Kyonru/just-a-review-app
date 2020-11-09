@@ -26,7 +26,7 @@ import { ReviewTypesAsOptions } from 'src/data/review';
 import colors from 'src/theme/colors';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { createQuestion } from 'src/utils/questions';
-import { createReview } from 'src/utils/reviews';
+import { createReview, updateReview } from 'src/utils/reviews';
 import { withThrottle } from 'src/utils/timers';
 
 import {
@@ -37,24 +37,62 @@ import {
 } from './props';
 import styles from './styles';
 
-class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
-  state = {
-    name: '',
-    type: ReviewType.weekly,
-    questions: [],
-    currentQuestion: '',
-    date: moment().toDate(),
-    day: moment()
-      .format('dddd')
-      .toLowerCase() as DayOfTheWeek,
-    time: moment().toDate(),
-    monthlyDay: 1,
-    showFAB: true,
-  };
+const DEFAULT_STATE: CreateInAppState = {
+  name: '',
+  type: ReviewType.weekly,
+  questions: [],
+  currentQuestion: '',
+  date: moment().toDate(),
+  day: moment()
+    .format('dddd')
+    .toLowerCase() as DayOfTheWeek,
+  time: moment().toDate(),
+  monthlyDay: 1,
+  showFAB: true,
+};
 
+class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   keyboardDidShowListener?: EmitterSubscription;
 
   keyboardDidHideListener?: EmitterSubscription;
+
+  constructor(props: CreateInAppProps) {
+    super(props);
+
+    let editModeEnabled = false;
+    let review;
+
+    if (props && (props as any).route && (props as any).route.params) {
+      editModeEnabled = (props as any).route.params.editModeEnabled;
+      review = (props as any).route.params.review;
+    }
+
+    if (editModeEnabled && review) {
+      let day: any = moment()
+        .format('dddd')
+        .toLowerCase() as DayOfTheWeek;
+
+      day = !Number.isInteger(review.day) ? (review.day as DayOfTheWeek) : day;
+
+      const monthlyDay: any = Number.isInteger(+review.day) ? review.day : 1;
+
+      this.state = {
+        day,
+        monthlyDay,
+        name: review.title,
+        type: review.type,
+        questions: review.questions,
+        time: review.time,
+        date: review.date || moment().toDate(),
+        showFAB: true,
+        currentQuestion: '',
+      };
+
+      props.navigation.setOptions({ title: 'Edit Review' });
+    } else {
+      this.state = DEFAULT_STATE;
+    }
+  }
 
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
@@ -74,21 +112,49 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
   onSave = withThrottle(() => {
     const { currentQuestion } = this.state;
-    const { navigation, addReview } = this.props;
+    const { navigation, addReview, editReview } = this.props;
+
+    let editModeEnabled = false;
+    let review: any;
+
+    if (
+      this.props &&
+      (this.props as any).route &&
+      (this.props as any).route.params
+    ) {
+      editModeEnabled = (this.props as any).route.params.editModeEnabled;
+      review = (this.props as any).route.params.review;
+    }
 
     const add = (state: CreateInAppState) => {
       const { name, type, questions, date, day, time, monthlyDay } = state;
-      addReview(
-        createReview({
-          name,
-          type,
-          questions,
-          date,
-          day,
-          time,
-          monthlyDay: monthlyDay as number,
-        }),
-      );
+
+      if (editModeEnabled && review) {
+        editReview(
+          review.id,
+          updateReview(review, {
+            name,
+            type,
+            questions,
+            date,
+            day,
+            time,
+            monthlyDay: monthlyDay as number,
+          }),
+        );
+      } else {
+        addReview(
+          createReview({
+            name,
+            type,
+            questions,
+            date,
+            day,
+            time,
+            monthlyDay: monthlyDay as number,
+          }),
+        );
+      }
       navigation.pop();
     };
 
@@ -329,7 +395,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           label="Date"
           mode="time"
           testID="dateTimePicker"
-          value={time}
+          value={moment(time).toDate()}
           is24Hour
           display="clock"
           onChange={(event: any, newTime: any) => {

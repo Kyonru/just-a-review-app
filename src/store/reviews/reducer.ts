@@ -3,7 +3,7 @@ import { ReducerActionMapper } from 'src/store/utils';
 import { Review, ReviewLog } from 'src/@types';
 
 import { ReviewInitialState } from './state';
-import { ADD_REVIEW, ADD_LOG, ReviewsActionType } from './types';
+import { ADD_REVIEW, ADD_LOG, EDIT_REVIEW, ReviewsActionType } from './types';
 
 const INITIAL_STATE = new ReviewInitialState();
 
@@ -15,6 +15,25 @@ mapActionToReducer.add(
     ...state,
     reviews: state.reviews.concat(review),
   }),
+);
+
+mapActionToReducer.add(
+  EDIT_REVIEW,
+  (state, review: { id: string; update: Review }): ReviewsState => {
+    const index = state.reviews.findIndex(
+      (value: Review) => value.id === review.id,
+    );
+
+    const updatedReview = { ...state.reviews[index], ...review.update };
+
+    const reviews: Review[] = [
+      ...state.reviews.slice(0, index),
+      updatedReview,
+      ...state.reviews.slice(index + 1),
+    ];
+
+    return { ...state, reviews };
+  },
 );
 
 mapActionToReducer.add(

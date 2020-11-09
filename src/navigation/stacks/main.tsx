@@ -63,7 +63,7 @@ export default () => {
         options={{
           title: '00:00',
           gestureEnabled: false,
-          headerTitle: 'lol possible?',
+          headerTitle: '',
         }}
         name={SCREEN_NAMES.reviewProcessQuestions}
         component={ReviewProcessQuestions}

@@ -42,7 +42,12 @@ export default StyleSheet.create<{
     lineHeight: 24,
     textAlign: 'center',
   },
-  title: { fontSize: 40, lineHeight: 44 },
+  title: {
+    fontSize: 40,
+    lineHeight: 44,
+    alignSelf: 'center',
+    textAlign: 'center',
+  },
   firstPage: {
     padding: 20,
     flex: 1,

@@ -74,6 +74,35 @@ export const createExternalReview = (review: {
   };
 };
 
+export const updateReview = (
+  review: Review,
+  update: {
+    name: string;
+    type: ReviewType;
+    questions: ReviewQuestion[];
+    date: Date;
+    day: DayOfTheWeek;
+    time: Date;
+    monthlyDay: number;
+  },
+): Review | MonthlyReview | YearlyReview | WeeklyReview => {
+  const monthlyDay =
+    update.type === ReviewType.monthly ? update.monthlyDay : review.day;
+  return {
+    id: review.id,
+    title: update.name || review.title,
+    description: review.description,
+    time: update.time || review.time,
+    type: update.type || review.type,
+    questions: update.questions || review.questions,
+    logs: review.logs || [],
+    date: update.date || review.date,
+    day: monthlyDay || review.day,
+    createdAt: review.createdAt,
+    updatedAt: new Date(),
+  };
+};
+
 export const convertReviewToLog = (
   review: Review,
   duration: number,
