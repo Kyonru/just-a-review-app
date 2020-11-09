@@ -17,6 +17,15 @@ export const getReviewList = createSelector(
   store => store.reviews || [],
 );
 
+export const getReview = createSelector(
+  getReviewList,
+  reviews => (id: string) => {
+    const index = (reviews || []).findIndex(review => review.id === id);
+
+    return reviews[index];
+  },
+);
+
 export const getReviewListAsDatedSection = createSelector<
   Store,
   Review[],

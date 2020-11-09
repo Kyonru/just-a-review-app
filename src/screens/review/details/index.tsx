@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
+import { connect } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import { Headline, Caption, FAB, Title } from 'react-native-paper';
 import Animated, { Easing } from 'react-native-reanimated';
@@ -15,25 +16,32 @@ import LogListItem from 'src/components/review/log-item';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { SCREEN_NAMES } from 'src/navigation/constants';
-import { Review, ReviewType, ReviewLog } from 'src/@types';
+import { ReviewType, ReviewLog } from 'src/@types';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getReviewAverageTime } from 'src/utils/reviews';
 import resources from 'src/resources';
 import EmptyState from 'src/components/empty-state';
 import { withThrottle } from 'src/utils/timers';
 
+import {
+  ReviewDetailsState,
+  ReviewDetailsProps,
+  mapStateToProps,
+  mapDispatchToProps,
+} from './props';
 import styles from './styles';
 
 const { timing } = Animated;
 
-class ReviewDetails extends Component<
-  {
-    review: Review;
-    navigation: any;
-    route: any;
-  },
-  any
-> {
+const config = {
+  duration: 500,
+  toValue: 120,
+  easing: Easing.inOut(Easing.ease),
+};
+
+class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
+  unsubscribeFocus: any;
+
   y = new Animated.Value(20);
 
   x = new Animated.Value(1);
@@ -46,18 +54,24 @@ class ReviewDetails extends Component<
 
   openProcess = withThrottle(() => {
     this.props.navigation.push(SCREEN_NAMES.reviewProcessQuestions, {
-      review: this.props.route.params.review,
+      review: this.state.review,
     });
   }, 1000);
+
+  onEdit = withThrottle(() => {
+    const { navigation } = this.props;
+    const { review } = this.state;
+
+    navigation.push(SCREEN_NAMES.createInApp, {
+      review,
+      editModeEnabled: true,
+    });
+  });
 
   constructor(props: any) {
     super(props);
 
-    const config = {
-      duration: 500,
-      toValue: 120,
-      easing: Easing.inOut(Easing.ease),
-    };
+    this.setButtons();
 
     setInterval(() => {
       if (this.shouldAnimateSwipeUp > 0) {
@@ -73,7 +87,29 @@ class ReviewDetails extends Component<
         }
       }
     }, 500);
+
+    this.state = {
+      review: props.route.params.review,
+    };
+
+    this.unsubscribeFocus = props.navigation.addListener('focus', () => {
+      const { review } = this.state;
+      const { getReview } = this.props;
+      this.setState({ review: { ...getReview(review.id) } });
+    });
   }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  setButtons = () => {
+    const { navigation } = this.props;
+    navigation.setParams({
+      headerRightIcon: 'pencil',
+      headerRightOnPress: this.onEdit,
+    });
+  };
 
   openLogs = (page: number = 1) => {
     if (this.viewPager.current) {
@@ -83,7 +119,7 @@ class ReviewDetails extends Component<
 
   openLogDetail = (item: ReviewLog) => () => {
     this.props.navigation.push(SCREEN_NAMES.reviewLogDetail, {
-      review: this.props.route.params.review,
+      review: this.state.review,
       log: item,
     });
   };
@@ -117,9 +153,7 @@ class ReviewDetails extends Component<
   };
 
   renderDetails = () => {
-    const { route } = this.props;
-    const { params } = route;
-    const { review } = params;
+    const { review } = this.state;
     return (
       <View key="1" style={styles.firstPage}>
         <Headline style={styles.title}>{review.title}</Headline>
@@ -163,9 +197,7 @@ class ReviewDetails extends Component<
   };
 
   renderLogs = () => {
-    const { route } = this.props;
-    const { params } = route;
-    const { review } = params;
+    const { review } = this.state;
     if (!review.logs || !review.logs.length) {
       return this.renderEmptyLogList();
     }
@@ -203,4 +235,4 @@ class ReviewDetails extends Component<
   }
 }
 
-export default ReviewDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewDetails);

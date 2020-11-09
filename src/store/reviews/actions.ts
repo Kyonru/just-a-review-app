@@ -8,6 +8,8 @@ import {
   AddLog,
   ADD_REVIEW,
   ADD_LOG as ADD_REVIEW_LOG,
+  EDIT_REVIEW,
+  EditReview,
   ReviewsActions,
 } from './types';
 
@@ -16,6 +18,16 @@ export function addReview(review: Review) {
     dispatch: Dispatch<ReviewsActions>,
   ): Promise<ReviewsActions> => {
     return dispatch(createReduxAction<AddReview>(ADD_REVIEW, review));
+  };
+}
+
+export function editReview(id: string, update: Review) {
+  return async (
+    dispatch: Dispatch<ReviewsActions>,
+  ): Promise<ReviewsActions> => {
+    return dispatch(
+      createReduxAction<EditReview>(EDIT_REVIEW, { id, update }),
+    );
   };
 }
 

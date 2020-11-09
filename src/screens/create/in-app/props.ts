@@ -1,16 +1,24 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Dispatch } from 'redux';
+import { Route } from '@react-navigation/native';
 import { ReviewsActions } from 'src/store/reviews/types';
-import { addReview } from 'src/store/reviews/actions';
+import { addReview, editReview } from 'src/store/reviews/actions';
 import {
   Review,
   ReviewType,
   ReviewQuestion,
   DayOfTheWeek,
 } from 'src/@types/index';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 
-export interface CreateInAppProps {
+export interface CreateInAppProps
+  extends Route<
+    SCREEN_NAMES.reviewProcessEnd,
+    { route: { review?: Review; editModeEnabled: boolean } }
+  > {
   navigation: any;
   addReview: (review: Review) => Promise<ReviewsActions>;
+  editReview: (id: string, review: Review) => Promise<ReviewsActions>;
 }
 
 export interface CreateInAppState {
@@ -29,4 +37,5 @@ export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch<ReviewsActions>) => ({
   addReview: (review: Review) => addReview(review)(dispatch),
+  editReview: (id: string, review: Review) => editReview(id, review)(dispatch),
 });
