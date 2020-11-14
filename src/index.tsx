@@ -14,6 +14,7 @@ import {
   SafeAreaProvider,
   initialWindowSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 import Drawer from 'src/navigation/drawer';
 import theme from 'src/theme';
@@ -28,13 +29,17 @@ export default function GlobalAppComponent() {
         loading={<ActivityIndicator animating color={colors.lynch} />}
         persistor={persistor}
       >
-        <NavigationContainer>
-          <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
-            <PaperProvider theme={theme}>
-              <Drawer />
-            </PaperProvider>
-          </SafeAreaProvider>
-        </NavigationContainer>
+        <ActionSheetProvider>
+          <NavigationContainer>
+            <SafeAreaProvider
+              initialSafeAreaInsets={initialWindowSafeAreaInsets}
+            >
+              <PaperProvider theme={theme}>
+                <Drawer />
+              </PaperProvider>
+            </SafeAreaProvider>
+          </NavigationContainer>
+        </ActionSheetProvider>
       </PersistGate>
     </Provider>
   );

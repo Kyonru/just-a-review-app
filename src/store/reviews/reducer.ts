@@ -1,9 +1,17 @@
+import moment from 'moment';
 import { ReviewsState, StoreAction } from 'src/@types/store';
 import { ReducerActionMapper } from 'src/store/utils';
 import { Review, ReviewLog } from 'src/@types';
 
 import { ReviewInitialState } from './state';
-import { ADD_REVIEW, ADD_LOG, EDIT_REVIEW, ReviewsActionType } from './types';
+import {
+  ADD_REVIEW,
+  ADD_LOG,
+  EDIT_REVIEW,
+  ReviewsActionType,
+  DELETE_REVIEW,
+  CHANGE_ARCHIVE_STATE_REVIEW,
+} from './types';
 
 const INITIAL_STATE = new ReviewInitialState();
 
@@ -15,6 +23,46 @@ mapActionToReducer.add(
     ...state,
     reviews: state.reviews.concat(review),
   }),
+);
+
+mapActionToReducer.add(
+  CHANGE_ARCHIVE_STATE_REVIEW,
+  (state, id: string): ReviewsState => {
+    const index = state.reviews.findIndex((value: Review) => value.id === id);
+
+    const reviews: Review[] = [
+      ...state.reviews.slice(0, index),
+      {
+        ...state.reviews[index],
+        archivedAt: state.reviews[index].archivedAt
+          ? undefined
+          : moment().format('MM/DD/YYYY'),
+      },
+      ...state.reviews.slice(index + 1),
+    ];
+
+    return {
+      ...state,
+      reviews,
+    };
+  },
+);
+
+mapActionToReducer.add(
+  DELETE_REVIEW,
+  (state, id: string): ReviewsState => {
+    const index = state.reviews.findIndex((value: Review) => value.id === id);
+
+    const reviews: Review[] = [
+      ...state.reviews.slice(0, index),
+      ...state.reviews.slice(index + 1),
+    ];
+
+    return {
+      ...state,
+      reviews,
+    };
+  },
 );
 
 mapActionToReducer.add(

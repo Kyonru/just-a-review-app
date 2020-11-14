@@ -8,19 +8,34 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ScreenContainer from 'src/components/screen-container';
 import Dots from 'src/components/dots';
 
-import { ReviewQuestion } from 'src/@types';
+import { ReviewQuestion, Review } from 'src/@types';
 import { SCREEN_NAMES } from 'src/navigation/constants';
 import colors from 'src/theme/colors';
-import { createAnswer, getAnsweredCount } from 'src/utils/questions';
+import {
+  createAnswer,
+  getAnsweredCount,
+  isAnswerEmpty,
+} from 'src/utils/questions';
 import { convertMinutesToHourString } from 'src/utils/time';
 import { withThrottle } from 'src/utils/timers';
 
 import styles from './styles';
 
-class ReviewProcessQuestions extends React.Component<any> {
+interface ReviewProcessQuestionsState {
+  review: Review;
+  questions: ReviewQuestion[];
+  duration: number;
+  startDate?: string | null;
+  currentPage: number;
+}
+
+class ReviewProcessQuestions extends React.Component<
+  any,
+  ReviewProcessQuestionsState
+> {
   state = {
     review: this.props.route.params.review,
-    questions: this.props.route.params.review.questions,
+    questions: this.props.route.params.review.questions as ReviewQuestion[],
     duration: 0,
     startDate: null,
     currentPage: 0,
@@ -110,7 +125,15 @@ class ReviewProcessQuestions extends React.Component<any> {
     const { navigation } = this.props;
     const { review, questions, duration, startDate } = this.state;
 
-    navigation.push(SCREEN_NAMES.reviewProcessEnd, {
+    const isInvalidReview = questions.some(
+      question => question.required && isAnswerEmpty(question.answer),
+    );
+
+    if (isInvalidReview) {
+      return Alert.alert('', 'You need to fill all the required questions.');
+    }
+
+    return navigation.push(SCREEN_NAMES.reviewProcessEnd, {
       duration,
       review: { ...review, questions },
       startDate,
