@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
-import { Headline, Caption, FAB, Title } from 'react-native-paper';
+import { Badge, Headline, Caption, FAB, Title } from 'react-native-paper';
 import Animated, { Easing } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
 
 import ScreenContainer from 'src/components/screen-container';
 import LogListItem from 'src/components/review/log-item';
@@ -58,6 +60,66 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     });
   }, 1000);
 
+  openOptionsMenu = withThrottle(() => {
+    const destructiveButtonIndex = 0;
+    const cancelButtonIndex = 3;
+
+    const mapOption: { [key: number]: Function } = {
+      0: this.onDelete,
+      1: this.onArchive,
+      2: this.onEdit,
+    };
+
+    const contextMenuOptions = [
+      'Delete',
+      this.state.review.archivedAt ? 'Unarchive' : 'Archive',
+      'Edit',
+      'Cancel',
+    ];
+
+    const contextMenuOptionIcons = [
+      <MaterialIcon color="red" name="delete" size={24} />,
+      <MaterialIcon name="archive" size={24} />,
+      <MaterialIcon name="pencil" size={24} />,
+      <MaterialIcon name="cancel" size={24} />,
+    ];
+
+    this.props.showActionSheetWithOptions(
+      {
+        options: contextMenuOptions,
+        cancelButtonIndex,
+        destructiveButtonIndex,
+        textStyle: { alignSelf: 'center', lineHeight: 24 },
+        icons: contextMenuOptionIcons,
+      },
+      buttonIndex => {
+        if (mapOption[buttonIndex]) {
+          mapOption[buttonIndex]();
+        }
+      },
+    );
+  });
+
+  onDelete = withThrottle(() => {
+    Alert.alert('Delete Review.', "This action can't be undone.", [
+      {
+        text: 'Ok',
+        onPress: async () => {
+          await this.props.deleteReview(this.state.review.id);
+          this.props.navigation.pop();
+        },
+      },
+      {
+        text: 'Cancel',
+      },
+    ]);
+  });
+
+  onArchive = withThrottle(async () => {
+    await this.props.changeArchiveStateReview(this.state.review.id);
+    this.fetchReview();
+  });
+
   onEdit = withThrottle(() => {
     const { navigation } = this.props;
     const { review } = this.state;
@@ -92,22 +154,27 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
       review: props.route.params.review,
     };
 
-    this.unsubscribeFocus = props.navigation.addListener('focus', () => {
-      const { review } = this.state;
-      const { getReview } = this.props;
-      this.setState({ review: { ...getReview(review.id) } });
-    });
+    this.unsubscribeFocus = props.navigation.addListener(
+      'focus',
+      this.fetchReview,
+    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
   }
 
+  fetchReview = () => {
+    const { review } = this.state;
+    const { getReview } = this.props;
+    this.setState({ review: { ...getReview(review.id) } });
+  };
+
   setButtons = () => {
     const { navigation } = this.props;
     navigation.setParams({
-      headerRightIcon: 'pencil',
-      headerRightOnPress: this.onEdit,
+      headerRightIcon: 'dots-vertical',
+      headerRightOnPress: this.openOptionsMenu,
     });
   };
 
@@ -156,6 +223,9 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     const { review } = this.state;
     return (
       <View key="1" style={styles.firstPage}>
+        <Badge style={styles.badge} visible={!!review.archivedAt}>
+          {`Archived at ${review.archivedAt}`}
+        </Badge>
         <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
           Average time:{'\n'}
@@ -235,4 +305,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(connectActionSheet(ReviewDetails));

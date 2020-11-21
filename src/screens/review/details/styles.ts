@@ -14,6 +14,7 @@ export default StyleSheet.create<{
   averageText: TextStyle;
   title: TextStyle;
   firstPage: ViewStyle;
+  badge: ViewStyle;
   listHeaderComponent: ViewStyle;
 }>({
   container: {},
@@ -53,5 +54,10 @@ export default StyleSheet.create<{
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  badge: {
+    marginVertical: 16,
+    backgroundColor: colors.lynch,
+    alignSelf: 'center',
   },
 });

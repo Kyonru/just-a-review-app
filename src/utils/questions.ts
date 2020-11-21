@@ -42,3 +42,14 @@ export const getAnsweredCount = (questions: ReviewQuestion[]) => {
     return current.answer ? sum + 1 : sum;
   }, 0);
 };
+
+export const isAnswerEmpty = (answer?: ReviewQuestionAnswer): boolean => {
+  if (!answer) return true;
+
+  return (
+    !answer.content &&
+    answer.files.length === 0 &&
+    answer.image.length === 0 &&
+    answer.voiceNotes.length === 0
+  );
+};

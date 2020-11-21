@@ -27,6 +27,7 @@ interface BaseReview {
   lastLog?: Date;
   createdAt?: Date;
   updatedAt?: Date;
+  archivedAt?: string | Date;
 }
 
 export interface Review extends BaseReview {
