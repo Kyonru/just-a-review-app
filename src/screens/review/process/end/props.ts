@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { addLog } from 'src/store/reviews/actions';
+import { addLog } from 'src/store/logs/actions';
 import { Review } from 'src/@types';
 
 export interface EndProcessProps {

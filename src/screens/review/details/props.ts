@@ -7,12 +7,14 @@ import {
   deleteReview,
 } from 'src/store/reviews/actions';
 
-import { Review } from 'src/@types/index';
+import { Review, ReviewLog } from 'src/@types/index';
 import { Store } from 'src/@types/store';
+import { getLogList } from 'src/store/logs/selectors';
 
 export interface ReviewDetailsProps extends ActionSheetProps {
   navigation: any;
   route: any;
+  logs: { [key: string]: ReviewLog };
   getReview(id: string): Review;
   deleteReview(id: string): Promise<any>;
   changeArchiveStateReview(id: string): Promise<any>;
@@ -24,6 +26,7 @@ export interface ReviewDetailsState {
 
 export const mapStateToProps = (state: Store) => ({
   getReview: getReview(state),
+  logs: getLogList(state),
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -31,7 +31,7 @@ interface BaseReview {
 }
 
 export interface Review extends BaseReview {
-  logs: ReviewLog[];
+  logs: string[];
   questions: ReviewQuestion[];
   type: ReviewType;
 }
@@ -48,6 +48,7 @@ export interface ReviewLog {
   duration: number;
   questions: ReviewQuestion[];
   startDate: string;
+  reviewId: string;
 }
 
 export interface ReviewQuestion {
