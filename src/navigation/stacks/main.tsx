@@ -5,7 +5,8 @@ import { SCREEN_NAMES } from 'src/navigation/constants';
 
 import NavHeader from 'src/components/nav-header';
 
-import App from 'src/screens/main';
+import ReviewList from 'src/screens/main';
+import ArchivedReviewList from 'src/screens/main/arhive-list';
 import CreateInApp from 'src/screens/create/in-app';
 import CreateExternalForm from 'src/screens/create/external-form';
 import ReviewDetails from 'src/screens/review/details';
@@ -26,10 +27,17 @@ export default () => {
     >
       <StackCreator.Screen
         options={{
-          title: 'Inbox',
+          title: 'Reviews',
         }}
         name={SCREEN_NAMES.reviewList}
-        component={App}
+        component={ReviewList}
+      />
+      <StackCreator.Screen
+        options={{
+          title: 'Archive reviews',
+        }}
+        name={SCREEN_NAMES.archivedReviewList}
+        component={ArchivedReviewList}
       />
       <StackCreator.Screen
         options={{

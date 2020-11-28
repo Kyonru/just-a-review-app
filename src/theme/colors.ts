@@ -10,4 +10,5 @@ export default {
   lynch: '#607D8B',
   pistonBlue: '#46ADDE',
   shamrock: '#31C4A8',
+  archive: '#607D8B11',
 };
