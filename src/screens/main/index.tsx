@@ -53,6 +53,10 @@ class MainScreen extends Component<
     this.props.navigation.push(SCREEN_NAMES.createExternalForm);
   };
 
+  openArchivedList = () => {
+    this.props.navigation.push(SCREEN_NAMES.archivedReviewList);
+  };
+
   render() {
     const { showFAB } = this.state;
     const { navigation, reviews } = this.props;
@@ -62,6 +66,12 @@ class MainScreen extends Component<
           onPressEmptyState={this.openCreateInApp}
           data={[...reviews]}
           navigation={navigation}
+          header={{
+            title: 'Archived List',
+            subtitle: '32',
+            icon: 'archive',
+          }}
+          onPressHeader={this.openArchivedList}
         />
         <FABButton
           isVisible={showFAB}

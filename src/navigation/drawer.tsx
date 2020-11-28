@@ -21,7 +21,7 @@ export default () => {
     >
       <DrawerCreator.Screen
         options={{
-          title: 'Inbox',
+          title: 'Reviews',
           drawerIcon: ({ color, size }: { color: string; size: number }) => (
             <Icon name="inbox" size={size} color={color} />
           ),

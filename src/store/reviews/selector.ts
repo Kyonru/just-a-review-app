@@ -1,16 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
 import { createSelector } from 'reselect';
-import { reviewsStoreSelector } from 'src/store/selectors';
-import { Review, ReviewType, DayOfTheWeek } from 'src/@types/index';
-import { Store } from 'src/@types/store';
-import moment from 'moment';
-import { getSectionsFromReviewDates } from 'src/utils/reviews';
 import { SectionListData } from 'react-native';
-import {
-  getNextDayOfWeek,
-  getNextDayOfMonth,
-  getNextDayOfYear,
-} from 'src/utils/time';
+import { reviewsStoreSelector } from 'src/store/selectors';
+import { Review } from 'src/@types/index';
+import { Store } from 'src/@types/store';
+import { getSectionsFromReviewDates } from 'src/utils/reviews';
+import { mapReviewsListToSectionList, sortDatedSectionList } from './utils';
 
 export const getReviewList = createSelector(
   reviewsStoreSelector,
@@ -26,73 +21,38 @@ export const getReview = createSelector(
   },
 );
 
-export const getReviewListAsDatedSection = createSelector<
+export const getArchivedReviewListAsDatedSectionList = createSelector<
   Store,
   Review[],
   { [key: string]: Review[] }
 >(getReviewList, reviews => {
-  const sections: { [key: string]: Review[] } = {};
-  reviews.forEach((review: Review) => {
-    let section = '';
-    let date;
-    if (review.type === ReviewType.daily) {
-      date =
-        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
-          ? moment().add(1, 'day')
-          : moment();
-      section = date.format('YYYY-MM-DD');
-    }
+  return mapReviewsListToSectionList(
+    reviews.filter(review => !!review.archivedAt),
+  );
+});
 
-    if (review.type === ReviewType.weekly) {
-      const reviewDate = getNextDayOfWeek(review.day! as DayOfTheWeek);
-      date =
-        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
-          ? reviewDate.add(1, 'week')
-          : reviewDate;
-
-      section = date.format('YYYY-MM-DD');
-    }
-
-    if (review.type === ReviewType.monthly) {
-      const reviewDate = getNextDayOfMonth(review.day! as number);
-      date =
-        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
-          ? reviewDate.add(1, 'month')
-          : reviewDate;
-
-      section = reviewDate.format('YYYY-MM-DD');
-    }
-
-    if (review.type === ReviewType.yearly) {
-      const reviewDate = getNextDayOfYear(review.date!);
-      date =
-        review.lastLog && moment(review.lastLog).isSame(moment(), 'day')
-          ? reviewDate.add(1, 'year')
-          : reviewDate;
-
-      section = reviewDate.format('YYYY-MM-DD');
-    }
-
-    sections[section] = sections[section]
-      ? sections[section].concat(review)
-      : [review];
-  });
-
-  return sections;
+export const getReviewListAsDatedSectionList = createSelector<
+  Store,
+  Review[],
+  { [key: string]: Review[] }
+>(getReviewList, reviews => {
+  return mapReviewsListToSectionList(
+    reviews.filter(review => !review.archivedAt),
+  );
 });
 
 export const getReviewListAsSectionList = createSelector<
   Store,
   { [key: string]: Review[] },
   SectionListData<Review>[]
->(getReviewListAsDatedSection, reviews => {
-  return getSectionsFromReviewDates(reviews).sort((a, b) => {
-    if (moment(a.value).unix() < moment(b.value).unix()) {
-      return -1;
-    }
-    if (moment(a.value).unix() > moment(b.value).unix()) {
-      return 1;
-    }
-    return 0;
-  });
+>(getReviewListAsDatedSectionList, reviews => {
+  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
+});
+
+export const getArchivedReviewListAsSectionList = createSelector<
+  Store,
+  { [key: string]: Review[] },
+  SectionListData<Review>[]
+>(getArchivedReviewListAsDatedSectionList, reviews => {
+  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
 });
