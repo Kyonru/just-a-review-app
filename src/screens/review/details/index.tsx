@@ -215,8 +215,9 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     );
   };
 
-  renderLogItem = ({ item }: { item: ReviewLog }) => {
-    return <LogListItem data={item} onPress={this.openLogDetail(item)} />;
+  renderLogItem = ({ item }: { item: string }) => {
+    const log = this.props.logs[item];
+    return <LogListItem data={log} onPress={this.openLogDetail(log)} />;
   };
 
   renderDetails = () => {
@@ -278,7 +279,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
         <FlatList
           ListHeaderComponent={<Title>Review Logs</Title>}
           ListHeaderComponentStyle={styles.listHeaderComponent}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item}
           data={review.logs}
           renderItem={this.renderLogItem}
           ListEmptyComponent={this.renderEmptyLogList}

@@ -7,17 +7,16 @@ import { Store } from 'src/@types/store';
 import { getSectionsFromReviewDates } from 'src/utils/reviews';
 import { mapReviewsListToSectionList, sortDatedSectionList } from './utils';
 
-export const getReviewList = createSelector(
-  reviewsStoreSelector,
-  store => store.reviews || [],
-);
+export const getReviewList = createSelector(reviewsStoreSelector, store => {
+  return Object.keys(store.reviews)
+    .map(key => store.reviews[key])
+    .filter(review => !!review);
+});
 
 export const getReview = createSelector(
-  getReviewList,
-  reviews => (id: string) => {
-    const index = (reviews || []).findIndex(review => review.id === id);
-
-    return reviews[index];
+  reviewsStoreSelector,
+  store => (id: string) => {
+    return store.reviews[id];
   },
 );
 
