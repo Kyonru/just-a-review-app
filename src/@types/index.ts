@@ -24,7 +24,7 @@ interface BaseReview {
   type: any;
   day?: DayOfTheWeek | number;
   date?: Date;
-  lastLog?: Date;
+  lastLog?: string;
   createdAt?: Date;
   updatedAt?: Date;
   archivedAt?: string | Date;

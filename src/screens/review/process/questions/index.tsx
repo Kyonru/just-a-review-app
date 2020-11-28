@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import moment from 'moment';
 import * as React from 'react';
 import { Alert, View } from 'react-native';
@@ -29,7 +30,7 @@ interface ReviewProcessQuestionsState {
   currentPage: number;
 }
 
-class ReviewProcessQuestions extends React.Component<
+class ReviewProcessQuestions extends React.PureComponent<
   any,
   ReviewProcessQuestionsState
 > {
