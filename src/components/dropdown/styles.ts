@@ -1,4 +1,5 @@
-import { StyleSheet, ViewStyle, Platform } from 'react-native';
+import { StyleSheet, ViewStyle, Platform, TextStyle } from 'react-native';
+import { DefaultTheme } from 'react-native-paper';
 
 export default StyleSheet.create<{
   separator: ViewStyle;
@@ -9,6 +10,7 @@ export default StyleSheet.create<{
   pickerIOS: ViewStyle;
   pickerIOSHeader: ViewStyle;
   pickerAndroidHeader: ViewStyle;
+  label: TextStyle;
 }>({
   separator: { height: 20 },
   picker: {
@@ -41,6 +43,15 @@ export default StyleSheet.create<{
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#9f9f9f',
-    backgroundColor: '#f6f6f6',
+    backgroundColor: 'transparent',
+  },
+  label: {
+    position: 'absolute',
+    top: -10,
+    left: 8,
+    backgroundColor: 'white',
+    paddingHorizontal: 4,
+    color: DefaultTheme.colors.placeholder,
+    fontSize: 12,
   },
 });

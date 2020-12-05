@@ -94,7 +94,8 @@ export class DatePicker extends PureComponent<
       <>
         <HeaderFormInputButton
           onPress={this.toggleModal}
-          label={displayValue || label}
+          value={displayValue || label}
+          title={label}
         />
         {this.renderInput()}
       </>

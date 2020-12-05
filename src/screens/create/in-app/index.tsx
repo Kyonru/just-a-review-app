@@ -392,7 +392,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     fields.push(
       <View key="timePicker">
         <DatePicker
-          label="Date"
+          label="Time"
           mode="time"
           testID="dateTimePicker"
           value={moment(time).toDate()}
