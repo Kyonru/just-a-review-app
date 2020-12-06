@@ -20,9 +20,9 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Use specific Java version for sdkmanager to work
-        uses: joschi/setup-jdk@v1
+        uses: joschi/setup-jdk@v2
         with:
-          java-version: 'openjdk8'
+          java-version: '8'
           architecture: 'x64'
 
       - name: Download Android Emulator Image
