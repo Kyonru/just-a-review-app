@@ -225,6 +225,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   renderDetails = () => {
     const { review } = this.state;
+    const { logs } = this.props;
     return (
       <View key="1" style={styles.firstPage}>
         <Badge style={styles.badge} visible={!!review.archivedAt}>
@@ -233,7 +234,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
         <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
           Average time:{'\n'}
-          {convertMinutesToAverageTime(getReviewAverageTime(review))}
+          {convertMinutesToAverageTime(getReviewAverageTime(review, logs))}
         </Caption>
 
         <TouchableHighlight
