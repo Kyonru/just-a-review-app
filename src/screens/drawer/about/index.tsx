@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, View, Linking } from 'react-native';
 import { List, Subheading, DataTable } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { ART_URL, CHANNEL_URL, PAY_URL, GITHUB_URL } from '@env';
 
 import app from 'src/data/app';
 import ScreenContainer from 'src/components/screen-container';
@@ -23,9 +24,7 @@ function Legal() {
           <DataTable.Title numeric>Source</DataTable.Title>
         </DataTable.Header>
 
-        <DataTable.Row
-          onPress={() => Linking.openURL('https://www.ls.graphics/') as any}
-        >
+        <DataTable.Row onPress={() => Linking.openURL(ART_URL) as any}>
           <DataTable.Cell>Art</DataTable.Cell>
           <DataTable.Cell numeric>ls.graphics</DataTable.Cell>
         </DataTable.Row>
@@ -46,16 +45,12 @@ function AboutApp() {
               description={app.version}
             />
             <List.Item
-              onPress={() =>
-                Linking.openURL('https://kyonru.github.io/') as any
-              }
+              onPress={() => Linking.openURL(CHANNEL_URL) as any}
               style={styles.item}
-              title="Visit my blog!"
+              title="Visit my channel!"
             />
             <List.Item
-              onPress={() =>
-                Linking.openURL('https://www.paypal.me/kyonru') as any
-              }
+              onPress={() => Linking.openURL(PAY_URL) as any}
               style={styles.item}
               title="Invite a ☕"
             />
@@ -71,9 +66,7 @@ function AboutApp() {
             <Subheading style={styles.message}>
               Hi, my name is{' '}
               <Subheading
-                onPress={() =>
-                  Linking.openURL('https://github.com/Kyonru') as any
-                }
+                onPress={() => Linking.openURL(GITHUB_URL) as any}
                 style={styles.kyonru}
               >
                 kyonru!{' '}
