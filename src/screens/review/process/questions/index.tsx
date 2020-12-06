@@ -28,6 +28,7 @@ interface ReviewProcessQuestionsState {
   duration: number;
   startDate?: string | null;
   currentPage: number;
+  leaveConfirm: boolean;
 }
 
 class ReviewProcessQuestions extends React.PureComponent<
@@ -40,6 +41,7 @@ class ReviewProcessQuestions extends React.PureComponent<
     duration: 0,
     startDate: null,
     currentPage: 0,
+    leaveConfirm: true,
   };
 
   counter: number = 0;
@@ -86,10 +88,11 @@ class ReviewProcessQuestions extends React.PureComponent<
   }
 
   onGoingBack = (e: any) => {
-    if (getAnsweredCount(this.state.questions) === 0) {
+    const { leaveConfirm } = this.state;
+
+    if (getAnsweredCount(this.state.questions) === 0 || !leaveConfirm) {
       return;
     }
-
     // Prevent default behavior of leaving the screen
     e.preventDefault();
 
@@ -98,7 +101,6 @@ class ReviewProcessQuestions extends React.PureComponent<
       'Discard review?',
       'You are in middle of a review, are you sure you want to leave?',
       [
-        { text: "Don't leave", style: 'cancel', onPress: () => {} },
         {
           text: 'Discard',
           style: 'destructive',
@@ -106,6 +108,7 @@ class ReviewProcessQuestions extends React.PureComponent<
           // This will continue the action that had triggered the removal of the screen
           onPress: () => this.props.navigation.dispatch(e.data.action),
         },
+        { text: "Don't leave", style: 'cancel', onPress: () => {} },
       ],
     );
   };
@@ -115,11 +118,17 @@ class ReviewProcessQuestions extends React.PureComponent<
     clearInterval(this.counter);
     this.counter = 0;
     this.startCounter();
+    this.setState({
+      leaveConfirm: true,
+    });
   };
 
   onBlur = () => {
     clearInterval(this.counter);
     this.counter = 0;
+    this.setState({
+      leaveConfirm: false,
+    });
   };
 
   onFinish = withThrottle(() => {

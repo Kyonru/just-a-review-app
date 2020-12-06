@@ -7,12 +7,31 @@ import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 
-function HeaderFormInputButton(props: { onPress?(): void; label: string }) {
-  const { label, onPress } = props;
+function HeaderFormInputButton(props: {
+  onPress?(): void;
+  value?: string;
+  title?: string;
+}) {
+  const { value, title, onPress } = props;
+
+  const Title = () => {
+    if (!title) {
+      return null;
+    }
+    return <Text style={styles.title}>{title}</Text>;
+  };
+  const Value = () => {
+    if (!value) {
+      return null;
+    }
+    return <Text>{capitalize(value)}</Text>;
+  };
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.header}>
-        <Text>{capitalize(label)}</Text>
+        <Title />
+        <Value />
         <Icon color={colors.lynch} name="menu-down" size={16} />
       </View>
     </TouchableOpacity>

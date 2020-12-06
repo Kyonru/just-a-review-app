@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import {
-  TouchableOpacity,
-  Platform,
-  Picker,
-  View,
-  Text,
-  Keyboard,
-} from 'react-native';
+import { TouchableOpacity, Platform, View, Text, Keyboard } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Modal, Portal, withTheme, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,9 +26,9 @@ class Dropdown extends Component<DropdownProps & any> {
     });
   };
 
-  onSelectionChange = (value: string) => {
+  onSelectionChange = (value: string | number) => {
     const { onSelect } = this.props;
-    onSelect(value);
+    onSelect(`${value}`);
   };
 
   renderIOS = () => {
@@ -82,7 +76,10 @@ class Dropdown extends Component<DropdownProps & any> {
 
   renderAndroid = () => {
     return (
-      <View style={styles.pickerAndroidHeader}>{this.renderPicker()}</View>
+      <View style={styles.pickerAndroidHeader}>
+        <Text style={styles.label}>{this.props.label}</Text>
+        {this.renderPicker()}
+      </View>
     );
   };
 
