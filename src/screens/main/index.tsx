@@ -82,6 +82,7 @@ class MainScreen extends Component<
               onPress: this.openCreateInApp,
               color: colors.white,
               style: { backgroundColor: colors.pistonBlue },
+              testID: 'in_app_button',
             },
             // {
             //   icon: 'link',

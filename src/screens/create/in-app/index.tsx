@@ -412,7 +412,10 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   render() {
     const { type, name, currentQuestion, questions, showFAB } = this.state;
     return (
-      <ScreenContainer containerStyle={styles.container}>
+      <ScreenContainer
+        containerProps={{ testID: 'create_screen' }}
+        containerStyle={styles.container}
+      >
         <Dropdown
           label="Review Type"
           options={ReviewTypesAsOptions}
