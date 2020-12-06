@@ -1,6 +1,6 @@
 {
   "name": "justAReviewApp",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -11,7 +11,10 @@
     "lint-windows": "eslint \"./src/**/*.ts?(x)\"",
     "build-detox-android": "detox build -c android.emu.debug",
     "build-detox-android-windows": "detox build -c android.emu.debug.windows",
-    "test-detox-android": "detox test -c android.emu.debug"
+    "test-detox-android": "detox test -c android.emu.debug",
+    "bump-patch": "npm version patch --no-git-tag-version && bundle exec fastlane bump",
+    "bump-minor": "npm version minor --no-git-tag-version && bundle exec fastlane bump",
+    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
