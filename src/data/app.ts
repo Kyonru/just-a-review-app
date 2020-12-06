@@ -1,4 +1,6 @@
+import app from '../../package.json';
+
 export default {
   name: 'Just a review app', // provisional
-  version: '0.5.0',
+  version: app.version,
 };

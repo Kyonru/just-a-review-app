@@ -5,19 +5,16 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react",
-    "lib": [
-      "es6"
-    ],
+    "lib": ["es6"],
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "*"
-      ]
-    }
+      "*": ["*"]
+    },
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",
