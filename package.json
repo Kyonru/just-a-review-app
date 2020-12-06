@@ -8,7 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint './src/**/*.ts?(x)'",
-    "lint-windows": "eslint \"./src/**/*.ts?(x)\""
+    "lint-windows": "eslint \"./src/**/*.ts?(x)\"",
+    "build-detox-android": "detox build -c android.emu.debug",
+    "build-detox-android-windows": "detox build -c android.emu.debug.windows",
+    "test-detox-android": "detox test -c android.emu.debug"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
