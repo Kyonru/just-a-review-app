@@ -10,4 +10,7 @@ module.exports = {
       '<rootDir>/src/data/mock/mockFile.ts',
   },
   modulePathIgnorePatterns: ['<rootDir>/__tests__/setup/index.ts'],
+  transformIgnorePatterns: [
+    'node_modules/(?!@react-native-picker|react-native|@react-native-community)',
+  ],
 };
