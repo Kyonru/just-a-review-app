@@ -14,10 +14,15 @@ function addLog(
   };
 }
 
+function deleteLog(state: ReviewsLogState, { payload }: PayloadAction<string>) {
+  delete state.logs[payload];
+}
+
 export default createSlice({
-  name: 'reviews',
+  name: 'logs',
   initialState: ReviewsLogsInitialState,
   reducers: {
     addLog,
+    deleteLog,
   },
 });

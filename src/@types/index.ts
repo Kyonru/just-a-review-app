@@ -37,14 +37,14 @@ export interface Review extends BaseReview {
 }
 
 export interface ExternalReview extends BaseReview {
-  logs: Date[];
+  logs: string[];
   type: 'ExternalReview';
   link: string;
 }
 
 export interface ReviewLog {
   id: string;
-  date: Date;
+  date: string;
   duration: number;
   questions: ReviewQuestion[];
   startDate: string;

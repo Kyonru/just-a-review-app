@@ -59,7 +59,7 @@ class MainScreen extends Component<
 
   render() {
     const { showFAB } = this.state;
-    const { navigation, reviews } = this.props;
+    const { navigation, reviews, archiveCount } = this.props;
     return (
       <ScreenContainer containerStyle={styles.container}>
         <SectionReviewList
@@ -68,7 +68,7 @@ class MainScreen extends Component<
           navigation={navigation}
           header={{
             title: 'Archived List',
-            subtitle: '32',
+            subtitle: `${archiveCount}`,
             icon: 'archive',
           }}
           onPressHeader={this.openArchivedList}

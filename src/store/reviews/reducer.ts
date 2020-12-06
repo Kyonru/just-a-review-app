@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import { ReviewsState } from 'src/@types/store';
 import { Review, ReviewLog } from 'src/@types';
+import { addLogAction, deleteLogAction } from 'src/store/shared/actions';
 
 import { ReviewInitialState } from './state';
 
@@ -43,14 +44,32 @@ function addLog(
   state.reviews[payload.reviewId].lastLog = new Date().toString();
 }
 
+function deleteLog(
+  state: ReviewsState,
+  { payload }: PayloadAction<{ reviewId: string; logId: string }>,
+) {
+  const index = state.reviews[payload.reviewId].logs.indexOf(payload.logId);
+
+  state.reviews[payload.reviewId].logs = [
+    ...state.reviews[payload.reviewId].logs.slice(0, index),
+    ...state.reviews[payload.reviewId].logs.slice(
+      index + 1,
+      state.reviews[payload.reviewId].logs.length,
+    ),
+  ];
+}
+
 export default createSlice({
   name: 'reviews',
   initialState: INITIAL_STATE,
   reducers: {
-    addLog,
     addReview,
     changeArchiveStateReview,
     deleteReview,
     editReview,
+  },
+  extraReducers: builder => {
+    builder.addCase(addLogAction, addLog);
+    builder.addCase(deleteLogAction, deleteLog);
   },
 });
