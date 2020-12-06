@@ -15,6 +15,7 @@ class FABButton extends Component<{
     return (
       <Portal>
         <FAB.Group
+          testID="FAB_button"
           visible={isVisible}
           open={open}
           icon={open ? 'close' : 'plus'}

@@ -68,6 +68,7 @@ class SectionReviewList extends PureComponent<Props, State> {
     const { onPressEmptyState } = this.props;
     return (
       <EmptyState
+        viewProps={{ testID: 'emptyState' }}
         title="There are no reviews."
         description="Create a review and it will show up here! ✏️"
         art={resources.images.emptyStates.start}

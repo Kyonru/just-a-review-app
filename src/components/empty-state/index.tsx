@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, ImageSourcePropType } from 'react-native';
+import { View, Image, ImageSourcePropType, ViewProps } from 'react-native';
 import { Headline, Paragraph } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -10,14 +10,16 @@ function EmptyState({
   title,
   description,
   onPress,
+  viewProps,
 }: {
   title: string;
   description: string;
   art: ImageSourcePropType;
   onPress?(): void;
+  viewProps?: ViewProps;
 }) {
   return (
-    <View style={styles.emptyState}>
+    <View style={styles.emptyState} {...viewProps}>
       <Image
         style={styles.emptyStateImage}
         resizeMode="contain"
