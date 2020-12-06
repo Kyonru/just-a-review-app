@@ -217,6 +217,9 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   renderLogItem = ({ item }: { item: string }) => {
     const log = this.props.logs[item];
+    if (!log) {
+      return null;
+    }
     return <LogListItem data={log} onPress={this.openLogDetail(log)} />;
   };
 

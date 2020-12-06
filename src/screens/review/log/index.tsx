@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import {
   Headline,
@@ -12,6 +12,8 @@ import {
   Badge,
 } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ScreenContainer from 'src/components/screen-container';
 import ListSeparator from 'src/components/separator';
@@ -20,6 +22,7 @@ import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { capitalize } from 'src/utils/strings';
 import { ReviewQuestion } from 'src/@types/index';
+import { deleteLog } from 'src/store/logs/actions';
 
 import styles from './styles';
 import {
@@ -39,9 +42,53 @@ function LogQuestion(log: ReviewQuestion) {
 }
 
 function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
-  const { route } = props;
+  const { route, navigation } = props;
   const { params } = route;
   const { review, log } = params;
+  const { showActionSheetWithOptions } = useActionSheet();
+  const dispatch = useDispatch();
+
+  const onDelete = () => {
+    deleteLog(review.id, log.id)(dispatch);
+    navigation.pop();
+  };
+
+  const openOptionsMenu = () => {
+    const destructiveButtonIndex = 0;
+    const cancelButtonIndex = 3;
+
+    const mapOption: { [key: number]: Function } = {
+      0: onDelete,
+    };
+
+    const contextMenuOptions = ['Delete'];
+
+    const contextMenuOptionIcons = [
+      <MaterialIcon color="red" name="delete" size={24} />,
+    ];
+
+    showActionSheetWithOptions(
+      {
+        options: contextMenuOptions,
+        cancelButtonIndex,
+        destructiveButtonIndex,
+        textStyle: { alignSelf: 'center', lineHeight: 24 },
+        icons: contextMenuOptionIcons,
+      },
+      buttonIndex => {
+        if (mapOption[buttonIndex]) {
+          mapOption[buttonIndex]();
+        }
+      },
+    );
+  };
+
+  useEffect(() => {
+    navigation.setParams({
+      headerRightIcon: 'dots-vertical',
+      headerRightOnPress: openOptionsMenu,
+    });
+  }, []);
 
   return (
     <ScreenContainer containerStyle={styles.container}>
