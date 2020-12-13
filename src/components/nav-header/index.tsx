@@ -16,16 +16,32 @@ class AppHeader extends Component<Props> {
 
     if (leftIcon) {
       return (
-        <Appbar.Action color="#000000" icon={leftIcon} onPress={onLeftAction} />
+        <Appbar.Action
+          testID="left_header_button"
+          color="#000000"
+          icon={leftIcon}
+          onPress={onLeftAction}
+        />
       );
     }
 
     if (previous) {
-      return <Appbar.BackAction color="#000000" onPress={this.goBack} />;
+      return (
+        <Appbar.BackAction
+          testID="back_header_button"
+          color="#000000"
+          onPress={this.goBack}
+        />
+      );
     }
 
     return (
-      <Appbar.Action color="#000000" icon="menu" onPress={this.openDrawer} />
+      <Appbar.Action
+        testID="open_drawer_button"
+        color="#000000"
+        icon="menu"
+        onPress={this.openDrawer}
+      />
     );
   };
 
@@ -41,7 +57,12 @@ class AppHeader extends Component<Props> {
 
     if (right) {
       return (
-        <Appbar.Action color="#000000" icon={right} onPress={rightOnPress} />
+        <Appbar.Action
+          testID="right_header_button"
+          color="#000000"
+          icon={right}
+          onPress={rightOnPress}
+        />
       );
     }
 

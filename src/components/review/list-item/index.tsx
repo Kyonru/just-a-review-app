@@ -31,7 +31,7 @@ class ReviewListItem extends Component<ReviewListItemProps> {
   render() {
     const { data } = this.props;
     return (
-      <Card onPress={this.onPress} style={this.style}>
+      <Card testID="review_list_item" onPress={this.onPress} style={this.style}>
         <Card.Content style={styles.card}>
           <Title>{data.title}</Title>
           <Paragraph>{(data.questions || []).length}</Paragraph>

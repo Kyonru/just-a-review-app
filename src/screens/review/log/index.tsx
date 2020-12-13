@@ -91,7 +91,10 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
   }, []);
 
   return (
-    <ScreenContainer containerStyle={styles.container}>
+    <ScreenContainer
+      containerProps={{ testID: 'log_details_screen' }}
+      containerStyle={styles.container}
+    >
       <ScrollView>
         <View key="1" style={styles.firstPage}>
           <View>

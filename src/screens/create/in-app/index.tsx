@@ -289,6 +289,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   renderQuestion = ({ item, drag, isActive }: any) => {
     return (
       <TouchableOpacity
+        testID="question_item"
         style={
           isActive
             ? styles.activeQuestionRowContainer
@@ -424,6 +425,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         />
         <ListSeparator />
         <TextInput
+          testID="name_text_input"
           mode="outlined"
           selectionColor={colors.lynch}
           label="Name"
@@ -435,6 +437,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         {this.renderExtraInputs()}
         <View style={styles.questionInputContainer}>
           <TextInput
+            testID="question_text_input"
             style={styles.questionInput}
             mode="outlined"
             selectionColor={colors.lynch}
@@ -448,6 +451,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           />
           <FAB
             small
+            testID="add_question_button"
             icon="plus"
             disabled={!currentQuestion}
             onPress={this.onAddQuestion}
@@ -455,6 +459,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         </View>
         <View style={styles.listContainer}>
           <DraggableFlatList
+            testID="question_list"
             data={questions}
             renderItem={this.renderQuestion}
             keyExtractor={(item, index) => `draggable-item-${index}`}
@@ -462,6 +467,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           />
         </View>
         <FAB
+          testID="add_review_button"
           visible={showFAB}
           disabled={!questions.length}
           style={styles.fab}

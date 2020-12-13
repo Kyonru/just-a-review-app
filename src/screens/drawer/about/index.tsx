@@ -35,7 +35,10 @@ function Legal() {
 
 function AboutApp() {
   return (
-    <ScreenContainer containerStyle={styles.container}>
+    <ScreenContainer
+      containerProps={{ testID: 'about_screen' }}
+      containerStyle={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.content}>
           <View>

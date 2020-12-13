@@ -2,6 +2,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReviewsLogState } from 'src/@types/store';
 import { ReviewLog } from 'src/@types/index';
+import { createMockReducer } from 'src/store/utils/mock';
+import reviewLog from 'src/data/mock/reviewLog';
+
 import { ReviewsLogsInitialState } from './state';
 
 function addLog(
@@ -24,5 +27,12 @@ export default createSlice({
   reducers: {
     addLog,
     deleteLog,
+  },
+  extraReducers: builder => {
+    createMockReducer(
+      builder,
+      [addLog],
+      [{ reviewId: reviewLog.reviewId, log: reviewLog }],
+    );
   },
 });

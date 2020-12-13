@@ -7,6 +7,7 @@ import Drawer from 'src/screens/drawer';
 
 import main from './stacks/main';
 import about from './stacks/about';
+import settings from './stacks/settings';
 
 import { NAVIGATORS } from './constants';
 
@@ -23,7 +24,7 @@ export default () => {
         options={{
           title: 'Reviews',
           drawerIcon: ({ color, size }: { color: string; size: number }) => (
-            <Icon name="inbox" size={size} color={color} />
+            <Icon name="pending-actions" size={size} color={color} />
           ),
         }}
         name={NAVIGATORS.drawer}
@@ -38,6 +39,16 @@ export default () => {
         }}
         name={NAVIGATORS.about}
         component={about}
+      />
+      <DrawerCreator.Screen
+        options={{
+          title: 'Settings',
+          drawerIcon: ({ color, size }: { color: string; size: number }) => (
+            <Icon name="settings" size={size} color={color} />
+          ),
+        }}
+        name={NAVIGATORS.settings}
+        component={settings}
       />
     </DrawerCreator.Navigator>
   );

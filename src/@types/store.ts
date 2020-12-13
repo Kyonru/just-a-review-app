@@ -1,4 +1,4 @@
-import { Review, ReviewLog } from 'src/@types/index';
+import { Review, ReviewLog, User } from 'src/@types/index';
 
 export interface Store {
   [key: string]: any;
@@ -12,4 +12,15 @@ export interface ReviewsState {
 
 export interface ReviewsLogState {
   logs: { [key: string]: ReviewLog };
+}
+
+export interface SettingsState {
+  user: User;
+  development: {
+    showYellowBox: boolean;
+  };
+  language: string;
+  useDarkMode: boolean;
+  showOnBoarding: boolean;
+  useRewards: boolean;
 }
