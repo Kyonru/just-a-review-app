@@ -1,5 +1,7 @@
 {
-  "cSpell.words": [
-    "kyonru"
-  ]
+  "cSpell.words": ["kyonru"],
+  "snakeTrail.color": "1,40,100",
+  "snakeTrail.colorLight": "1,40,100",
+  "snakeTrail.colorDark": "1,40,100",
+  "snakeTrail.fadeMS": 75
 }

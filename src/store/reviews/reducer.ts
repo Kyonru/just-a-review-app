@@ -5,6 +5,9 @@ import moment from 'moment';
 import { ReviewsState } from 'src/@types/store';
 import { Review, ReviewLog } from 'src/@types';
 import { addLogAction, deleteLogAction } from 'src/store/shared/actions';
+import { createMockReducer } from 'src/store/utils/mock';
+import review from 'src/data/mock/review';
+import reviewLog from 'src/data/mock/reviewLog';
 
 import { ReviewInitialState } from './state';
 
@@ -71,5 +74,10 @@ export default createSlice({
   extraReducers: builder => {
     builder.addCase(addLogAction, addLog);
     builder.addCase(deleteLogAction, deleteLog);
+    createMockReducer(
+      builder,
+      [addReview, addLog],
+      [review, { reviewId: reviewLog.reviewId, log: reviewLog }],
+    );
   },
 });

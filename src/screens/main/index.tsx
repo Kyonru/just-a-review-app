@@ -61,7 +61,10 @@ class MainScreen extends Component<
     const { showFAB } = this.state;
     const { navigation, reviews, archiveCount } = this.props;
     return (
-      <ScreenContainer containerStyle={styles.container}>
+      <ScreenContainer
+        containerProps={{ testID: 'review_list_screen' }}
+        containerStyle={styles.container}
+      >
         <SectionReviewList
           onPressEmptyState={this.openCreateInApp}
           data={[...reviews]}

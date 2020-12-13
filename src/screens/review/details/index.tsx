@@ -260,6 +260,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
             ]}
           >
             <Icon
+              testID="show_logs_button"
               onPress={() => this.openLogs(1)}
               style={{ padding: 20, paddingHorizontal: 80 }}
               name="keyboard-arrow-up"
@@ -278,7 +279,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     }
 
     return (
-      <View key="2">
+      <View testID="log_list_screen" key="2">
         {this.renderSwipeDown()}
         <FlatList
           ListHeaderComponent={<Title>Review Logs</Title>}
@@ -294,7 +295,10 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   render() {
     return (
-      <ScreenContainer containerStyle={styles.container}>
+      <ScreenContainer
+        containerProps={{ testID: 'review_details_screen' }}
+        containerStyle={styles.container}
+      >
         <ViewPager
           scrollEnabled={false}
           ref={this.viewPager}

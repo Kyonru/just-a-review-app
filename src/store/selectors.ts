@@ -1,4 +1,9 @@
-import { Store, ReviewsState, ReviewsLogState } from 'src/@types/store';
+import {
+  Store,
+  ReviewsState,
+  ReviewsLogState,
+  SettingsState,
+} from 'src/@types/store';
 
 export const storeSelector = <T>(storeName: string, state: Store): T => {
   return (state[storeName] || {}) as T;
@@ -9,3 +14,6 @@ export const reviewsStoreSelector = (state: Store) =>
 
 export const logsStoreSelector = (state: Store) =>
   storeSelector<ReviewsLogState>('logs', state);
+
+export const settingsStoreSelector = (state: Store) =>
+  storeSelector<SettingsState>('settings', state);

@@ -8,9 +8,12 @@ export enum SCREEN_NAMES {
   reviewProcessEnd = 'app.main.reviews.process.end',
   reviewLogDetail = 'app.main.reviews.logs.details',
   aboutApp = 'app.about',
+  settings = 'app.settings',
+  avatarEdit = 'app.settings.avatar.edit',
 }
 
 export enum NAVIGATORS {
   drawer = 'app.drawer.main',
   about = 'app.drawer.about',
+  settings = 'app.drawer.settings',
 }

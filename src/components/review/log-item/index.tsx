@@ -19,6 +19,7 @@ class LogListItem extends Component<LogListItemProps> {
     const { data } = this.props;
     return (
       <List.Item
+        testID="log_list_item"
         title={moment(data.date).calendar()}
         description={`Duration: ${convertMinutesToAverageTime(data.duration)}`}
         style={styles.logItem}

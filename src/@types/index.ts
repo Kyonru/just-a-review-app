@@ -21,7 +21,7 @@ interface BaseReview {
   title: string;
   description: string;
   time: Date;
-  type: any;
+  type: ReviewType | string;
   day?: DayOfTheWeek | number;
   date?: Date;
   lastLog?: string;
@@ -79,4 +79,9 @@ export interface MonthlyReview extends Review {
 export interface YearlyReview extends Review {
   date: Date;
   type: ReviewType.yearly;
+}
+
+export interface User {
+  name: string;
+  image: string;
 }

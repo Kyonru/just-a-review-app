@@ -9,13 +9,13 @@ jest.mock('@react-native-community/async-storage', () =>
   require('@react-native-community/async-storage/jest/async-storage-mock'),
 );
 
+jest.mock('react-native-get-random-values', () => ({
+  getRandomBase64: () => 1,
+}));
 
-jest.mock('react-native-get-random-values', () =>
-  ({
-    getRandomBase64: () => 1,
-  }),
-);
-
+jest.mock('react-native/Libraries/LogBox/LogBox', () => ({
+  ignoreAllLogs: (value: boolean) => value,
+}));
 
 const mockComponent = jest.fn().mockImplementation(() => ({
   render: () => '',

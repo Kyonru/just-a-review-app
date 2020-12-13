@@ -1,27 +1,44 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { Avatar, Drawer as PaperDrawer, Subheading } from 'react-native-paper';
+import { SvgUri } from 'react-native-svg';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Drawer as PaperDrawer, Subheading } from 'react-native-paper';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import colors from 'src/theme/colors';
+import { setMockState } from 'src/store/mock/actions';
+import { settingsStoreSelector } from 'src/store/selectors';
 
 import styles from './styles';
 
 function Drawer(props: any) {
+  const dispatch = useDispatch();
+  const { user } = useSelector(settingsStoreSelector);
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={{ paddingTop: 0 }}
+      testID="drawer_screen"
+    >
       <View style={styles.header}>
-        <Avatar.Image
-          size={80}
-          source={{
-            uri: 'https://i.pravatar.cc/300',
-          }}
-        />
-        <Subheading style={styles.name}>Generic First Name</Subheading>
+        <SvgUri width={100} height={100} uri={user.image} />
+        <Subheading style={styles.name}>{user.name}</Subheading>
       </View>
+      {__DEV__ ? (
+        <TouchableOpacity
+          testID="populate_date_button"
+          onPress={() => {
+            dispatch(setMockState());
+            (props.navigation as any).toggleDrawer();
+          }}
+        >
+          <Text>Populate Data</Text>
+        </TouchableOpacity>
+      ) : null}
       <PaperDrawer.Section title=" ">
         <DrawerItemList
           {...props}
@@ -33,4 +50,4 @@ function Drawer(props: any) {
   );
 }
 
-export default Drawer;
+export default connect(undefined, undefined)(Drawer);

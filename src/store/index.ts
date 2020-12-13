@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import { LogBox } from 'react-native';
 import {
   persistStore,
   persistReducer,
@@ -18,11 +19,14 @@ import { Store } from 'src/@types/store';
 
 import reviewsSlice from './reviews/reducer';
 import logsSclice from './logs/reducer';
+import settingsSclice from './settings/reducer';
 import migrations from './migrations';
+import { getDevelopment } from './settings/selectors';
 
 export const reducers = combineReducers<Store>({
-  reviews: reviewsSlice.reducer,
   logs: logsSclice.reducer,
+  reviews: reviewsSlice.reducer,
+  settings: settingsSclice.reducer,
 });
 
 const persistConfig = {
@@ -46,7 +50,11 @@ export const store = configureStore({
       .concat(__DEV__ ? logger : ([] as any)),
 });
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store, {}, () => {
+  const { showYellowBox } = getDevelopment(store.getState());
+
+  LogBox.ignoreAllLogs(showYellowBox);
+});
 
 export default () => {
   return { store, persistor };
