@@ -13,6 +13,7 @@ import ReviewDetails from 'src/screens/review/details';
 import ReviewProcessQuestions from 'src/screens/review/process/questions';
 import ReviewProcessEnd from 'src/screens/review/process/end';
 import ReviewLogDetail from 'src/screens/review/log';
+import QuestionEdit from 'src/screens/create/in-app/question-edit';
 
 const StackCreator = createStackNavigator();
 
@@ -52,6 +53,13 @@ export default () => {
         }}
         name={SCREEN_NAMES.createExternalForm}
         component={CreateExternalForm}
+      />
+      <StackCreator.Screen
+        options={{
+          title: 'Edit Question',
+        }}
+        name={SCREEN_NAMES.questionEdit}
+        component={QuestionEdit}
       />
       <StackCreator.Screen
         options={{
