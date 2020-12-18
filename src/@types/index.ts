@@ -51,11 +51,29 @@ export interface ReviewLog {
   reviewId: string;
 }
 
+export enum ReviewQuestionType {
+  Choice = 'Choice',
+  Select = 'Select',
+  Number = 'Number',
+  String = 'String',
+  Time = 'Time',
+  Date = 'Date',
+  List = 'List',
+}
+
+export interface ReviewQuestionOption {
+  id: string;
+  label: string;
+  value?: boolean;
+}
+
 export interface ReviewQuestion {
   id: string;
   q: string;
+  type: ReviewQuestionType;
   required?: boolean;
   answer?: ReviewQuestionAnswer;
+  options?: ReviewQuestionOption[];
 }
 
 export interface ReviewQuestionAnswer {
@@ -64,6 +82,7 @@ export interface ReviewQuestionAnswer {
   files: string[];
   voiceNotes: string[];
   date?: string;
+  options?: ReviewQuestionOption[];
 }
 
 export interface WeeklyReview extends Review {

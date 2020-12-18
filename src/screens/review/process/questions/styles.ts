@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import colors from 'src/theme/colors';
 
 export default StyleSheet.create<{
   container: ViewStyle;
@@ -7,11 +8,14 @@ export default StyleSheet.create<{
   swipeUpIndicator: ViewStyle;
   playButton: ViewStyle;
   answerInput: ViewStyle;
+  listAnswerInput: ViewStyle;
   playButtonContainer: ViewStyle;
   averageText: TextStyle;
   title: TextStyle;
   firstPage: ViewStyle;
   flex: ViewStyle;
+  footer: ViewStyle;
+  item: ViewStyle;
 }>({
   container: {
     paddingBottom: 8,
@@ -21,6 +25,7 @@ export default StyleSheet.create<{
     flex: 1,
   },
   answerInput: { backgroundColor: 'white', paddingBottom: 20 },
+  listAnswerInput: { flex: 1, backgroundColor: 'white', marginRight: 16 },
   swipeUpIndicator: { position: 'absolute', bottom: 20 },
   playButton: {
     height: 100,
@@ -41,4 +46,14 @@ export default StyleSheet.create<{
     padding: 20,
   },
   flex: { flex: 1 },
+  footer: {
+    flexDirection: 'row',
+    paddingVertical: 20,
+    justifyContent: 'flex-end',
+  },
+  item: {
+    paddingHorizontal: 0,
+    borderBottomColor: `${colors.lynch}33`,
+    borderBottomWidth: 1,
+  },
 });

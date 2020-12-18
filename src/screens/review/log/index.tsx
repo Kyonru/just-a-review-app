@@ -21,7 +21,7 @@ import ListSeparator from 'src/components/separator';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { capitalize } from 'src/utils/strings';
-import { ReviewQuestion } from 'src/@types/index';
+import { ReviewQuestion, ReviewQuestionType } from 'src/@types/index';
 import { deleteLog } from 'src/store/logs/actions';
 
 import styles from './styles';
@@ -31,12 +31,75 @@ import {
   mapDispatchToProps,
 } from './props';
 
+const IconNameOff: { [key: string]: string } = {
+  [ReviewQuestionType.Choice]: 'checkbox-blank-circle-outline',
+  [ReviewQuestionType.Select]: 'checkbox-blank-outline',
+  [ReviewQuestionType.List]: 'check',
+};
+
+const IconNameOn: { [key: string]: string } = {
+  [ReviewQuestionType.Choice]: 'checkbox-marked-circle',
+  [ReviewQuestionType.Select]: 'checkbox-marked',
+  [ReviewQuestionType.List]: 'check',
+};
+
+const formatAnswer = (type: ReviewQuestionType, value?: string) => {
+  if (!value) {
+    return '';
+  }
+
+  if (type === ReviewQuestionType.Time) {
+    return moment(value).format('LT');
+  }
+
+  if (type === ReviewQuestionType.Date) {
+    return moment(value).format('ll');
+  }
+
+  return value;
+};
+
 function LogQuestion(log: ReviewQuestion) {
+  if (
+    log.type === ReviewQuestionType.Choice ||
+    log.type === ReviewQuestionType.List ||
+    log.type === ReviewQuestionType.Select
+  ) {
+    return (
+      <View key={log.id}>
+        <ListSeparator />
+        <Title>{log.q}</Title>
+        {log.answer?.options?.map(op => (
+          <View style={{ flexDirection: 'row' }}>
+            <MaterialIcon
+              color="black"
+              name={op.value ? IconNameOn[log.type] : IconNameOff[log.type]}
+              size={24}
+              style={{ marginRight: 8 }}
+            />
+            <Paragraph
+              style={{
+                textDecorationLine:
+                  op.value || log.type === ReviewQuestionType.List
+                    ? 'none'
+                    : 'line-through',
+              }}
+            >
+              {op.label}
+            </Paragraph>
+          </View>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View key={log.id}>
       <ListSeparator />
       <Title>{log.q}</Title>
-      <Paragraph>{log.answer?.content.trim()}</Paragraph>
+      <Paragraph>
+        {formatAnswer(log.type, log.answer?.content.trim())}
+      </Paragraph>
     </View>
   );
 }

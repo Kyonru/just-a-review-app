@@ -1,19 +1,39 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment';
 import * as React from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, View, FlatList } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
-import { Headline, Caption, TextInput, Card, Button } from 'react-native-paper';
+import {
+  Headline,
+  Caption,
+  TextInput,
+  FAB,
+  Card,
+  Button,
+  List,
+  Checkbox,
+  RadioButton,
+  IconButton,
+} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { TextInputMask } from 'react-native-masked-text';
 
 import ScreenContainer from 'src/components/screen-container';
 import Dots from 'src/components/dots';
+import DatePicker from 'src/components/date-picker';
 
-import { ReviewQuestion, Review } from 'src/@types';
+import {
+  ReviewQuestion,
+  Review,
+  ReviewQuestionType,
+  ReviewQuestionOption,
+} from 'src/@types';
 import { SCREEN_NAMES } from 'src/navigation/constants';
 import colors from 'src/theme/colors';
 import {
   createAnswer,
+  createOptionAnswer,
+  createReviewQuestionOption,
   getAnsweredCount,
   isAnswerEmpty,
 } from 'src/utils/questions';
@@ -44,7 +64,7 @@ class ReviewProcessQuestions extends React.PureComponent<
     leaveConfirm: true,
   };
 
-  counter: number = 0;
+  counter: any = 0;
 
   viewPager = React.createRef<ViewPager>();
 
@@ -183,6 +203,29 @@ class ReviewProcessQuestions extends React.PureComponent<
     });
   };
 
+  updateQuestionAnswerOptions = (
+    question: ReviewQuestion,
+    option: string,
+  ) => () => {
+    const { questions } = this.state;
+    const index = questions.findIndex(
+      (value: ReviewQuestion) => value.id === question.id,
+    );
+
+    this.setState({
+      questions: [
+        ...questions.slice(0, index),
+        createOptionAnswer(
+          { ...question, answer: { ...question.answer!, content: '' } },
+          question.answer?.options?.concat(
+            createReviewQuestionOption(option),
+          ) || [createReviewQuestionOption(option)],
+        ),
+        ...questions.slice(index + 1),
+      ],
+    });
+  };
+
   changePageTo = (page: number) => () => {
     this.viewPager.current?.setPage(page);
   };
@@ -196,6 +239,229 @@ class ReviewProcessQuestions extends React.PureComponent<
 
   onInputFocus = (input: number) => () => {
     this.questionInputs[input].current?.focus();
+  };
+
+  updateOption = (questionIndex: number, optionId: string, value: boolean) => {
+    const { questions } = this.state;
+    const question = questions[questionIndex];
+
+    const arr = question.answer?.options || question.options!;
+
+    const index = arr.findIndex(
+      (op: ReviewQuestionOption) => op.id === optionId,
+    );
+    const options = [
+      ...arr.slice(0, index),
+      { ...arr[index], value },
+      ...arr.slice(index + 1),
+    ];
+
+    this.setState({
+      questions: [
+        ...questions.slice(0, questionIndex),
+        createOptionAnswer(question, options),
+        ...questions.slice(questionIndex + 1),
+      ],
+    });
+  };
+
+  selectOption = (questionIndex: number, optionId: string, value: boolean) => {
+    const { questions } = this.state;
+    const question = questions[questionIndex];
+
+    const arr = question.answer?.options || question.options!;
+
+    const index = arr.findIndex(
+      (op: ReviewQuestionOption) => op.id === optionId,
+    );
+    const options = arr.map((op, i) => {
+      if (i === index) {
+        return { ...op, value };
+      }
+      return { ...op, value: false };
+    });
+
+    this.setState({
+      questions: [
+        ...questions.slice(0, questionIndex),
+        createOptionAnswer(question, options),
+        ...questions.slice(questionIndex + 1),
+      ],
+    });
+  };
+
+  renderOptionItem = (type: ReviewQuestionType, index: number) => ({
+    item,
+  }: {
+    item: ReviewQuestionOption;
+  }) => {
+    if (type === ReviewQuestionType.Select) {
+      return (
+        <List.Item
+          style={styles.item}
+          title={item.label}
+          left={() => (
+            <Checkbox
+              status={item.value ? 'checked' : 'unchecked'}
+              onPress={() => {
+                this.updateOption(index, item.id, !item.value);
+              }}
+            />
+          )}
+          onPress={() => {
+            this.updateOption(index, item.id, !item.value);
+          }}
+        />
+      );
+    }
+    if (type === ReviewQuestionType.Choice) {
+      return (
+        <List.Item
+          style={styles.item}
+          title={item.label}
+          left={() => (
+            <RadioButton
+              value=""
+              status={item.value ? 'checked' : 'unchecked'}
+              onPress={() => {
+                this.selectOption(index, item.id, !item.value);
+              }}
+            />
+          )}
+          onPress={() => {
+            this.selectOption(index, item.id, !item.value);
+          }}
+        />
+      );
+    }
+    return (
+      <List.Item
+        style={styles.item}
+        title={item.label}
+        right={() => (
+          <IconButton
+            icon="close"
+            color={colors.lynch}
+            size={24}
+            onPress={() => {
+              this.selectOption(index, item.id, !item.value);
+            }}
+          />
+        )}
+      />
+    );
+  };
+
+  renderAnswerType = (question: ReviewQuestion, index: number) => {
+    if (question.type === ReviewQuestionType.Choice) {
+      return (
+        <FlatList
+          data={question.answer?.options || question.options}
+          renderItem={this.renderOptionItem(question.type, index)}
+          keyExtractor={(item, i) => `${item.label}${item.id}${i}`}
+        />
+      );
+    }
+
+    if (question.type === ReviewQuestionType.Select) {
+      return (
+        <FlatList
+          data={question.answer?.options || question.options}
+          renderItem={this.renderOptionItem(question.type, index)}
+          keyExtractor={(item, i) => `${item.label}${item.id}${i}`}
+        />
+      );
+    }
+
+    if (question.type === ReviewQuestionType.List) {
+      return (
+        <>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TextInput
+              testID="question_text_input"
+              style={styles.listAnswerInput}
+              mode="outlined"
+              selectionColor={colors.lynch}
+              label="Question"
+              value={question.answer?.content}
+              onChangeText={this.updateQuestionAnswer(question)}
+              theme={{ colors: { primary: colors.lynch } }}
+            />
+            <FAB
+              small
+              testID="add_question_button"
+              icon="plus"
+              disabled={!question.answer?.content}
+              onPress={this.updateQuestionAnswerOptions(
+                question,
+                question.answer?.content || '',
+              )}
+            />
+          </View>
+          <FlatList
+            data={question.answer?.options || []}
+            renderItem={this.renderOptionItem(question.type, index)}
+            keyExtractor={(item, i) => `${item.label}${item.id}${i}`}
+          />
+        </>
+      );
+    }
+
+    if (question.type === ReviewQuestionType.Number) {
+      return (
+        <TextInput
+          multiline
+          underlineColor="transparent"
+          style={styles.answerInput}
+          value={question.answer?.content}
+          onChangeText={this.updateQuestionAnswer(question)}
+          theme={{ colors: { primary: colors.lynch } }}
+          render={props => (
+            <TextInputMask
+              // @ts-ignore
+              ref={this.questionInputs[index]}
+              {...props}
+              type="only-numbers"
+            />
+          )}
+        />
+      );
+    }
+
+    if (
+      question.type === ReviewQuestionType.Date ||
+      question.type === ReviewQuestionType.Time
+    ) {
+      const isTime = question.type === ReviewQuestionType.Time;
+      return (
+        <DatePicker
+          label={isTime ? 'Time' : 'Date'}
+          mode={isTime ? 'time' : 'date'}
+          testID="dateTimePicker"
+          value={moment(question.answer?.content).toDate()}
+          is24Hour
+          display={isTime ? 'clock' : 'default'}
+          onChange={(event: any, newTime: any) => {
+            this.updateQuestionAnswer(question)(newTime);
+          }}
+          displayValue={moment(question.answer?.content).format(
+            isTime ? 'LT' : 'll',
+          )}
+        />
+      );
+    }
+
+    return (
+      <TextInput
+        ref={this.questionInputs[index]}
+        multiline
+        underlineColor="transparent"
+        style={styles.answerInput}
+        value={question.answer?.content}
+        onChangeText={this.updateQuestionAnswer(question)}
+        theme={{ colors: { primary: colors.lynch } }}
+      />
+    );
   };
 
   renderQuestion = (question: ReviewQuestion, index: number) => {
@@ -215,24 +481,10 @@ class ReviewProcessQuestions extends React.PureComponent<
             </Caption>
 
             <Card style={styles.card} onPress={this.onInputFocus(index)}>
-              <TextInput
-                ref={this.questionInputs[index]}
-                multiline
-                underlineColor="transparent"
-                style={styles.answerInput}
-                value={question.answer?.content}
-                onChangeText={this.updateQuestionAnswer(question)}
-                theme={{ colors: { primary: colors.lynch } }}
-              />
+              {this.renderAnswerType(question, index)}
             </Card>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 20,
-              justifyContent: 'flex-end',
-            }}
-          >
+          <View style={styles.footer}>
             <Button
               mode="contained"
               style={{ marginRight: 8, display: index > 0 ? 'flex' : 'none' }}

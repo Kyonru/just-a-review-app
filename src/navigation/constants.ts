@@ -1,5 +1,6 @@
 export enum SCREEN_NAMES {
   createInApp = 'app.main.reviews.add',
+  questionEdit = 'app.main.reviews.add.question.edit',
   createExternalForm = 'app.main.reviews.add.google.form',
   reviewList = 'app.main.reviews',
   archivedReviewList = 'app.main.reviews.archived',

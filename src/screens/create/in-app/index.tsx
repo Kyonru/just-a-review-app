@@ -23,6 +23,7 @@ import { ReviewType, ReviewQuestion, DayOfTheWeek } from 'src/@types';
 
 import { daysOfTheWeek } from 'src/data/date';
 import { ReviewTypesAsOptions } from 'src/data/review';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 import colors from 'src/theme/colors';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { createQuestion } from 'src/utils/questions';
@@ -286,6 +287,28 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     ]);
   };
 
+  openQuestion = (item: ReviewQuestion) => () => {
+    const { questions } = this.state;
+    const { navigation } = this.props;
+
+    const index = questions.findIndex(
+      (value: ReviewQuestion) => value.id === item.id,
+    );
+
+    navigation.navigate(SCREEN_NAMES.questionEdit, {
+      question: item,
+      onSaveChanges: (question: ReviewQuestion) => {
+        this.setState({
+          questions: [
+            ...questions.slice(0, index),
+            { ...question },
+            ...questions.slice(index + 1),
+          ],
+        });
+      },
+    });
+  };
+
   renderQuestion = ({ item, drag, isActive }: any) => {
     return (
       <TouchableOpacity
@@ -295,7 +318,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             ? styles.activeQuestionRowContainer
             : styles.questionRowContainer
         }
-        onPress={this.onCheckQuestion(item)}
+        onPress={this.openQuestion(item)}
         onLongPress={drag}
       >
         <View style={styles.questionRow}>
