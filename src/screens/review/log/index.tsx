@@ -98,7 +98,7 @@ function LogQuestion(log: ReviewQuestion) {
       <ListSeparator />
       <Title>{log.q}</Title>
       <Paragraph>
-        {formatAnswer(log.type, log.answer?.content.trim())}
+        {formatAnswer(log.type, `${log.answer?.content}`.trim())}
       </Paragraph>
     </View>
   );
