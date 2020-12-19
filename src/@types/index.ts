@@ -104,3 +104,17 @@ export interface User {
   name: string;
   image: string;
 }
+
+export interface Token {
+  os: string;
+  token: string;
+}
+
+export enum NotificationPayloadType {
+  review = 'review',
+}
+export interface NotificationPayload {
+  type: NotificationPayloadType;
+  date: string;
+  info: Review;
+}

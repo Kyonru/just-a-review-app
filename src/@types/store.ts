@@ -1,9 +1,10 @@
-import { Review, ReviewLog, User } from 'src/@types/index';
+import { Review, ReviewLog, User, Token } from 'src/@types/index';
 
 export interface Store {
   [key: string]: any;
   reviews: ReviewsState;
   logs: ReviewsLogState;
+  settings: SettingsState;
 }
 
 export interface ReviewsState {
@@ -23,4 +24,8 @@ export interface SettingsState {
   useDarkMode: boolean;
   showOnBoarding: boolean;
   useRewards: boolean;
+  notifications: {
+    token?: Token;
+    enabled: boolean;
+  };
 }

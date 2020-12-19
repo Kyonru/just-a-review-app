@@ -32,7 +32,7 @@ export const reducers = combineReducers<Store>({
 const persistConfig = {
   key: 'root',
   storage,
-  version: 0,
+  version: 1,
   migrate: createMigrate(migrations as any, { debug: false }),
 };
 

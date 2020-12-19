@@ -13,4 +13,8 @@ export const SettingsInitialState: SettingsState = {
   useDarkMode: false,
   showOnBoarding: false,
   useRewards: false,
+  notifications: {
+    token: undefined,
+    enabled: true,
+  },
 };
