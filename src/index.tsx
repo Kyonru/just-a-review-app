@@ -16,13 +16,16 @@ import {
 } from 'react-native-safe-area-context';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
+import { Init } from 'src/services/notifications/index';
+
 import Drawer from 'src/navigation/drawer';
-import theme from 'src/theme';
+import { linkingOptions } from 'src/navigation/constants';
 
 import { store, persistor } from 'src/store';
-import colors from 'src/theme/colors';
-import { Init } from 'src/services/notifications/index';
 import settingsSlice from 'src/store/settings/reducer';
+
+import colors from 'src/theme/colors';
+import theme from 'src/theme';
 
 Init({
   onRegisterToke: token =>
@@ -37,7 +40,7 @@ export default function GlobalAppComponent() {
         persistor={persistor}
       >
         <ActionSheetProvider>
-          <NavigationContainer>
+          <NavigationContainer linking={linkingOptions}>
             <SafeAreaProvider initialMetrics={initialWindowMetrics}>
               <PaperProvider theme={theme}>
                 <Drawer />
