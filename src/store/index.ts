@@ -20,6 +20,8 @@ import { Store } from 'src/@types/store';
 import reviewsSlice from './reviews/reducer';
 import logsSclice from './logs/reducer';
 import settingsSclice from './settings/reducer';
+import notificationsSlice from './notifications/reducer';
+
 import migrations from './migrations';
 import { getDevelopment } from './settings/selectors';
 
@@ -27,6 +29,7 @@ export const reducers = combineReducers<Store>({
   logs: logsSclice.reducer,
   reviews: reviewsSlice.reducer,
   settings: settingsSclice.reducer,
+  notifications: notificationsSlice.reducer,
 });
 
 const persistConfig = {

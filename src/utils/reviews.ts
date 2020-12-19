@@ -4,6 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { capitalize } from 'src/utils/strings';
 import {
+  getNextDayOfMonth,
+  getNextDayOfWeek,
+  getNextDayOfYear,
+} from 'src/utils/time';
+import {
   Review,
   ReviewLog,
   MonthlyReview,
@@ -128,3 +133,32 @@ export const getReviewAverageTime = (
       (review.logs || []).length) *
       100,
   ) / 100;
+
+export const getNextDate = (
+  review: Review,
+  skipCurentDate: boolean = false,
+) => {
+  let date = moment();
+  const ignoreCurrentDay =
+    (review.lastLog && moment(review.lastLog).isSame(moment(), 'day')) ||
+    skipCurentDate;
+  if (review.type === ReviewType.daily) {
+    date = ignoreCurrentDay ? moment().add(1, 'day') : moment();
+  }
+
+  if (review.type === ReviewType.weekly) {
+    const reviewDate = getNextDayOfWeek(review.day! as DayOfTheWeek);
+    date = ignoreCurrentDay ? reviewDate.add(1, 'week') : reviewDate;
+  }
+
+  if (review.type === ReviewType.monthly) {
+    const reviewDate = getNextDayOfMonth(review.day! as number);
+    date = ignoreCurrentDay ? reviewDate.add(1, 'month') : reviewDate;
+  }
+
+  if (review.type === ReviewType.yearly) {
+    const reviewDate = getNextDayOfYear(review.date!);
+    date = ignoreCurrentDay ? reviewDate.add(1, 'year') : reviewDate;
+  }
+  return date;
+};

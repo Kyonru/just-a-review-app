@@ -116,7 +116,8 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   });
 
   onArchive = withThrottle(async () => {
-    await this.props.changeArchiveStateReview(this.state.review.id);
+    const { review } = this.state;
+    await this.props.changeArchiveStateReview(this.state.review.id, review);
     this.fetchReview();
   });
 

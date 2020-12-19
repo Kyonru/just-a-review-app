@@ -9,3 +9,13 @@ export const daysOfTheWeek = [
   { label: 'Saturday', value: DayOfTheWeek.saturday, id: 5 },
   { label: 'Sunday', value: DayOfTheWeek.sunday, id: 6 },
 ];
+
+export const Weekday: { [key: number]: string } = {
+  1: DayOfTheWeek.monday,
+  2: DayOfTheWeek.tuesday,
+  3: DayOfTheWeek.wednesday,
+  4: DayOfTheWeek.thursday,
+  5: DayOfTheWeek.friday,
+  6: DayOfTheWeek.saturday,
+  7: DayOfTheWeek.sunday,
+};

@@ -10,6 +10,9 @@ import {
 import { Review, ReviewLog } from 'src/@types/index';
 import { Store } from 'src/@types/store';
 import { getLogList } from 'src/store/logs/selectors';
+import notificationSlice from 'src/store/notifications/reducer';
+import { addReviewScheduledNotification } from 'src/store/notifications/actions';
+import { mapReviewToNotificationPayload } from 'src/utils/notifications';
 
 export interface ReviewDetailsProps extends ActionSheetProps {
   navigation: any;
@@ -17,7 +20,7 @@ export interface ReviewDetailsProps extends ActionSheetProps {
   logs: { [key: string]: ReviewLog };
   getReview(id: string): Review;
   deleteReview(id: string): Promise<any>;
-  changeArchiveStateReview(id: string): Promise<any>;
+  changeArchiveStateReview(id: string, review: Review): Promise<any>;
 }
 
 export interface ReviewDetailsState {
@@ -30,7 +33,22 @@ export const mapStateToProps = (state: Store) => ({
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  deleteReview: (id: string) => deleteReview(id)(dispatch),
-  changeArchiveStateReview: (id: string) =>
-    changeArchiveStateReview(id)(dispatch),
+  deleteReview: (id: string) => {
+    dispatch(notificationSlice.actions.deleteNotifications({ reviewId: id }));
+    return deleteReview(id)(dispatch);
+  },
+  changeArchiveStateReview: (id: string, review: Review) => {
+    if (!review.archivedAt) {
+      dispatch(
+        notificationSlice.actions.deleteNotifications({
+          reviewId: id,
+        }),
+      );
+    } else {
+      addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
+        dispatch,
+      );
+    }
+    return changeArchiveStateReview(id)(dispatch);
+  },
 });

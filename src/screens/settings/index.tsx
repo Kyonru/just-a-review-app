@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { List, Switch, IconButton, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SvgUri } from 'react-native-svg';
@@ -15,7 +15,9 @@ import styles from './styles';
 
 function Setting({ navigation }: any) {
   const dispatch = useDispatch();
-  const { user, development, language } = useSelector(settingsStoreSelector);
+  const { user, development, language, notifications } = useSelector(
+    settingsStoreSelector,
+  );
 
   return (
     <ScreenContainer
@@ -74,6 +76,37 @@ function Setting({ navigation }: any) {
                 )}
               />
             ) : null}
+            <List.Item
+              style={styles.item}
+              title="Reminder Notifications"
+              right={() => (
+                <Switch
+                  value={notifications.enabled}
+                  onValueChange={status => {
+                    if (notifications.enabled && !status) {
+                      Alert.alert(
+                        'Are you sure?',
+                        'This will cancel all the current reminders, and disable future notifications.',
+                        [
+                          { text: 'No' },
+                          {
+                            text: 'Yes',
+                            onPress: () =>
+                              dispatch(
+                                settingsSlice.actions.toggleNotifications(
+                                  status,
+                                ),
+                              ),
+                          },
+                        ],
+                      );
+                      return;
+                    }
+                    dispatch(settingsSlice.actions.toggleNotifications(status));
+                  }}
+                />
+              )}
+            />
           </View>
         </View>
       </ScrollView>

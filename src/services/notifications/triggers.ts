@@ -20,7 +20,7 @@ const DefaultNotificationProperties = {
   playSound: false,
 };
 
-interface LocalNotificationProperties {
+export interface LocalNotificationProperties {
   title: string;
   message: string;
   ongoing?: boolean;

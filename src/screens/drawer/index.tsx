@@ -16,7 +16,10 @@ import {
 import { setMockState } from 'src/store/mock/actions';
 import { settingsStoreSelector } from 'src/store/selectors';
 import colors from 'src/theme/colors';
+import review from 'src/data/mock/review';
 
+import { createNotificationPayload } from 'src/utils/notifications';
+import { NotificationPayloadType } from 'src/@types';
 import styles from './styles';
 
 function Drawer(props: any) {
@@ -52,11 +55,19 @@ function Drawer(props: any) {
                 title: 'Local Notification',
                 message: 'Test Message',
                 group: 'Reviews',
+                data: createNotificationPayload(
+                  NotificationPayloadType.review,
+                  review,
+                ),
               });
               createScheduleNotification(new Date(Date.now() + 25 * 1000), {
                 title: 'Schedule Notification',
                 message: `${new Date(Date.now() + 25 * 1000)}`,
                 group: 'Reviews',
+                data: createNotificationPayload(
+                  NotificationPayloadType.review,
+                  review,
+                ),
               });
 
               (props.navigation as any).toggleDrawer();

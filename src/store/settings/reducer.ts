@@ -1,9 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { LogBox } from 'react-native';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { Token } from 'src/@types/index';
 import { SettingsState } from 'src/@types/store';
 import { createMockReducer } from 'src/store/utils/mock';
+import { removeAllNotifcations } from 'src/services/notifications/triggers';
 
 import { SettingsInitialState } from './state';
 
@@ -70,6 +72,7 @@ function toggleNotifications(
   { payload }: PayloadAction<boolean>,
 ) {
   state.notifications.enabled = payload;
+  removeAllNotifcations();
 }
 
 export default createSlice({

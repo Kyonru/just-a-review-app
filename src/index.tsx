@@ -20,6 +20,7 @@ import { Init } from 'src/services/notifications/index';
 
 import Drawer from 'src/navigation/drawer';
 import { linkingOptions } from 'src/navigation/constants';
+import { navigationRef } from 'src/navigation/';
 
 import { store, persistor } from 'src/store';
 import settingsSlice from 'src/store/settings/reducer';
@@ -40,7 +41,7 @@ export default function GlobalAppComponent() {
         persistor={persistor}
       >
         <ActionSheetProvider>
-          <NavigationContainer linking={linkingOptions}>
+          <NavigationContainer ref={navigationRef} linking={linkingOptions}>
             <SafeAreaProvider initialMetrics={initialWindowMetrics}>
               <PaperProvider theme={theme}>
                 <Drawer />

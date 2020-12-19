@@ -1,6 +1,9 @@
 import { Dispatch } from 'redux';
+
 import { addLog } from 'src/store/logs/actions';
 import { Review } from 'src/@types';
+import { addReviewScheduledNotification } from 'src/store/notifications/actions';
+import { mapReviewToNotificationPayload } from 'src/utils/notifications';
 
 export interface EndProcessProps {
   navigation: any;
@@ -12,6 +15,10 @@ export interface EndProcessProps {
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addLog: (review: Review, duration: number, startDate: string) =>
-    addLog(review, duration, startDate)(dispatch),
+  addLog: (review: Review, duration: number, startDate: string) => {
+    addLog(review, duration, startDate)(dispatch);
+    addReviewScheduledNotification(
+      mapReviewToNotificationPayload(review, true),
+    )(dispatch);
+  },
 });

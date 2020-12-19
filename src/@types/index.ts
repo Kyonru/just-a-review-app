@@ -118,3 +118,10 @@ export interface NotificationPayload {
   date: string;
   info: Review;
 }
+
+export interface Notification {
+  id: string;
+  date: string;
+  title: string;
+  message: string;
+}

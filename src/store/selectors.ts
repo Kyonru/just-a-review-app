@@ -17,3 +17,6 @@ export const logsStoreSelector = (state: Store) =>
 
 export const settingsStoreSelector = (state: Store) =>
   storeSelector<SettingsState>('settings', state);
+
+export const notificationsStoreSelector = (state: Store) =>
+  storeSelector<SettingsState>('notifications', state);
