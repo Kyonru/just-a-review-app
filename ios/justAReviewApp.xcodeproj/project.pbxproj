@@ -77,6 +77,7 @@
 		EF1DF1F8258D78B9006C87DC /* justAReviewApp-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF1DF203258D7C1C006C87DC /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF1DF20B258D9539006C87DC /* justAReviewApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = justAReviewApp.entitlements; path = justAReviewApp/justAReviewApp.entitlements; sourceTree = "<group>"; };
 		F401596CD467B3E3CDD2B5CD /* Pods-justAReviewApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FC1EB5A222693558EE4BC2EC /* Pods-justAReviewApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +138,7 @@
 		13B07FAE1A68108700A75B9A /* justAReviewApp */ = {
 			isa = PBXGroup;
 			children = (
+				EF1DF20B258D9539006C87DC /* justAReviewApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -757,6 +759,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = justAReviewApp/justAReviewApp.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = justAReviewApp/Info.plist;
@@ -787,6 +790,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = justAReviewApp/justAReviewApp.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = justAReviewApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
