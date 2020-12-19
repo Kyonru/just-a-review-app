@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* justAReviewAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* justAReviewAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -23,6 +22,8 @@
 		EF1DF205258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
 		EF1DF206258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
 		EF1DF207258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
+		EF1DF209258D9153006C87DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */; };
+		EF1DF20A258D9153006C87DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */; };
 		FF7F418B8BB43334E5F43931 /* libPods-justAReviewApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4F7317755E16220DEEA336 /* libPods-justAReviewApp-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +53,6 @@
 		13B07F961A680F5B00A75B9A /* justAReviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = justAReviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = justAReviewApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = justAReviewApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = justAReviewApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = justAReviewApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = justAReviewApp/main.m; sourceTree = "<group>"; };
@@ -76,6 +76,7 @@
 		EF1DF1F7258D78B9006C87DC /* justAReviewApp-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF1DF1F8258D78B9006C87DC /* justAReviewApp-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF1DF203258D7C1C006C87DC /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F401596CD467B3E3CDD2B5CD /* Pods-justAReviewApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FC1EB5A222693558EE4BC2EC /* Pods-justAReviewApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,13 +142,13 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				EF1DF203258D7C1C006C87DC /* Dummy.swift */,
 				EF1DF1F5258D78B9006C87DC /* justAReviewApp-Bridging-Header.h */,
 				EF1DF1F6258D78B9006C87DC /* justAReviewAppTests-Bridging-Header.h */,
 				EF1DF1F7258D78B9006C87DC /* justAReviewApp-tvOS-Bridging-Header.h */,
 				EF1DF1F8258D78B9006C87DC /* justAReviewApp-tvOSTests-Bridging-Header.h */,
+				EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */,
 			);
 			name = justAReviewApp;
 			sourceTree = "<group>";
@@ -363,7 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				EF1DF209258D9153006C87DC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
+				EF1DF20A258D9153006C87DC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,18 +696,6 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = justAReviewApp;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
