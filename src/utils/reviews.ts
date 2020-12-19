@@ -122,7 +122,7 @@ export const getReviewAverageTime = (
 ): number =>
   Math.round(
     ((review.logs || []).reduce(
-      (sum, curr) => sum + logState[curr].duration,
+      (sum, curr) => sum + (logState[curr] ? logState[curr].duration : 0),
       0,
     ) /
       (review.logs || []).length) *

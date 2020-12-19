@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* justAReviewAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* justAReviewAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -17,8 +16,14 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* justAReviewAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* justAReviewAppTests.m */; };
 		3A1411A031988D146B37A129 /* libPods-justAReviewApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B48438251DC15E58E45BDAB /* libPods-justAReviewApp-tvOSTests.a */; };
-		492845720E0CCED5B8B2ED58 /* libPods-justAReviewAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26A542F248D1B7FF93D4D02 /* libPods-justAReviewAppTests.a */; };
+		7EED4AFBEFF8C40FA3758087 /* libPods-justAReviewApp-justAReviewAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA115305FA92CE098D285956 /* libPods-justAReviewApp-justAReviewAppTests.a */; };
 		9E7BECEC953E72E1A53C77C0 /* libPods-justAReviewApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD4CEC3E44F15F02A75CEC8 /* libPods-justAReviewApp.a */; };
+		EF1DF204258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
+		EF1DF205258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
+		EF1DF206258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
+		EF1DF207258D7C1C006C87DC /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DF203258D7C1C006C87DC /* Dummy.swift */; };
+		EF1DF209258D9153006C87DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */; };
+		EF1DF20A258D9153006C87DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */; };
 		FF7F418B8BB43334E5F43931 /* libPods-justAReviewApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4F7317755E16220DEEA336 /* libPods-justAReviewApp-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +53,6 @@
 		13B07F961A680F5B00A75B9A /* justAReviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = justAReviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = justAReviewApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = justAReviewApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = justAReviewApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = justAReviewApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = justAReviewApp/main.m; sourceTree = "<group>"; };
@@ -56,15 +60,23 @@
 		2D02E4901E0B4A5D006451C7 /* justAReviewApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "justAReviewApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		372A632BB4D55BD734BAD788 /* Pods-justAReviewAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewAppTests.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewAppTests/Pods-justAReviewAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3FD4CEC3E44F15F02A75CEC8 /* libPods-justAReviewApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-justAReviewApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B4BD5B2A6A0416B3E64DAF0 /* Pods-justAReviewApp-justAReviewAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-justAReviewAppTests.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-justAReviewAppTests/Pods-justAReviewApp-justAReviewAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4D4F7317755E16220DEEA336 /* libPods-justAReviewApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-justAReviewApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B7D95D247AE833F0496BCF6 /* Pods-justAReviewApp-justAReviewAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-justAReviewAppTests.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-justAReviewAppTests/Pods-justAReviewApp-justAReviewAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		741726BC5F62E96CDF842F8E /* Pods-justAReviewAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewAppTests.release.xcconfig"; path = "Target Support Files/Pods-justAReviewAppTests/Pods-justAReviewAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		B26A542F248D1B7FF93D4D02 /* libPods-justAReviewAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-justAReviewAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C16AFA36FC69FEE116475AAE /* Pods-justAReviewApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp/Pods-justAReviewApp.release.xcconfig"; sourceTree = "<group>"; };
 		CEDF5185B504B847CAB90739 /* Pods-justAReviewApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOSTests/Pods-justAReviewApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		E812E3447C3CA2C249F08338 /* Pods-justAReviewApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOSTests/Pods-justAReviewApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA115305FA92CE098D285956 /* libPods-justAReviewApp-justAReviewAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-justAReviewApp-justAReviewAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA625E28D852B4EF17C098CD /* Pods-justAReviewApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp/Pods-justAReviewApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		EF1DF1F5258D78B9006C87DC /* justAReviewApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF1DF1F6258D78B9006C87DC /* justAReviewAppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewAppTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF1DF1F7258D78B9006C87DC /* justAReviewApp-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF1DF1F8258D78B9006C87DC /* justAReviewApp-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "justAReviewApp-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF1DF203258D7C1C006C87DC /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F401596CD467B3E3CDD2B5CD /* Pods-justAReviewApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FC1EB5A222693558EE4BC2EC /* Pods-justAReviewApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justAReviewApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-justAReviewApp-tvOS/Pods-justAReviewApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492845720E0CCED5B8B2ED58 /* libPods-justAReviewAppTests.a in Frameworks */,
+				7EED4AFBEFF8C40FA3758087 /* libPods-justAReviewApp-justAReviewAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,8 +142,13 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				EF1DF203258D7C1C006C87DC /* Dummy.swift */,
+				EF1DF1F5258D78B9006C87DC /* justAReviewApp-Bridging-Header.h */,
+				EF1DF1F6258D78B9006C87DC /* justAReviewAppTests-Bridging-Header.h */,
+				EF1DF1F7258D78B9006C87DC /* justAReviewApp-tvOS-Bridging-Header.h */,
+				EF1DF1F8258D78B9006C87DC /* justAReviewApp-tvOSTests-Bridging-Header.h */,
+				EF1DF208258D9153006C87DC /* LaunchScreen.storyboard */,
 			);
 			name = justAReviewApp;
 			sourceTree = "<group>";
@@ -144,7 +161,7 @@
 				3FD4CEC3E44F15F02A75CEC8 /* libPods-justAReviewApp.a */,
 				4D4F7317755E16220DEEA336 /* libPods-justAReviewApp-tvOS.a */,
 				0B48438251DC15E58E45BDAB /* libPods-justAReviewApp-tvOSTests.a */,
-				B26A542F248D1B7FF93D4D02 /* libPods-justAReviewAppTests.a */,
+				EA115305FA92CE098D285956 /* libPods-justAReviewApp-justAReviewAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,6 +210,8 @@
 				CEDF5185B504B847CAB90739 /* Pods-justAReviewApp-tvOSTests.release.xcconfig */,
 				372A632BB4D55BD734BAD788 /* Pods-justAReviewAppTests.debug.xcconfig */,
 				741726BC5F62E96CDF842F8E /* Pods-justAReviewAppTests.release.xcconfig */,
+				4B4BD5B2A6A0416B3E64DAF0 /* Pods-justAReviewApp-justAReviewAppTests.debug.xcconfig */,
+				5B7D95D247AE833F0496BCF6 /* Pods-justAReviewApp-justAReviewAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -208,6 +227,7 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				EEE9F25F62EC8CBE4A348FCB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,19 +305,25 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = Facebook;
+				LastUpgradeCheck = 1160;
+				ORGANIZATIONNAME = Kyonru;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1160;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1160;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -338,7 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				EF1DF209258D9153006C87DC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
+				EF1DF20A258D9153006C87DC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +430,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-justAReviewAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-justAReviewApp-justAReviewAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -477,6 +504,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -496,6 +524,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -522,6 +551,56 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEE9F25F62EC8CBE4A348FCB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-justAReviewApp-justAReviewAppTests/Pods-justAReviewApp-justAReviewAppTests-resources.sh",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-justAReviewApp-justAReviewAppTests/Pods-justAReviewApp-justAReviewAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -569,6 +648,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1DF205258D7C1C006C87DC /* Dummy.swift in Sources */,
 				00E356F31AD99517003FC87E /* justAReviewAppTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,6 +658,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				EF1DF204258D7C1C006C87DC /* Dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
+				EF1DF206258D7C1C006C87DC /* Dummy.swift in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,6 +677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1DF207258D7C1C006C87DC /* Dummy.swift in Sources */,
 				2DCD954D1E0B4F2C00145EB5 /* justAReviewAppTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,24 +697,14 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = justAReviewApp;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 372A632BB4D55BD734BAD788 /* Pods-justAReviewAppTests.debug.xcconfig */;
+			baseConfigurationReference = 4B4BD5B2A6A0416B3E64DAF0 /* Pods-justAReviewApp-justAReviewAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -646,15 +719,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewAppTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/justAReviewApp.app/justAReviewApp";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 741726BC5F62E96CDF842F8E /* Pods-justAReviewAppTests.release.xcconfig */;
+			baseConfigurationReference = 5B7D95D247AE833F0496BCF6 /* Pods-justAReviewApp-justAReviewAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = justAReviewAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -666,6 +744,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewAppTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/justAReviewApp.app/justAReviewApp";
 			};
 			name = Release;
@@ -674,11 +754,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA625E28D852B4EF17C098CD /* Pods-justAReviewApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 2;
-				DEAD_CODE_STRIPPING = NO;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = justAReviewApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -686,6 +773,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyonru.justareviewapp;
 				PRODUCT_NAME = justAReviewApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -694,10 +784,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C16AFA36FC69FEE116475AAE /* Pods-justAReviewApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = justAReviewApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -705,6 +802,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyonru.justareviewapp;
 				PRODUCT_NAME = justAReviewApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -716,6 +815,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -732,6 +832,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.justAReviewApp-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-tvOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -744,6 +847,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -760,6 +864,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.justAReviewApp-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-tvOS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -769,8 +875,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E812E3447C3CA2C249F08338 /* Pods-justAReviewApp-tvOSTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -787,6 +895,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.justAReviewApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-tvOSTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/justAReviewApp-tvOS.app/justAReviewApp-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -796,8 +907,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEDF5185B504B847CAB90739 /* Pods-justAReviewApp-tvOSTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -814,6 +927,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.justAReviewApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "justAReviewApp-tvOSTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/justAReviewApp-tvOS.app/justAReviewApp-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -822,7 +937,9 @@
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -855,8 +972,8 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -866,6 +983,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
+					"$(inherited)",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -875,7 +997,9 @@
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -912,6 +1036,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
+					"$(inherited)",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
