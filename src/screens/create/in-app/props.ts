@@ -39,16 +39,16 @@ export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   addReview: (review: Review) => {
-    addReview(review)(dispatch);
     addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
       dispatch,
     );
+    return addReview(review)(dispatch);
   },
   editReview: (id: string, review: Review) => {
-    editReview(id, review)(dispatch);
     dispatch(notificationSlice.actions.deleteNotifications({ reviewId: id }));
     addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
       dispatch,
     );
+    return editReview(id, review)(dispatch);
   },
 });

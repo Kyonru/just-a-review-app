@@ -18,7 +18,7 @@ import LogListItem from 'src/components/review/log-item';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { SCREEN_NAMES } from 'src/navigation/constants';
-import { ReviewType, ReviewLog } from 'src/@types';
+import { Review, ReviewType, ReviewLog } from 'src/@types';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getReviewAverageTime } from 'src/utils/reviews';
 import resources from 'src/resources';
@@ -105,7 +105,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
       {
         text: 'Ok',
         onPress: async () => {
-          await this.props.deleteReview(this.state.review.id);
+          await this.props.deleteReview(this.state.review.id!);
           this.props.navigation.pop();
         },
       },
@@ -117,7 +117,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   onArchive = withThrottle(async () => {
     const { review } = this.state;
-    await this.props.changeArchiveStateReview(this.state.review.id, review);
+    await this.props.changeArchiveStateReview(review.id!, review as Review);
     this.fetchReview();
   });
 
@@ -133,9 +133,6 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   constructor(props: any) {
     super(props);
-
-    this.setButtons();
-
     setInterval(() => {
       if (this.shouldAnimateSwipeUp > 0) {
         if (this.isGoingUp) {
@@ -152,9 +149,10 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     }, 500);
 
     this.state = {
-      review: props.route.params.review,
+      review: { ...props.getReview(props.route.params.review.id!) },
     };
 
+    this.setButtons();
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.fetchReview,
@@ -168,10 +166,16 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   fetchReview = () => {
     const { review } = this.state;
     const { getReview } = this.props;
-    this.setState({ review: { ...getReview(review.id) } });
+    this.setState({ review: { ...getReview(review.id!) } });
   };
 
   setButtons = () => {
+    const { review } = this.state;
+
+    if (!review.id) {
+      return;
+    }
+
     const { navigation } = this.props;
     navigation.setParams({
       headerRightIcon: 'dots-vertical',
@@ -235,7 +239,9 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
         <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
           Average time:{'\n'}
-          {convertMinutesToAverageTime(getReviewAverageTime(review, logs))}
+          {convertMinutesToAverageTime(
+            getReviewAverageTime(review as Review, logs),
+          )}
         </Caption>
 
         <TouchableHighlight
@@ -294,12 +300,25 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     );
   };
 
-  render() {
+  renderEmpty = () => {
     return (
-      <ScreenContainer
-        containerProps={{ testID: 'review_details_screen' }}
-        containerStyle={styles.container}
-      >
+      <View style={styles.container}>
+        <EmptyState
+          title="Oops!"
+          description="This review is not longer available."
+          art={resources.images.emptyStates.noConnection}
+        />
+      </View>
+    );
+  };
+
+  render() {
+    const { review } = this.state;
+    if (!review || !review.id) {
+      return this.renderEmpty();
+    }
+    return (
+      <ScreenContainer containerProps={{ testID: 'review_details_screen' }}>
         <ViewPager
           scrollEnabled={false}
           ref={this.viewPager}

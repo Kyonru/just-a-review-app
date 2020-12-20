@@ -20,14 +20,15 @@ interface BaseReview {
   id: string;
   title: string;
   description: string;
-  time: Date;
+  time: string;
   type: ReviewType | string;
   day?: DayOfTheWeek | number;
-  date?: Date;
+  date?: string;
   lastLog?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  archivedAt?: string | Date;
+  createdAt?: string;
+  updatedAt?: string;
+  archivedAt?: string;
+  nextReminder: string;
 }
 
 export interface Review extends BaseReview {
@@ -96,7 +97,7 @@ export interface MonthlyReview extends Review {
 }
 
 export interface YearlyReview extends Review {
-  date: Date;
+  date: string;
   type: ReviewType.yearly;
 }
 

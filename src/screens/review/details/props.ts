@@ -24,7 +24,7 @@ export interface ReviewDetailsProps extends ActionSheetProps {
 }
 
 export interface ReviewDetailsState {
-  review: Review;
+  review: Partial<Review>;
 }
 
 export const mapStateToProps = (state: Store) => ({

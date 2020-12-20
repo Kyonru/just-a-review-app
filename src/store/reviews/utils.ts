@@ -2,13 +2,12 @@ import moment from 'moment';
 import { SectionListData } from 'react-native';
 
 import { Review } from 'src/@types';
-import { getNextDate } from 'src/utils/reviews';
 
 export function mapReviewsListToSectionList(reviews: Review[]) {
   const sections: { [key: string]: Review[] } = {};
   reviews.forEach((review: Review) => {
     let section = '';
-    const date = getNextDate(review);
+    const date = moment(review.nextReminder);
     section = date.format('YYYY-MM-DD');
 
     sections[section] = sections[section]

@@ -14,7 +14,8 @@ export const SettingsInitialState: SettingsState = {
   showOnBoarding: false,
   useRewards: false,
   notifications: {
-    token: undefined,
+    clearDelivered: false,
     enabled: true,
+    token: undefined,
   },
 };

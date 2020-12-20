@@ -9,6 +9,7 @@ export default function(state: Store) {
       notifications: {
         token: undefined,
         enabled: true,
+        clearDelivered: true,
       },
       user: {
         ...state.settings.user,

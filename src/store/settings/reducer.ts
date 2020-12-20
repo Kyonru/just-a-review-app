@@ -5,7 +5,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Token } from 'src/@types/index';
 import { SettingsState } from 'src/@types/store';
 import { createMockReducer } from 'src/store/utils/mock';
-import { removeAllNotifcations } from 'src/services/notifications/triggers';
+import {
+  removeAllNotifcations,
+  clearDeliveredNotifcations,
+} from 'src/services/notifications/triggers';
 
 import { SettingsInitialState } from './state';
 
@@ -72,7 +75,19 @@ function toggleNotifications(
   { payload }: PayloadAction<boolean>,
 ) {
   state.notifications.enabled = payload;
-  removeAllNotifcations();
+  if (!payload) {
+    removeAllNotifcations();
+  }
+}
+
+function toggleClearDeliveredNotifications(
+  state: SettingsState,
+  { payload }: PayloadAction<boolean>,
+) {
+  state.notifications.clearDelivered = payload;
+  if (payload) {
+    clearDeliveredNotifcations();
+  }
 }
 
 export default createSlice({
@@ -83,6 +98,7 @@ export default createSlice({
     toggleWarnings,
     toggleDarkMode,
     toggleNotifications,
+    toggleClearDeliveredNotifications,
     toggleShowOnBoarding,
     toggleUseRewards,
     updateUserInfo,

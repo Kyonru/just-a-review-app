@@ -78,6 +78,23 @@ function Setting({ navigation }: any) {
             ) : null}
             <List.Item
               style={styles.item}
+              title="Clear notification"
+              description="When the app is opened, all the delivered notifications will be removed."
+              right={() => (
+                <Switch
+                  value={notifications.clearDelivered}
+                  onValueChange={status => {
+                    dispatch(
+                      settingsSlice.actions.toggleClearDeliveredNotifications(
+                        status,
+                      ),
+                    );
+                  }}
+                />
+              )}
+            />
+            <List.Item
+              style={styles.item}
               title="Reminder Notifications"
               right={() => (
                 <Switch

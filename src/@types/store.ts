@@ -26,8 +26,9 @@ export interface SettingsState {
   showOnBoarding: boolean;
   useRewards: boolean;
   notifications: {
-    token?: Token;
+    clearDelivered: boolean;
     enabled: boolean;
+    token?: Token;
   };
 }
 

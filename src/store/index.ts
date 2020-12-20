@@ -16,6 +16,7 @@ import storage from '@react-native-community/async-storage';
 import logger from 'redux-logger';
 
 import { Store } from 'src/@types/store';
+import { clearDeliveredNotifcations } from 'src/services/notifications/triggers';
 
 import reviewsSlice from './reviews/reducer';
 import logsSclice from './logs/reducer';
@@ -23,7 +24,7 @@ import settingsSclice from './settings/reducer';
 import notificationsSlice from './notifications/reducer';
 
 import migrations from './migrations';
-import { getDevelopment } from './settings/selectors';
+import { getDevelopment, getNotificationsSettings } from './settings/selectors';
 
 export const reducers = combineReducers<Store>({
   logs: logsSclice.reducer,
@@ -55,8 +56,15 @@ export const store = configureStore({
 
 export const persistor = persistStore(store, {}, () => {
   const { showYellowBox } = getDevelopment(store.getState());
+  const { clearDelivered } = getNotificationsSettings(store.getState());
 
-  LogBox.ignoreAllLogs(showYellowBox);
+  if (__DEV__) {
+    LogBox.ignoreAllLogs(showYellowBox);
+  }
+
+  if (clearDelivered) {
+    clearDeliveredNotifcations();
+  }
 });
 
 export default () => {

@@ -48,7 +48,7 @@ export const mapReviewToNotificationPayload = (
     message: `${review.type}: ${review.title}`,
     data: {
       type: NotificationPayloadType.review,
-      date: getNextDate(review, nextDate).format(),
+      date: nextDate ? getNextDate(review).format() : review.nextReminder,
       info: review,
     },
     review,

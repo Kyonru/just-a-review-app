@@ -16,9 +16,9 @@ export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   addLog: (review: Review, duration: number, startDate: string) => {
-    addLog(review, duration, startDate)(dispatch);
     addReviewScheduledNotification(
       mapReviewToNotificationPayload(review, true),
     )(dispatch);
+    return addLog(review, duration, startDate)(dispatch);
   },
 });
