@@ -20,10 +20,12 @@ function deleteNotifications(
   state: NotificationState,
   { payload }: PayloadAction<{ reviewId: string }>,
 ) {
-  Object.keys(state[payload.reviewId]).forEach(notificationId => {
-    cancelLocalNotification(notificationId);
-  });
-  delete state[payload.reviewId];
+  if (state[payload.reviewId]) {
+    Object.keys(state[payload.reviewId]).forEach(notificationId => {
+      cancelLocalNotification(notificationId);
+    });
+    delete state[payload.reviewId];
+  }
 }
 
 export default createSlice({

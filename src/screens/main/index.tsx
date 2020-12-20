@@ -66,6 +66,7 @@ class MainScreen extends Component<
         containerStyle={styles.container}
       >
         <SectionReviewList
+          showHeader={!reviews.length}
           onPressEmptyState={this.openCreateInApp}
           data={[...reviews]}
           navigation={navigation}
@@ -73,6 +74,7 @@ class MainScreen extends Component<
             title: 'Archived List',
             subtitle: `${archiveCount}`,
             icon: 'archive',
+            displayWhenEmpty: true,
           }}
           onPressHeader={this.openArchivedList}
         />

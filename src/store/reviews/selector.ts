@@ -55,3 +55,11 @@ export const getArchivedReviewListAsSectionList = createSelector<
 >(getArchivedReviewListAsDatedSectionList, reviews => {
   return sortDatedSectionList(getSectionsFromReviewDates(reviews));
 });
+
+export const getArchivedReviewListLength = createSelector<
+  Store,
+  Review[],
+  number
+>(getReviewList, reviews => {
+  return reviews.filter(review => !!review.archivedAt).length;
+});
