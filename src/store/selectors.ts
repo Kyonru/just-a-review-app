@@ -3,6 +3,7 @@ import {
   ReviewsState,
   ReviewsLogState,
   SettingsState,
+  NotificationState,
 } from 'src/@types/store';
 
 export const storeSelector = <T>(storeName: string, state: Store): T => {
@@ -19,4 +20,4 @@ export const settingsStoreSelector = (state: Store) =>
   storeSelector<SettingsState>('settings', state);
 
 export const notificationsStoreSelector = (state: Store) =>
-  storeSelector<SettingsState>('notifications', state);
+  storeSelector<NotificationState>('notifications', state);
