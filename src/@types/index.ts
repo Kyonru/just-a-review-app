@@ -102,6 +102,7 @@ export interface YearlyReview extends Review {
 }
 
 export interface User {
+  id: string;
   name: string;
   image: string;
 }

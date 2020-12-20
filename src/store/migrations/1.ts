@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { Store } from 'src/@types/store';
-import { getRandomInt } from 'src/utils/numbers';
 
 export default function(state: Store) {
   return {
@@ -13,7 +14,7 @@ export default function(state: Store) {
       },
       user: {
         ...state.settings.user,
-        id: getRandomInt(),
+        id: uuidv4(),
       },
     },
   };

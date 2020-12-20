@@ -9,7 +9,7 @@ export default {
   id: '08c95e75-1cad-45ef-87f2-8f340163d100f',
   title: 'Daily Review',
   description: 'This is a mock review',
-  time: new Date(2020, 10, 10),
+  time: new Date(2020, 10, 10).toString(),
   type: ReviewType.daily,
   questions: [
     {
@@ -33,8 +33,9 @@ export default {
     },
   ],
   logs: [],
-  date: new Date(2020, 10, 10),
+  date: new Date(2020, 10, 10).toString(),
   day: DayOfTheWeek.saturday,
-  createdAt: new Date(2020, 10, 10),
-  updatedAt: new Date(2020, 10, 10),
+  createdAt: new Date(2020, 10, 10).toString(),
+  updatedAt: new Date(2020, 10, 10).toString(),
+  nextReminder: new Date(2020, 10, 10).toString(),
 } as Review;
