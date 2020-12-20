@@ -102,12 +102,6 @@ See also the list of [contributors](https://github.com/Kyonru/just-a-review-app/
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
 ## Screenshots
 <div style="display: flex; flex-direction: row;">
   <img src="https://i.imgur.com/2ghCBgO.png" alt="First Screen" width="210" height="432" />
