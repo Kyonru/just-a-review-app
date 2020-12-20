@@ -9,6 +9,9 @@ import {
   DayOfTheWeek,
 } from 'src/@types/index';
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import { addReviewScheduledNotification } from 'src/store/notifications/actions';
+import { mapReviewToNotificationPayload } from 'src/utils/notifications';
+import notificationSlice from 'src/store/notifications/reducer';
 
 export interface CreateInAppProps
   extends Route<
@@ -35,6 +38,17 @@ export interface CreateInAppState {
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addReview: (review: Review) => addReview(review)(dispatch),
-  editReview: (id: string, review: Review) => editReview(id, review)(dispatch),
+  addReview: (review: Review) => {
+    addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
+      dispatch,
+    );
+    return addReview(review)(dispatch);
+  },
+  editReview: (id: string, review: Review) => {
+    dispatch(notificationSlice.actions.deleteNotifications({ reviewId: id }));
+    addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
+      dispatch,
+    );
+    return editReview(id, review)(dispatch);
+  },
 });

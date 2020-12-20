@@ -20,14 +20,15 @@ interface BaseReview {
   id: string;
   title: string;
   description: string;
-  time: Date;
+  time: string;
   type: ReviewType | string;
   day?: DayOfTheWeek | number;
-  date?: Date;
+  date?: string;
   lastLog?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  archivedAt?: string | Date;
+  createdAt?: string;
+  updatedAt?: string;
+  archivedAt?: string;
+  nextReminder: string;
 }
 
 export interface Review extends BaseReview {
@@ -96,11 +97,33 @@ export interface MonthlyReview extends Review {
 }
 
 export interface YearlyReview extends Review {
-  date: Date;
+  date: string;
   type: ReviewType.yearly;
 }
 
 export interface User {
+  id: string;
   name: string;
   image: string;
+}
+
+export interface Token {
+  os: string;
+  token: string;
+}
+
+export enum NotificationPayloadType {
+  review = 'review',
+}
+export interface NotificationPayload {
+  type: NotificationPayloadType;
+  date: string;
+  info: Review;
+}
+
+export interface Notification {
+  id: string;
+  date: string;
+  title: string;
+  message: string;
 }

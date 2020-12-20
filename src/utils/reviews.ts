@@ -4,6 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { capitalize } from 'src/utils/strings';
 import {
+  getNextDayOfMonth,
+  getNextDayOfWeek,
+  getNextDayOfYear,
+} from 'src/utils/time';
+import {
   Review,
   ReviewLog,
   MonthlyReview,
@@ -14,6 +19,42 @@ import {
   DayOfTheWeek,
   ExternalReview,
 } from 'src/@types';
+
+const getDate: {
+  [key: string]: (review: Review, ignoreToday?: boolean) => moment.Moment;
+} = {
+  [ReviewType.daily]: (review, ignoreToday = true) => {
+    if (ignoreToday) {
+      return moment(review.nextReminder).add(1, 'day');
+    }
+    return moment(review.nextReminder);
+  },
+  [ReviewType.weekly]: (review, ignoreToday = true) =>
+    getNextDayOfWeek(
+      review.day! as DayOfTheWeek,
+      review.nextReminder,
+      ignoreToday,
+    ),
+  [ReviewType.monthly]: (review, ignoreToday = true) =>
+    getNextDayOfMonth(review.day! as number, review.nextReminder, ignoreToday),
+  [ReviewType.yearly]: (review, ignoreToday = true) =>
+    getNextDayOfYear(
+      moment(review.date!).toDate(),
+      review.nextReminder,
+      ignoreToday,
+    ),
+};
+
+export const getNextDate = (review: Review, ignoreToday: boolean = true) => {
+  const time = moment(review.time);
+  const date = getDate[review.type](review, ignoreToday)
+    .hour(time.hour())
+    .minute(time.minutes())
+    .seconds(0)
+    .milliseconds(0);
+
+  return date;
+};
 
 export const getSectionsFromReviewDates = (reviewObject: {
   [key: string]: Review[];
@@ -36,19 +77,24 @@ export const createReview = (review: {
   time: Date;
   monthlyDay: number;
 }): Review | MonthlyReview | YearlyReview | WeeklyReview => {
-  return {
+  const newReview: Review = {
     id: uuidv4(),
     title:
       review.name === '' ? `${capitalize(review.type)} Review` : review.name,
     description: '',
-    time: review.time,
+    time: moment(review.time).format(),
     type: review.type,
     questions: review.questions,
     logs: [],
-    date: review.date,
+    date: moment(review.date).format(),
     day: review.type === ReviewType.monthly ? review.monthlyDay : review.day,
-    createdAt: new Date(),
+    createdAt: moment().format(),
+    nextReminder: moment().format(),
   };
+
+  newReview.nextReminder = getNextDate(newReview, false).format();
+
+  return newReview;
 };
 
 export const createExternalReview = (review: {
@@ -60,18 +106,26 @@ export const createExternalReview = (review: {
   time: Date;
   monthlyDay: number;
 }): ExternalReview => {
-  return {
+  const newReview: ExternalReview = {
     id: uuidv4(),
     title:
       review.name === '' ? `${capitalize(review.type)} Review` : review.name,
     description: '',
-    time: review.time,
+    time: moment(review.time).format(),
     type: 'ExternalReview',
     link: review.questions,
     logs: [],
-    date: review.date,
+    date: moment(review.date).format(),
     day: review.type === ReviewType.monthly ? review.monthlyDay : review.day,
+    nextReminder: moment().format(),
   };
+
+  newReview.nextReminder = getNextDate(
+    (newReview as unknown) as Review,
+    false,
+  ).format();
+
+  return newReview;
 };
 
 export const updateReview = (
@@ -88,19 +142,22 @@ export const updateReview = (
 ): Review | MonthlyReview | YearlyReview | WeeklyReview => {
   const monthlyDay =
     update.type === ReviewType.monthly ? update.monthlyDay : review.day;
-  return {
+  const updatedreview: Review = {
     id: review.id,
     title: update.name || review.title,
     description: review.description,
-    time: update.time || review.time,
+    time: moment(update.time || review.time).format(),
     type: update.type || review.type,
     questions: update.questions || review.questions,
     logs: review.logs || [],
-    date: update.date || review.date,
+    date: moment(update.date || review.date).format(),
     day: monthlyDay || review.day,
     createdAt: review.createdAt,
-    updatedAt: new Date(),
+    updatedAt: moment().format(),
+    nextReminder: getNextDate(review).format(),
   };
+
+  return updatedreview;
 };
 
 export const convertReviewToLog = (

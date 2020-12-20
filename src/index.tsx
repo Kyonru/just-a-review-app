@@ -12,15 +12,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import {
   SafeAreaProvider,
-  initialWindowSafeAreaInsets,
+  initialWindowMetrics,
 } from 'react-native-safe-area-context';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
+import { Init } from 'src/services/notifications/index';
+
 import Drawer from 'src/navigation/drawer';
-import theme from 'src/theme';
+import { linkingOptions } from 'src/navigation/constants';
+import { navigationRef } from 'src/navigation/';
 
 import { store, persistor } from 'src/store';
+import settingsSlice from 'src/store/settings/reducer';
+
 import colors from 'src/theme/colors';
+import theme from 'src/theme';
+
+Init({
+  onRegisterToke: token =>
+    store.dispatch(settingsSlice.actions.updateNotificationToken(token)),
+});
 
 export default function GlobalAppComponent() {
   return (
@@ -30,10 +41,8 @@ export default function GlobalAppComponent() {
         persistor={persistor}
       >
         <ActionSheetProvider>
-          <NavigationContainer>
-            <SafeAreaProvider
-              initialSafeAreaInsets={initialWindowSafeAreaInsets}
-            >
+          <NavigationContainer ref={navigationRef} linking={linkingOptions}>
+            <SafeAreaProvider initialMetrics={initialWindowMetrics}>
               <PaperProvider theme={theme}>
                 <Drawer />
               </PaperProvider>

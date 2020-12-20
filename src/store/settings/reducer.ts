@@ -1,8 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { LogBox } from 'react-native';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Token } from 'src/@types/index';
 import { SettingsState } from 'src/@types/store';
 import { createMockReducer } from 'src/store/utils/mock';
+import {
+  removeAllNotifcations,
+  clearDeliveredNotifcations,
+} from 'src/services/notifications/triggers';
 
 import { SettingsInitialState } from './state';
 
@@ -57,6 +63,33 @@ function updateUserInfo(
   }
 }
 
+function updateNotificationToken(
+  state: SettingsState,
+  { payload }: PayloadAction<Token>,
+) {
+  state.notifications.token = payload;
+}
+
+function toggleNotifications(
+  state: SettingsState,
+  { payload }: PayloadAction<boolean>,
+) {
+  state.notifications.enabled = payload;
+  if (!payload) {
+    removeAllNotifcations();
+  }
+}
+
+function toggleClearDeliveredNotifications(
+  state: SettingsState,
+  { payload }: PayloadAction<boolean>,
+) {
+  state.notifications.clearDelivered = payload;
+  if (payload) {
+    clearDeliveredNotifcations();
+  }
+}
+
 export default createSlice({
   name: 'settings',
   initialState: SettingsInitialState,
@@ -64,9 +97,12 @@ export default createSlice({
     changeLanguage,
     toggleWarnings,
     toggleDarkMode,
+    toggleNotifications,
+    toggleClearDeliveredNotifications,
     toggleShowOnBoarding,
     toggleUseRewards,
     updateUserInfo,
+    updateNotificationToken,
   },
   extraReducers: builder => {
     createMockReducer(builder, [toggleWarnings], [true]);

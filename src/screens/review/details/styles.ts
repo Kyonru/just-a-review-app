@@ -17,7 +17,7 @@ export default StyleSheet.create<{
   badge: ViewStyle;
   listHeaderComponent: ViewStyle;
 }>({
-  container: {},
+  container: { backgroundColor: 'white', flex: 1 },
   listHeaderComponent: { padding: 16 },
   viewPager: {
     flex: 1,

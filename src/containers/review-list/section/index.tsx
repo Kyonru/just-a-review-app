@@ -15,7 +15,7 @@ import { BaseReviewListProps } from '../props';
 
 class SectionReviewList extends PureComponent<Props, State> {
   state = {
-    showHeader: false,
+    showHeader: !!this.props.showHeader,
   };
 
   openDetails = (review: Review) => {
@@ -65,15 +65,19 @@ class SectionReviewList extends PureComponent<Props, State> {
   };
 
   renderEmpty = () => {
-    const { onPressEmptyState } = this.props;
+    const { onPressEmptyState, header } = this.props;
+
     return (
-      <EmptyState
-        viewProps={{ testID: 'emptyState' }}
-        title="There are no reviews."
-        description="Create a review and it will show up here! ✏️"
-        art={resources.images.emptyStates.start}
-        onPress={onPressEmptyState}
-      />
+      <>
+        {!!header && header.displayWhenEmpty ? this.renderListHeader() : null}
+        <EmptyState
+          viewProps={{ testID: 'emptyState' }}
+          title="There are no reviews."
+          description="Create a review and it will show up here! ✏️"
+          art={resources.images.emptyStates.start}
+          onPress={onPressEmptyState}
+        />
+      </>
     );
   };
 
@@ -86,6 +90,7 @@ class SectionReviewList extends PureComponent<Props, State> {
 
     return (
       <SectionList
+        ListEmptyComponent={this.renderEmpty()}
         ListHeaderComponent={this.renderListHeader}
         sections={data}
         keyExtractor={(item, index) => `${item.title}${item.type}${index}`}
@@ -108,8 +113,10 @@ interface Props extends BaseReviewListProps {
     title: string;
     subtitle: string;
     icon: string;
+    displayWhenEmpty?: boolean;
   };
   onPressHeader?(): void;
+  showHeader?: boolean;
 }
 
 interface State {

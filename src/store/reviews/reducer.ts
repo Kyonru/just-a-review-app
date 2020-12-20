@@ -2,12 +2,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
-import { ReviewsState } from 'src/@types/store';
-import { Review, ReviewLog } from 'src/@types';
-import { addLogAction, deleteLogAction } from 'src/store/shared/actions';
+// #region mock data
 import { createMockReducer } from 'src/store/utils/mock';
 import review from 'src/data/mock/review';
 import reviewLog from 'src/data/mock/reviewLog';
+// #endregion
+
+import { ReviewsState } from 'src/@types/store';
+import { Review, ReviewLog } from 'src/@types';
+import { addLogAction, deleteLogAction } from 'src/store/shared/actions';
+import { getNextDate } from 'src/utils/reviews';
 
 import { ReviewInitialState } from './state';
 
@@ -44,7 +48,10 @@ function addLog(
   { payload }: PayloadAction<{ reviewId: string; log: ReviewLog }>,
 ) {
   state.reviews[payload.reviewId].logs.push(payload.log.id);
-  state.reviews[payload.reviewId].lastLog = new Date().toString();
+  state.reviews[payload.reviewId].lastLog = moment().format();
+  state.reviews[payload.reviewId].nextReminder = getNextDate(
+    state.reviews[payload.reviewId],
+  ).format();
 }
 
 function deleteLog(

@@ -31,34 +31,46 @@ export const convertMinutesToAverageTime = (mins?: number): string => {
   return `${hours}m ${minutes}s`;
 };
 
-export const getNextDayOfWeek = (day: DayOfTheWeek) => {
-  const dayDate = moment().day(day);
+export const getNextDayOfWeek = (
+  day: DayOfTheWeek,
+  nextReminder: string,
+  ignoreToday: boolean = true,
+) => {
+  const dayDate = moment(ignoreToday ? nextReminder : undefined).day(day);
 
-  if (dayDate.isBefore(moment().startOf('day'))) {
+  if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
     dayDate.add(1, 'weeks');
   }
   return dayDate;
 };
 
-export const getNextDayOfMonth = (day: number) => {
-  const dayDate = moment()
+export const getNextDayOfMonth = (
+  day: number,
+  nextReminder: string,
+  ignoreToday: boolean = true,
+) => {
+  const dayDate = moment(ignoreToday ? nextReminder : undefined)
     .day(day)
     .month(moment().month());
 
-  if (dayDate.isBefore(moment().startOf('day'))) {
+  if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
     dayDate.add(1, 'months');
   }
 
   return dayDate;
 };
 
-export const getNextDayOfYear = (date: Date) => {
+export const getNextDayOfYear = (
+  date: Date,
+  nextReminder: string,
+  ignoreToday: boolean = true,
+) => {
   const review = moment(date);
-  const dayDate = moment()
+  const dayDate = moment(ignoreToday ? nextReminder : undefined)
     .day(review.day())
     .month(review.month());
 
-  if (dayDate.isBefore(moment().startOf('day'))) {
+  if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
     dayDate.add(1, 'years');
   }
 

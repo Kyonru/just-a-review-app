@@ -30,3 +30,8 @@ export const getUseRewards = createSelector(
   settingsStoreSelector,
   store => store.useRewards || {},
 );
+
+export const getNotificationsSettings = createSelector(
+  settingsStoreSelector,
+  store => store.notifications || {},
+);

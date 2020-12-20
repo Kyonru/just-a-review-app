@@ -237,11 +237,6 @@ export const createAvatar = (props: { [key: string]: string }) => {
   return `${BASE_URL}${queryString.stringify(props)}`;
 };
 
-export const getAvatarProperties = (url: string) => {
-  const search = url.split('?');
-  return queryString.parse(search[1]);
-};
-
 export const createRandomAvatar = () => {
   return createAvatar({
     [AvatarProps.topType]: randomEnum(TopType),
@@ -259,4 +254,9 @@ export const createRandomAvatar = () => {
     [AvatarProps.skinColor]: randomEnum(SkinColor),
     [AvatarProps.hatColor]: randomEnum(HatColor),
   });
+};
+
+export const getAvatarProperties = (url?: string) => {
+  const search = (url || createRandomAvatar()).split('?');
+  return queryString.parse(search[1]);
 };
