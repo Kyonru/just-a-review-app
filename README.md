@@ -20,9 +20,25 @@ cd ios
 pod install
 ```
 
+### Running Android
+
+```bash
+cd just-a-review-app
+yarn start
+yarn android
+```
+
+### Running iOS
+
+```bash
+cd just-a-review-app
+yarn start
+yarn ios
+```
+
 ## Running the tests
 
-### e2e tests
+### e2e tests ([see windows version of these commands](https://github.com/Kyonru/just-a-review-app/blob/master/package.json#L13))
 
 Make sure you have an emulator named: Pixel_3a_API_30_x86 or change the name on `./github/workflows/android.yml` from `Pixel_3a_API_30_x86` to your emulator name.
 
@@ -31,7 +47,7 @@ yarn build-detox-android
 yarn test-detox-android-windows
 ```
 
-### And coding style tests
+### And coding style tests ([see windows version of these commands](https://github.com/Kyonru/just-a-review-app/blob/master/package.json#L11))
 
 Run linter
 ```bash
