@@ -76,5 +76,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>RCTAsyncStorageExcludeFromBackup</key>
+	<false/>
 </dict>
 </plist>

@@ -12,7 +12,7 @@ import {
   REGISTER,
   createMigrate,
 } from 'redux-persist';
-import storage from '@react-native-community/async-storage';
+import storage from '@react-native-async-storage/async-storage';
 import logger from 'redux-logger';
 
 import { Store } from 'src/@types/store';
