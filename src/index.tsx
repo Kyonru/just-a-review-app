@@ -16,7 +16,8 @@ import {
 } from 'react-native-safe-area-context';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
-import { Init } from 'src/services/notifications/index';
+import { Init as InitNotifications } from 'src/services/notifications/index';
+import { Init as InitReporting } from 'src/services/reporting';
 
 import Drawer from 'src/navigation/drawer';
 import { linkingOptions } from 'src/navigation/constants';
@@ -28,10 +29,12 @@ import settingsSlice from 'src/store/settings/reducer';
 import colors from 'src/theme/colors';
 import theme from 'src/theme';
 
-Init({
+InitNotifications({
   onRegisterToke: token =>
     store.dispatch(settingsSlice.actions.updateNotificationToken(token)),
 });
+
+InitReporting();
 
 export default function GlobalAppComponent() {
   return (

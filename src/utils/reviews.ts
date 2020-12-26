@@ -7,6 +7,7 @@ import {
   getNextDayOfMonth,
   getNextDayOfWeek,
   getNextDayOfYear,
+  formatReviewDate,
 } from 'src/utils/time';
 import {
   Review,
@@ -48,10 +49,10 @@ const getDate: {
 export const getNextDate = (review: Review, ignoreToday: boolean = true) => {
   const time = moment(review.time);
   const date = getDate[review.type](review, ignoreToday)
-    .hour(time.hour())
-    .minute(time.minutes())
-    .seconds(0)
-    .milliseconds(0);
+    .set('hour', time.hour())
+    .set('minute', time.minutes())
+    .set('second', 0)
+    .set('millisecond', 0);
 
   return date;
 };
@@ -60,9 +61,7 @@ export const getSectionsFromReviewDates = (reviewObject: {
   [key: string]: Review[];
 }): SectionListData<Review>[] => {
   return Object.keys(reviewObject).map(date => ({
-    title: moment(date)
-      .calendar()
-      .split(' ')[0],
+    title: formatReviewDate(date),
     value: moment(date).format('YYYY-MM-DD'),
     data: reviewObject[date],
   }));
