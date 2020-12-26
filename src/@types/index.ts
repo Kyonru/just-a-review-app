@@ -127,3 +127,9 @@ export interface Notification {
   title: string;
   message: string;
 }
+
+export interface ErrorPayload {
+  message: string;
+  error: Error;
+  tags?: { [key: string]: any };
+}
