@@ -18,6 +18,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 import { Init as InitNotifications } from 'src/services/notifications/index';
 import { Init as InitReporting } from 'src/services/reporting';
+import { Init as InitAnalytics } from 'src/services/analytics';
 
 import Drawer from 'src/navigation/drawer';
 import { linkingOptions } from 'src/navigation/constants';
@@ -35,6 +36,7 @@ InitNotifications({
 });
 
 InitReporting();
+InitAnalytics();
 
 export default function GlobalAppComponent() {
   return (
