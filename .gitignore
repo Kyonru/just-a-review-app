@@ -62,3 +62,4 @@ buck-out/
 .env
 google-services.json
 sentry.properties
+appcenter-config.json
