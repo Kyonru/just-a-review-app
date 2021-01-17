@@ -7,4 +7,5 @@ declare module '@env' {
   export const CHANNEL_URL: string;
   export const PAY_URL: string;
   export const GITHUB_URL: string;
+  export const SENTRY: string;
 }

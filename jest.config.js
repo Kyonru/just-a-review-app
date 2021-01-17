@@ -11,6 +11,6 @@ module.exports = {
   },
   modulePathIgnorePatterns: ['<rootDir>/__tests__/setup/index.ts'],
   transformIgnorePatterns: [
-    'node_modules/(?!@react-native-picker|react-native|@react-native-community)',
+    'node_modules/(?!@react-native-picker|react-native|@react-native-community|@sentry/react-native)',
   ],
 };
