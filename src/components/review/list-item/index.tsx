@@ -1,5 +1,7 @@
+import moment from 'moment';
 import React, { Component } from 'react';
-import { Card, Title, Paragraph } from 'react-native-paper';
+
+import { Card, Title, Paragraph, Badge } from 'react-native-paper';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { ReviewType } from 'src/@types';
@@ -28,13 +30,25 @@ class ReviewListItem extends Component<ReviewListItemProps> {
     };
   };
 
+  renderRight = () => {
+    const { data } = this.props;
+    if (moment(data.nextReminder).isBefore(moment())) {
+      return (
+        <Badge style={styles.expiredBadge} visible>
+          Expired
+        </Badge>
+      );
+    }
+    return <Paragraph>{(data.questions || []).length}</Paragraph>;
+  };
+
   render() {
     const { data } = this.props;
     return (
       <Card testID="review_list_item" onPress={this.onPress} style={this.style}>
         <Card.Content style={styles.card}>
           <Title>{data.title}</Title>
-          <Paragraph>{(data.questions || []).length}</Paragraph>
+          {this.renderRight()}
         </Card.Content>
       </Card>
     );
