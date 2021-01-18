@@ -3,6 +3,7 @@ import 'react-native-get-random-values';
 
 import React from 'react';
 import { Provider } from 'react-redux';
+import RNBootSplash from 'react-native-bootsplash';
 
 import {
   ActivityIndicator,
@@ -37,6 +38,8 @@ InitNotifications({
 
 InitReporting();
 InitAnalytics();
+
+RNBootSplash.hide({ fade: true });
 
 export default function GlobalAppComponent() {
   return (
