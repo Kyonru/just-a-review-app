@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import {
@@ -21,7 +21,11 @@ import ListSeparator from 'src/components/separator';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { capitalize } from 'src/utils/strings';
-import { ReviewQuestion, ReviewQuestionType } from 'src/@types/index';
+import {
+  ReviewQuestion,
+  ReviewQuestionOption,
+  ReviewQuestionType,
+} from 'src/@types/index';
 import { deleteLog } from 'src/store/logs/actions';
 
 import styles from './styles';
@@ -59,6 +63,34 @@ const formatAnswer = (type: ReviewQuestionType, value?: string) => {
   return value;
 };
 
+const renderOption = (log: ReviewQuestion) => (
+  option: ReviewQuestionOption,
+) => {
+  if (!option.value) {
+    return null;
+  }
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <MaterialIcon
+        color="black"
+        name={option.value ? IconNameOn[log.type] : IconNameOff[log.type]}
+        size={24}
+        style={{ marginRight: 8 }}
+      />
+      <Paragraph
+        style={{
+          textDecorationLine:
+            option.value || log.type === ReviewQuestionType.List
+              ? 'none'
+              : 'line-through',
+        }}
+      >
+        {option.label}
+      </Paragraph>
+    </View>
+  );
+};
+
 function LogQuestion(log: ReviewQuestion) {
   if (
     log.type === ReviewQuestionType.Choice ||
@@ -69,26 +101,7 @@ function LogQuestion(log: ReviewQuestion) {
       <View key={log.id}>
         <ListSeparator />
         <Title>{log.q}</Title>
-        {log.answer?.options?.map(op => (
-          <View style={{ flexDirection: 'row' }}>
-            <MaterialIcon
-              color="black"
-              name={op.value ? IconNameOn[log.type] : IconNameOff[log.type]}
-              size={24}
-              style={{ marginRight: 8 }}
-            />
-            <Paragraph
-              style={{
-                textDecorationLine:
-                  op.value || log.type === ReviewQuestionType.List
-                    ? 'none'
-                    : 'line-through',
-              }}
-            >
-              {op.label}
-            </Paragraph>
-          </View>
-        ))}
+        {log.answer?.options?.map(renderOption(log))}
       </View>
     );
   }
@@ -194,4 +207,4 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ReviewLogScreenProcess);
+)(memo(ReviewLogScreenProcess));

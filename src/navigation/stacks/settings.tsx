@@ -1,5 +1,8 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 import { SCREEN_NAMES } from 'src/navigation/constants';
 
@@ -29,6 +32,8 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: 'Avatar Edit',
+          cardStyleInterpolator:
+            CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
         name={SCREEN_NAMES.avatarEdit}
         component={AvatarEdit}

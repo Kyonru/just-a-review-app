@@ -82,6 +82,9 @@ export default StyleSheet.create<{
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderTopColor: '#00000044',
+    borderBottomWidth: 0.5,
+    paddingVertical: 8,
   },
   activeQuestionRowContainer: {
     shadowOffset: { width: 1, height: 1 },

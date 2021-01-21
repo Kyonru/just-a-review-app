@@ -78,12 +78,7 @@ function QuestionEditScreen(props: any) {
               size={28}
             />
 
-            <Text
-              style={styles.question}
-              textBreakStrategy="simple"
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
+            <Text style={styles.question} textBreakStrategy="simple">
               {item.label}
             </Text>
           </View>
@@ -108,6 +103,7 @@ function QuestionEditScreen(props: any) {
         <View style={styles.content}>
           <View style={styles.header} />
           <TextInput
+            multiline
             mode="outlined"
             selectionColor={colors.lynch}
             label="Question"

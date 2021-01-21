@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment';
 import * as React from 'react';
-import { Alert, View, FlatList } from 'react-native';
+import { Alert, View, FlatList, Keyboard } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import {
   Headline,
@@ -146,6 +146,7 @@ class ReviewProcessQuestions extends React.PureComponent<
   onBlur = () => {
     clearInterval(this.counter);
     this.counter = 0;
+    Keyboard.dismiss();
     this.setState({
       leaveConfirm: false,
     });
@@ -382,7 +383,7 @@ class ReviewProcessQuestions extends React.PureComponent<
               style={styles.listAnswerInput}
               mode="outlined"
               selectionColor={colors.lynch}
-              label="Question"
+              label="Item"
               value={question.answer?.content}
               onChangeText={this.updateQuestionAnswer(question)}
               theme={{ colors: { primary: colors.lynch } }}

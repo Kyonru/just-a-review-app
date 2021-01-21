@@ -19,6 +19,7 @@ export default StyleSheet.create<{
   header: {
     alignItems: 'center',
     justifyContent: 'center',
+    height: 140,
   },
   name: { fontWeight: 'bold', color: colors.brown, paddingTop: 16 },
   container: {

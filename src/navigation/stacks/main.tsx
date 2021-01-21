@@ -1,5 +1,8 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 import { SCREEN_NAMES } from 'src/navigation/constants';
 
@@ -36,6 +39,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: 'Archive reviews',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.archivedReviewList}
         component={ArchivedReviewList}
@@ -57,6 +61,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: 'Edit Question',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.questionEdit}
         component={QuestionEdit}
@@ -64,6 +69,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewDetails}
         component={ReviewDetails}
@@ -71,6 +77,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewLogDetail}
         component={ReviewLogDetail}
@@ -87,6 +94,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewProcessEnd}
         component={ReviewProcessEnd}
