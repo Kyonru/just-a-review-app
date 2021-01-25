@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { LogBox } from 'react-native';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Locale } from 'react-native-localize';
 
 import { Token } from 'src/@types/index';
 import { SettingsState } from 'src/@types/store';
@@ -9,13 +10,15 @@ import {
   removeAllNotifcations,
   clearDeliveredNotifcations,
 } from 'src/services/notifications/triggers';
+import { updateLanguage } from 'src/services/i18n/index';
 
 import { SettingsInitialState } from './state';
 
 function changeLanguage(
   state: SettingsState,
-  { payload }: PayloadAction<string>,
+  { payload }: PayloadAction<Locale>,
 ) {
+  updateLanguage(payload);
   state.language = payload;
 }
 

@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/stack';
 
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import { LocalizationContext } from 'src/services/i18n/index';
 
 import NavHeader from 'src/components/nav-header';
 
@@ -21,6 +22,7 @@ import QuestionEdit from 'src/screens/create/in-app/question-edit';
 const StackCreator = createStackNavigator();
 
 export default () => {
+  const { translate, strings } = React.useContext(LocalizationContext);
   return (
     <StackCreator.Navigator
       screenOptions={{
@@ -31,14 +33,14 @@ export default () => {
     >
       <StackCreator.Screen
         options={{
-          title: 'Reviews',
+          title: translate(strings.reviews),
         }}
         name={SCREEN_NAMES.reviewList}
         component={ReviewList}
       />
       <StackCreator.Screen
         options={{
-          title: 'Archive reviews',
+          title: translate(strings.archivedList),
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.archivedReviewList}

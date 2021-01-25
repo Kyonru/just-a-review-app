@@ -36,7 +36,7 @@ export const reducers = combineReducers<Store>({
 const persistConfig = {
   key: 'root',
   storage,
-  version: 1,
+  version: 2,
   migrate: createMigrate(migrations as any, { debug: false }),
 };
 
@@ -65,6 +65,7 @@ export const persistor = persistStore(store, {}, () => {
   if (clearDelivered) {
     clearDeliveredNotifcations();
   }
+  // RNBootSplash.hide({ fade: true });
 });
 
 export default () => {

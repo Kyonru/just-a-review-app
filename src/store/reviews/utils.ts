@@ -3,10 +3,12 @@ import { SectionListData } from 'react-native';
 
 import { Review } from 'src/@types';
 
-export function mapReviewsListToSectionList(reviews: Review[]) {
+export function mapReviewsListToSectionList(reviews: Review[], locale = 'en') {
   const sections: { [key: string]: Review[] } = {};
   reviews.forEach((review: Review) => {
     let section = '';
+
+    moment.locale(locale);
     const date = moment(review.nextReminder);
     section = date.format('YYYY-MM-DD');
 

@@ -8,5 +8,6 @@ export default StyleSheet.create<{
     flex: 1,
     paddingTop: 0,
     backgroundColor: colors.white,
+    overflow: 'visible',
   },
 });

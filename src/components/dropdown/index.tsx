@@ -31,9 +31,37 @@ class Dropdown extends Component<DropdownProps & any> {
     onSelect(`${value}`);
   };
 
+  renderIOSPicker = () => {
+    const { isModalOpen } = this.state;
+    return (
+      <Portal>
+        <Modal
+          visible={isModalOpen}
+          onDismiss={this.onHideModal}
+          contentContainerStyle={styles.modal}
+        >
+          <TouchableOpacity
+            style={styles.background}
+            onPress={this.onHideModal}
+          >
+            <View style={styles.pickerIOS}>
+              {this.renderPicker()}
+              <Button
+                style={styles.button}
+                mode="contained"
+                onPress={this.onHideModal}
+              >
+                Ok
+              </Button>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </Portal>
+    );
+  };
+
   renderIOS = () => {
     const { theme, selectedValue } = this.props;
-    const { isModalOpen } = this.state;
     return (
       <>
         <TouchableOpacity onPress={this.onShowModal}>
@@ -47,36 +75,14 @@ class Dropdown extends Component<DropdownProps & any> {
             <Icon color={theme.colors.accent} name="menu-down" size={16} />
           </View>
         </TouchableOpacity>
-        <Portal>
-          <Modal
-            visible={isModalOpen}
-            onDismiss={this.onHideModal}
-            contentContainerStyle={styles.modal}
-          >
-            <TouchableOpacity
-              style={styles.background}
-              onPress={this.onHideModal}
-            >
-              <View style={styles.pickerIOS}>
-                {this.renderPicker()}
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={this.onHideModal}
-                >
-                  Ok
-                </Button>
-              </View>
-            </TouchableOpacity>
-          </Modal>
-        </Portal>
+        {this.renderIOSPicker()}
       </>
     );
   };
 
   renderAndroid = () => {
     return (
-      <View style={styles.pickerAndroidHeader}>
+      <View style={[styles.pickerAndroidHeader, this.props.style]}>
         <Text style={styles.label}>{this.props.label}</Text>
         {this.renderPicker()}
       </View>

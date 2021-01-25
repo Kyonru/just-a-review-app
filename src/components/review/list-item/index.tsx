@@ -32,7 +32,11 @@ class ReviewListItem extends Component<ReviewListItemProps> {
 
   renderRight = () => {
     const { data } = this.props;
-    if (moment(data.nextReminder).isBefore(moment())) {
+    if (
+      moment(data.nextReminder)
+        .add(1, 'hour')
+        .isBefore(moment())
+    ) {
       return (
         <Badge style={styles.expiredBadge} visible>
           Expired

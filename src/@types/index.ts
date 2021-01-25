@@ -133,3 +133,8 @@ export interface ErrorPayload {
   error: Error;
   tags?: { [key: string]: any };
 }
+
+export interface DropdownOption {
+  label: string;
+  value: any;
+}

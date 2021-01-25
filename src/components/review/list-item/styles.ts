@@ -12,6 +12,7 @@ export default StyleSheet.create<{
   },
   container: {
     borderRadius: 5,
+    marginHorizontal: 20,
   },
   expiredBadge: {
     fontWeight: 'bold',

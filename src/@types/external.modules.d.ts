@@ -1,5 +1,6 @@
 declare module 'lodash.debounce';
 declare module 'lodash.throttle';
+declare module 'lodash.memoize';
 
 declare module '@env' {
   export const TEST_KEY: string;

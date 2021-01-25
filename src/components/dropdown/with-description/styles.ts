@@ -11,9 +11,6 @@ export default StyleSheet.create<{
   pickerIOSHeader: ViewStyle;
   pickerAndroidHeader: ViewStyle;
   label: TextStyle;
-  header: ViewStyle;
-  pickerOptionsContainer: ViewStyle;
-  dropdownOption: ViewStyle;
 }>({
   separator: { height: 20 },
   picker: {
@@ -56,19 +53,5 @@ export default StyleSheet.create<{
     paddingHorizontal: 4,
     color: DefaultTheme.colors.placeholder,
     fontSize: 12,
-  },
-  header: {
-    paddingHorizontal: 0,
-  },
-  pickerOptionsContainer: {
-    backgroundColor: 'white',
-    height: 300,
-  },
-  dropdownOption: {
-    padding: 16,
-    borderTopWidth: 0.5,
-    borderColor: '#00000055',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 });

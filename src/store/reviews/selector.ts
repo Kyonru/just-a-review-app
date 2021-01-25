@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/indent */
 import { createSelector } from 'reselect';
 import { SectionListData } from 'react-native';
-import { reviewsStoreSelector } from 'src/store/selectors';
+
 import { Review } from 'src/@types/index';
-import { Store } from 'src/@types/store';
+import { Store, SettingsState } from 'src/@types/store';
+
 import { getSectionsFromReviewDates } from 'src/utils/reviews';
+
+import {
+  reviewsStoreSelector,
+  settingsStoreSelector,
+} from 'src/store/selectors';
+
 import { mapReviewsListToSectionList, sortDatedSectionList } from './utils';
 
 export const getReviewList = createSelector(reviewsStoreSelector, store => {
@@ -23,20 +30,24 @@ export const getReview = createSelector(
 export const getArchivedReviewListAsDatedSectionList = createSelector<
   Store,
   Review[],
+  SettingsState,
   { [key: string]: Review[] }
->(getReviewList, reviews => {
+>(getReviewList, settingsStoreSelector, (reviews, settings) => {
   return mapReviewsListToSectionList(
     reviews.filter(review => !!review.archivedAt),
+    settings.language.languageCode,
   );
 });
 
 export const getReviewListAsDatedSectionList = createSelector<
   Store,
   Review[],
+  SettingsState,
   { [key: string]: Review[] }
->(getReviewList, reviews => {
+>(getReviewList, settingsStoreSelector, (reviews, settings) => {
   return mapReviewsListToSectionList(
     reviews.filter(review => !review.archivedAt),
+    settings.language.languageCode,
   );
 });
 
