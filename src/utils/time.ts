@@ -56,7 +56,6 @@ export const getNextDayOfMonth = (
   }
 
   if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
-    // dayDate.add(1, 'M'); // TODO: FIX ME! Adding a year instead of a month
     dayDate.add(moment.duration({ M: 1 }), 'M');
   }
 
