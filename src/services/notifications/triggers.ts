@@ -11,6 +11,7 @@ const DefaultNotificationProperties = {
   /* Android Only Properties */
   channelId: REVIEWS_NOTIFICATION_CHANNEL, // (required) channelId, if the channel doesn't exist, it will be created with options passed above (importance, vibration, sound). Once the channel is created, the channel will not be update. Make sure your channelId is different if you change these options. If you have created a custom channel, it will apply options of the channel.
   vibrate: true, // (optional) default: true
+  smallIcon: 'ic_notification',
 
   vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
   ignoreInForeground: false, // (optional) if true, the notification will not be visible when the app is in the foreground (useful for parity with how iOS notifications appear). should be used in combine with `com.dieam.reactnativepushnotification.notification_foreground` setting
