@@ -49,12 +49,15 @@ export const getNextDayOfMonth = (
   nextReminder: string,
   ignoreToday: boolean = true,
 ) => {
-  const dayDate = moment(ignoreToday ? nextReminder : undefined)
-    .set('date', day)
-    .set('month', moment().month());
+  const dayDate = moment(ignoreToday ? nextReminder : undefined);
+
+  if (!ignoreToday) {
+    dayDate.set('date', day).set('month', moment().month());
+  }
 
   if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
-    dayDate.add(1, 'month'); // TODO: FIX ME! Adding a year instead of a month
+    // dayDate.add(1, 'M'); // TODO: FIX ME! Adding a year instead of a month
+    dayDate.add(moment.duration({ M: 1 }), 'M');
   }
 
   return dayDate;
