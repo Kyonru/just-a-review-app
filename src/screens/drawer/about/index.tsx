@@ -10,27 +10,30 @@ import { SCREEN_NAMES } from 'src/navigation/constants';
 import resources from 'src/resources';
 import colors from 'src/theme/colors';
 import { getRandomColor } from 'src/utils/colors';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 
 function Legal() {
+  const { translate, strings } = React.useContext(LocalizationContext);
+
   return (
     <List.Accordion
-      title="Legal"
+      title={translate(strings.credits)}
       style={styles.legal}
       theme={{ colors: { primary: colors.black } }}
     >
       <DataTable>
         <DataTable.Header>
           <DataTable.Title> </DataTable.Title>
-          <DataTable.Title numeric>Source</DataTable.Title>
+          <DataTable.Title numeric>{translate(strings.source)}</DataTable.Title>
         </DataTable.Header>
 
         <DataTable.Row
           rippleColor={`${colors.pistonBlue}22`}
           onPress={() => Linking.openURL(ART_URL) as any}
         >
-          <DataTable.Cell>Art</DataTable.Cell>
+          <DataTable.Cell>{translate(strings.art)}</DataTable.Cell>
           <DataTable.Cell numeric>ls.graphics</DataTable.Cell>
         </DataTable.Row>
       </DataTable>
@@ -41,6 +44,8 @@ function Legal() {
 function AboutApp(props: any) {
   const [easterEggCount, setCount] = useState(0);
   const { navigation } = props;
+
+  const { translate, strings } = React.useContext(LocalizationContext);
 
   useEffect(() => {
     if (easterEggCount > 10) {
@@ -63,7 +68,7 @@ function AboutApp(props: any) {
           <View>
             <List.Item
               style={styles.item}
-              title="App version"
+              title={translate(strings.appVersion)}
               description={app.version}
               onPress={incrementAppTouchesCount}
               rippleColor={`${getRandomColor()}22`}
@@ -71,13 +76,13 @@ function AboutApp(props: any) {
             <List.Item
               onPress={() => Linking.openURL(CHANNEL_URL) as any}
               style={styles.item}
-              title="Visit twitch my channel!"
+              title={translate(strings.twitchChannel)}
               rippleColor={`${colors.yearly}22`}
             />
             <List.Item
               onPress={() => Linking.openURL(PAY_URL) as any}
               style={styles.item}
-              title="Invite me 🍕 or ☕"
+              title={translate(strings.invitePizza)}
               rippleColor={`${colors.shamrock}22`}
             />
             <Legal />
@@ -90,16 +95,17 @@ function AboutApp(props: any) {
               source={resources.images.emptyStates.coding}
             />
             <Subheading style={styles.message}>
-              Hi, my name is{' '}
+              {translate(strings.hiMyNameIs)}
               <Subheading
                 onPress={() => Linking.openURL(GITHUB_URL) as any}
                 style={styles.kyonru}
               >
                 kyonru!{' '}
               </Subheading>
-              {'\n'}This app was made with
+              {'\n'}
+              {translate(strings.appMadeWith)}
               <Subheading style={styles.love}>{`${' 💗 '}`}</Subheading>
-              and react native.
+              {translate(strings.andReactNative)}
             </Subheading>
           </View>
         </View>

@@ -28,6 +28,7 @@ import {
   getAvatarProperties,
   createAvatar,
 } from 'src/utils/avatar';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 
@@ -70,6 +71,7 @@ function AvatarProps() {
   const { user } = useSelector(settingsStoreSelector);
   const avatarProps = getAvatarProperties(user.image);
 
+  const { translate, strings } = React.useContext(LocalizationContext);
   return (
     <ScreenContainer
       containerProps={{ testID: 'avatar_edit_screen' }}
@@ -84,98 +86,98 @@ function AvatarProps() {
             <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Avatar Style"
+                label={translate(strings.avatarStyle)}
                 options={avatarStyle}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.avatarStyle}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Top Type"
+                label={translate(strings.topType)}
                 options={topTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.topType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Accessories"
+                label={translate(strings.accessories)}
                 options={accessoriesTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.accessoriesType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Hair Color"
+                label={translate(strings.hairColor)}
                 options={hairColors}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.hairColor}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Facial Hair Type"
+                label={translate(strings.facialHairType)}
                 options={facialHairTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.facialHairType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Facial Hair Color"
+                label={translate(strings.facialHairColor)}
                 options={facialHairColors}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.facialHairColor}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Clothe Type"
+                label={translate(strings.clotheType)}
                 options={clotheTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.clotheType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Clothe Color"
+                label={translate(strings.clotheColor)}
                 options={clotheColors}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.clotheColor}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Clothe Graphic"
+                label={translate(strings.clotheGraphic)}
                 options={graphicTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.graphicType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Eye Type"
+                label={translate(strings.eyeType)}
                 options={eyeTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.eyeType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Eyebrow Type"
+                label={translate(strings.eyebrowType)}
                 options={eyebrowTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.eyebrowType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Mouth Type"
+                label={translate(strings.mouthType)}
                 options={mouthTypes}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.mouthType}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Skin Color"
+                label={translate(strings.skinColor)}
                 options={skinColors}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.skinColor}
               />
               <PropertyDropdown
                 avatar={avatarProps}
-                label="Hat Color"
+                label={translate(strings.hatColor)}
                 options={hatColors}
                 dispatch={dispatch}
                 selectedValue={AvatarProperties.hatColor}

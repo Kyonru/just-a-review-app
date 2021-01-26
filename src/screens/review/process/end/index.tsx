@@ -9,6 +9,7 @@ import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { getAnsweredCount } from 'src/utils/questions';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 import { EndProcessProps, mapStateToProps, mapDispatchToProps } from './props';
@@ -17,6 +18,7 @@ function EndReviewProcess(props: EndProcessProps) {
   const { route, navigation, addLog } = props;
   const { params } = route;
   const { review, duration, startDate } = params;
+  const { translate, strings } = React.useContext(LocalizationContext);
 
   const onFinish = withThrottle(() => {
     addLog(review, duration, startDate);
@@ -41,7 +43,7 @@ function EndReviewProcess(props: EndProcessProps) {
           style={styles.finishButton}
           onPress={onFinish}
         >
-          Finish
+          {translate(strings.finish)}
         </Button>
       </View>
     </ScreenContainer>

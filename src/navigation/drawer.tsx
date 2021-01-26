@@ -45,7 +45,7 @@ export default () => {
       />
       <DrawerCreator.Screen
         options={{
-          title: 'Settings',
+          title: translate(strings.settings),
           drawerIcon: ({ color, size }: { color: string; size: number }) => (
             <Icon name="settings" size={size} color={color} />
           ),
@@ -55,7 +55,7 @@ export default () => {
       />
       <DrawerCreator.Screen
         options={{
-          title: 'About',
+          title: translate(strings.about),
           drawerIcon: ({ color, size }: { color: string; size: number }) => (
             <Icon name="info-outline" size={size} color={color} />
           ),

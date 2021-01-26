@@ -37,7 +37,7 @@ export enum TopType {
 }
 
 // ID: avatarStyle
-export enum AvartarStyle {
+export enum AvatarStyle {
   Circle = 'Circle',
   Transparent = 'Transparent',
 }
@@ -240,7 +240,7 @@ export const createAvatar = (props: { [key: string]: string }) => {
 export const createRandomAvatar = () => {
   return createAvatar({
     [AvatarProps.topType]: randomEnum(TopType),
-    [AvatarProps.avatarStyle]: AvartarStyle.Circle,
+    [AvatarProps.avatarStyle]: AvatarStyle.Circle,
     [AvatarProps.accessoriesType]: randomEnum(AccessoriesType),
     [AvatarProps.hairColor]: randomEnum(HairColor),
     [AvatarProps.facialHairType]: randomEnum(FacialHairType),

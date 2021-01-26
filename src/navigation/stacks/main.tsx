@@ -48,21 +48,21 @@ export default () => {
       />
       <StackCreator.Screen
         options={{
-          title: 'Add review',
+          title: translate(strings.addReview),
         }}
         name={SCREEN_NAMES.createInApp}
         component={CreateInApp}
       />
       <StackCreator.Screen
         options={{
-          title: 'Add review',
+          title: translate(strings.addReview),
         }}
         name={SCREEN_NAMES.createExternalForm}
         component={CreateExternalForm}
       />
       <StackCreator.Screen
         options={{
-          title: 'Edit Question',
+          title: translate(strings.editQuestion),
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.questionEdit}

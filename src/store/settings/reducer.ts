@@ -7,8 +7,8 @@ import { Token } from 'src/@types/index';
 import { SettingsState } from 'src/@types/store';
 import { createMockReducer } from 'src/store/utils/mock';
 import {
-  removeAllNotifcations,
-  clearDeliveredNotifcations,
+  removeAllNotifications,
+  clearDeliveredNotifications,
 } from 'src/services/notifications/triggers';
 import { updateLanguage } from 'src/services/i18n/index';
 
@@ -79,7 +79,7 @@ function toggleNotifications(
 ) {
   state.notifications.enabled = payload;
   if (!payload) {
-    removeAllNotifcations();
+    removeAllNotifications();
   }
 }
 
@@ -89,7 +89,7 @@ function toggleClearDeliveredNotifications(
 ) {
   state.notifications.clearDelivered = payload;
   if (payload) {
-    clearDeliveredNotifcations();
+    clearDeliveredNotifications();
   }
 }
 

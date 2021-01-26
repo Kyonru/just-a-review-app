@@ -39,6 +39,7 @@ import {
 } from 'src/utils/questions';
 import { convertMinutesToHourString } from 'src/utils/time';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 
@@ -116,19 +117,24 @@ class ReviewProcessQuestions extends React.PureComponent<
     // Prevent default behavior of leaving the screen
     e.preventDefault();
 
+    const { translate, strings } = this.context;
     // Prompt the user before leaving the screen
     Alert.alert(
-      'Discard review?',
-      'You are in middle of a review, are you sure you want to leave?',
+      translate(strings.discardReview),
+      translate(strings.discardReviewMessage),
       [
         {
-          text: 'Discard',
+          text: translate(strings.discard),
           style: 'destructive',
           // If the user confirmed, then we dispatch the action we blocked earlier
           // This will continue the action that had triggered the removal of the screen
           onPress: () => this.props.navigation.dispatch(e.data.action),
         },
-        { text: "Don't leave", style: 'cancel', onPress: () => {} },
+        {
+          text: translate(strings.dontLeave),
+          style: 'cancel',
+          onPress: () => {},
+        },
       ],
     );
   };
@@ -160,8 +166,9 @@ class ReviewProcessQuestions extends React.PureComponent<
       question => question.required && isAnswerEmpty(question.answer),
     );
 
+    const { translate, strings } = this.context;
     if (isInvalidReview) {
-      return Alert.alert('', 'You need to fill all the required questions.');
+      return Alert.alert('', translate(strings.needToBeFilled));
     }
 
     return navigation.push(SCREEN_NAMES.reviewProcessEnd, {
@@ -525,5 +532,7 @@ class ReviewProcessQuestions extends React.PureComponent<
     );
   }
 }
+
+ReviewProcessQuestions.contextType = LocalizationContext;
 
 export default ReviewProcessQuestions;

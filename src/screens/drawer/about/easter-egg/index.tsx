@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions, Text } from 'react-native';
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
+import { LocalizationContext } from 'src/services/i18n';
 import { Box } from './renderers';
 
 import { Physics, CreateBox, MoveBox, CleanBoxes } from './rigidbody';
@@ -55,6 +56,8 @@ export default React.memo(() => {
   Matter.World.add(world, [body, floor]);
   Matter.World.addConstraint(world, constraint);
 
+  const { translate, strings } = React.useContext(LocalizationContext);
+
   return (
     <GameEngine
       style={styles.container}
@@ -76,7 +79,9 @@ export default React.memo(() => {
         text: {
           position: [width / 2, 40],
           renderer: () => (
-            <Text style={styles.text}>Tap to destroy performance!</Text>
+            <Text style={styles.text}>
+              {translate(strings.destroyPerformance)}
+            </Text>
           ),
         },
       }}

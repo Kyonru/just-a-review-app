@@ -18,6 +18,7 @@ export interface CreateInAppProps
     SCREEN_NAMES.reviewProcessEnd,
     { route: { review?: Review; editModeEnabled: boolean } }
   > {
+  context: any;
   navigation: any;
   addReview: (review: Review) => Promise<any>;
   editReview: (id: string, review: Review) => Promise<any>;

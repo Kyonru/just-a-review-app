@@ -24,6 +24,7 @@ import { getReviewAverageTime } from 'src/utils/reviews';
 import resources from 'src/resources';
 import EmptyState from 'src/components/empty-state';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
 
 import {
   ReviewDetailsState,
@@ -63,6 +64,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   openOptionsMenu = withThrottle(() => {
     const destructiveButtonIndex = 0;
     const cancelButtonIndex = 3;
+    const { translate, strings } = this.context;
 
     const mapOption: { [key: number]: Function } = {
       0: this.onDelete,
@@ -71,10 +73,12 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     };
 
     const contextMenuOptions = [
-      'Delete',
-      this.state.review.archivedAt ? 'Unarchive' : 'Archive',
-      'Edit',
-      'Cancel',
+      translate(strings.delete),
+      this.state.review.archivedAt
+        ? translate(strings.unarchive)
+        : translate(strings.archive),
+      translate(strings.edit),
+      translate(strings.cancel),
     ];
 
     const contextMenuOptionIcons = [
@@ -101,18 +105,23 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   });
 
   onDelete = withThrottle(() => {
-    Alert.alert('Delete Review.', "This action can't be undone.", [
-      {
-        text: 'Ok',
-        onPress: async () => {
-          await this.props.deleteReview(this.state.review.id!);
-          this.props.navigation.pop();
+    const { translate, strings } = this.context;
+    Alert.alert(
+      translate(strings.deleteReview),
+      translate(strings.cantBeUndone),
+      [
+        {
+          text: translate(strings.ok),
+          onPress: async () => {
+            await this.props.deleteReview(this.state.review.id!);
+            this.props.navigation.pop();
+          },
         },
-      },
-      {
-        text: 'Cancel',
-      },
-    ]);
+        {
+          text: translate(strings.cancel),
+        },
+      ],
+    );
   });
 
   onArchive = withThrottle(async () => {
@@ -197,12 +206,13 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   };
 
   renderEmptyLogList = () => {
+    const { translate, strings } = this.context;
     return (
       <View key="2">
         {this.renderSwipeDown()}
         <EmptyState
-          title="No log has been found."
-          description="Complete this review and your logs will show up here!"
+          title={translate(strings.noLog)}
+          description={translate(strings.completeThisReview)}
           art={resources.images.emptyStates.meeting}
         />
       </View>
@@ -231,14 +241,15 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   renderDetails = () => {
     const { review } = this.state;
     const { logs } = this.props;
+    const { translate, strings } = this.context;
     return (
       <View key="1" style={styles.firstPage}>
         <Badge style={styles.badge} visible={!!review.archivedAt}>
-          {`Archived at ${review.archivedAt}`}
+          {`${translate(strings.archivedAt)} ${review.archivedAt}`}
         </Badge>
         <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
-          Average time:{'\n'}
+          {translate(strings.averageTime)}:{'\n'}
           {convertMinutesToAverageTime(
             getReviewAverageTime(review as Review, logs),
           )}
@@ -284,12 +295,13 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     if (!review.logs || !review.logs.length) {
       return this.renderEmptyLogList();
     }
+    const { translate, strings } = this.context;
 
     return (
       <View testID="log_list_screen" key="2">
         {this.renderSwipeDown()}
         <FlatList
-          ListHeaderComponent={<Title>Review Logs</Title>}
+          ListHeaderComponent={<Title>{translate(strings.reviewLogs)}</Title>}
           ListHeaderComponentStyle={styles.listHeaderComponent}
           keyExtractor={item => item}
           data={review.logs}
@@ -301,11 +313,12 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   };
 
   renderEmpty = () => {
+    const { translate, strings } = this.context;
     return (
       <View style={styles.container}>
         <EmptyState
-          title="Oops!"
-          description="This review is not longer available."
+          title={translate(strings.oops)}
+          description={translate(strings.reviewNoFound)}
           art={resources.images.emptyStates.noConnection}
         />
       </View>
@@ -333,6 +346,8 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     );
   }
 }
+
+ReviewDetails.contextType = LocalizationContext;
 
 export default connect(
   mapStateToProps,

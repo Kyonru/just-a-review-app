@@ -27,6 +27,7 @@ import {
   ReviewQuestionType,
 } from 'src/@types/index';
 import { deleteLog } from 'src/store/logs/actions';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 import {
@@ -123,6 +124,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
   const { review, log } = params;
   const { showActionSheetWithOptions } = useActionSheet();
   const dispatch = useDispatch();
+  const { translate, strings } = React.useContext(LocalizationContext);
 
   const onDelete = () => {
     deleteLog(review.id, log.id)(dispatch);
@@ -137,7 +139,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
       0: onDelete,
     };
 
-    const contextMenuOptions = ['Delete'];
+    const contextMenuOptions = [translate(strings.delete)];
 
     const contextMenuOptionIcons = [
       <MaterialIcon color="red" name="delete" size={24} />,
@@ -188,7 +190,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
               {capitalize(review.type)}
             </Badge>
             <ListSeparator />
-            <Subheading>Duration</Subheading>
+            <Subheading>{translate(strings.duration)}</Subheading>
             <Caption style={styles.averageText}>
               {convertMinutesToAverageTime(log.duration)}
             </Caption>

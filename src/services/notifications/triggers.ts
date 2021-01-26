@@ -84,11 +84,11 @@ export function cancelLocalNotification(id: string) {
   PushNotification.cancelLocalNotifications({ id });
 }
 
-export function removeAllNotifcations() {
+export function removeAllNotifications() {
   PushNotification.cancelAllLocalNotifications();
 }
 
-export function clearDeliveredNotifcations() {
+export function clearDeliveredNotifications() {
   PushNotification.removeAllDeliveredNotifications();
 }
 

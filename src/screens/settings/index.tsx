@@ -26,7 +26,9 @@ function Setting({ navigation }: any) {
     settingsStoreSelector,
   );
 
-  const { setLocale } = React.useContext(LocalizationContext);
+  const { setLocale, translate, strings } = React.useContext(
+    LocalizationContext,
+  );
   return (
     <ScreenContainer
       containerProps={{ testID: 'setting_screen' }}
@@ -51,7 +53,7 @@ function Setting({ navigation }: any) {
               <TextInput
                 mode="outlined"
                 selectionColor={colors.lynch}
-                label="Name"
+                label={translate(strings.name)}
                 value={`${user.name}`}
                 onChangeText={name =>
                   dispatch(
@@ -66,7 +68,7 @@ function Setting({ navigation }: any) {
               />
             </View>
             <Dropdown
-              label="Language"
+              label={translate(strings.language)}
               options={AvailableLanguages}
               value={LanguageName[language.languageCode]}
               optionSelected={language.languageCode}
@@ -93,8 +95,8 @@ function Setting({ navigation }: any) {
             ) : null}
             <List.Item
               style={styles.item}
-              title="Clear notifications"
-              description="When the app is opened, all the delivered notifications will be removed."
+              title={translate(strings.clearNotifications)}
+              description={translate(strings.clearNotificationsDescription)}
               right={() => (
                 <Switch
                   value={notifications.clearDelivered}
@@ -110,7 +112,7 @@ function Setting({ navigation }: any) {
             />
             <List.Item
               style={styles.item}
-              title="Reminder Notifications"
+              title={translate(strings.reminderNotifications)}
               right={() => (
                 <Switch
                   value={notifications.enabled}
