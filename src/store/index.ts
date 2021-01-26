@@ -17,6 +17,7 @@ import logger from 'redux-logger';
 
 import { Store } from 'src/@types/store';
 import { clearDeliveredNotifications } from 'src/services/notifications/triggers';
+import { Init as codePushInit } from 'src/services/versioning/code-push';
 
 import reviewsSlice from './reviews/reducer';
 import logsSlice from './logs/reducer';
@@ -65,6 +66,8 @@ export const persistor = persistStore(store, {}, () => {
   if (clearDelivered) {
     clearDeliveredNotifications();
   }
+
+  codePushInit();
 });
 
 export default () => {
