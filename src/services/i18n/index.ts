@@ -29,7 +29,9 @@ export const updateLanguage = (languague: RNLocalize.Locale) => {
   I18nManager.forceRTL(isRTL);
   // // set i18n-js config
   i18n.translations = {
-    [languageTag]: translationGetters[languageTag](),
+    [languageTag]: translationGetters[languageTag]
+      ? translationGetters[languageTag]()
+      : defaultLanguage.languageTag,
   };
   i18n.locale = languageTag;
   moment.locale(languageTag);
@@ -49,7 +51,9 @@ export const Init = (): Partial<RNLocalize.Locale> => {
   I18nManager.forceRTL(isRTL);
   // set i18n-js config
   i18n.translations = {
-    [languageTag]: translationGetters[languageTag](),
+    [languageTag]: translationGetters[languageTag]
+      ? translationGetters[languageTag]()
+      : defaultLanguage.languageTag,
   };
   i18n.locale = languageTag;
   moment.locale(languageTag);
