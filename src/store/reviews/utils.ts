@@ -1,6 +1,8 @@
 import moment from 'moment';
+import 'moment/locale/es';
 import { SectionListData } from 'react-native';
 
+import { momentLangConfig } from 'src/services/i18n';
 import { Review } from 'src/@types';
 
 export function mapReviewsListToSectionList(reviews: Review[], locale = 'en') {
@@ -8,7 +10,7 @@ export function mapReviewsListToSectionList(reviews: Review[], locale = 'en') {
   reviews.forEach((review: Review) => {
     let section = '';
 
-    moment.locale(locale);
+    moment.locale(locale, momentLangConfig);
     const date = moment(review.nextReminder);
     section = date.format('YYYY-MM-DD');
 

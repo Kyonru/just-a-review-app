@@ -15,6 +15,7 @@ import colors from 'src/theme/colors';
 import { questionTypes } from 'src/data/question';
 import { createReviewQuestionOption } from 'src/utils/questions';
 import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 
@@ -42,6 +43,11 @@ function QuestionEditScreen(props: any) {
     });
     setOption('');
   };
+
+  const types = questionTypes.map(t => ({
+    ...t,
+    label: capitalize(translate(t.translateKey)),
+  }));
 
   const onDeleteOption = (item: ReviewQuestionOption) => () => {
     const action = () => {
@@ -122,7 +128,7 @@ function QuestionEditScreen(props: any) {
           <View style={{ paddingVertical: 16 }}>
             <Dropdown
               label={translate(strings.type)}
-              options={questionTypes}
+              options={types}
               onSelect={(type: string) =>
                 setValue({ ...value, type: type as ReviewQuestionType })
               }

@@ -57,11 +57,14 @@ export const getNextDate = (review: Review, ignoreToday: boolean = true) => {
   return date;
 };
 
-export const getSectionsFromReviewDates = (reviewObject: {
-  [key: string]: Review[];
-}): SectionListData<Review>[] => {
+export const getSectionsFromReviewDates = (
+  reviewObject: {
+    [key: string]: Review[];
+  },
+  locale: string,
+): SectionListData<Review>[] => {
   return Object.keys(reviewObject).map(date => ({
-    title: formatReviewDate(date),
+    title: formatReviewDate(date, locale),
     value: moment(date).format('YYYY-MM-DD'),
     data: reviewObject[date],
   }));

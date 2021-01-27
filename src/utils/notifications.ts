@@ -6,7 +6,10 @@ import {
   NotificationPayloadType,
   Review,
 } from 'src/@types';
+import { LanguageSource } from 'src/@types/services';
 import { getRandomInt } from 'src/utils/numbers';
+import { translate } from 'src/services/i18n/index';
+
 import { getNextDate } from './reviews';
 
 export const createNotificationPayload = (
@@ -36,6 +39,7 @@ export const createNotification = (
 
 export const mapReviewToNotificationPayload = (
   review: Review,
+  message: string,
   nextDate: boolean = false,
 ): {
   title: string;
@@ -44,8 +48,10 @@ export const mapReviewToNotificationPayload = (
   review: Review;
 } => {
   return {
-    title: 'Time for a review process! 🔥',
-    message: `${review.type}: ${review.title}`,
+    title: message,
+    message: `${review.type}: ${review.title} ${translate(
+      LanguageSource.time,
+    )}`,
     data: {
       type: NotificationPayloadType.review,
       date: nextDate ? getNextDate(review).format() : review.nextReminder,

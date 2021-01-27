@@ -21,7 +21,12 @@ function EndReviewProcess(props: EndProcessProps) {
   const { translate, strings } = React.useContext(LocalizationContext);
 
   const onFinish = withThrottle(() => {
-    addLog(review, duration, startDate);
+    addLog(
+      review,
+      duration,
+      startDate,
+      translate(strings.timeForReviewProcess),
+    );
     navigation.popToTop();
   });
 

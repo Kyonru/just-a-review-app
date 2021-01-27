@@ -100,4 +100,12 @@ export enum LanguageSource {
   noContinue = 'noContinue',
   waitCancel = 'waitCancel',
   yesAddIt = 'yesAddIt',
+  monday = 'monday',
+  tuesday = 'tuesday',
+  wednesday = 'wednesday',
+  thursday = 'thursday',
+  friday = 'friday',
+  saturday = 'saturday',
+  sunday = 'sunday',
+  item = 'item',
 }

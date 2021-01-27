@@ -97,5 +97,13 @@
   "lastQuestion": "Did you forgot to add that las question? Want to add it before continue?",
   "noContinue": "No, continue",
   "waitCancel": "Wait, cancel",
-  "yesAddIt": "Yes, Add it!"
+  "yesAddIt": "Yes, Add it!",
+  "monday": "monday",
+  "tuesday": "tuesday",
+  "wednesday": "wednesday",
+  "thursday": "thursday",
+  "friday": "friday",
+  "saturday": "saturday",
+  "sunday": "sunday",
+  "item": "item"
 }

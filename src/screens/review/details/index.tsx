@@ -126,7 +126,12 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
 
   onArchive = withThrottle(async () => {
     const { review } = this.state;
-    await this.props.changeArchiveStateReview(review.id!, review as Review);
+    const { translate, strings } = this.context;
+    await this.props.changeArchiveStateReview(
+      review.id!,
+      review as Review,
+      translate(strings.timeForReviewProcess),
+    );
     this.fetchReview();
   });
 

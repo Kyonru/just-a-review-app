@@ -20,7 +20,11 @@ export interface ReviewDetailsProps extends ActionSheetProps {
   logs: { [key: string]: ReviewLog };
   getReview(id: string): Review;
   deleteReview(id: string): Promise<any>;
-  changeArchiveStateReview(id: string, review: Review): Promise<any>;
+  changeArchiveStateReview(
+    id: string,
+    review: Review,
+    message: string,
+  ): Promise<any>;
 }
 
 export interface ReviewDetailsState {
@@ -37,7 +41,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(notificationSlice.actions.deleteNotifications({ reviewId: id }));
     return deleteReview(id)(dispatch);
   },
-  changeArchiveStateReview: (id: string, review: Review) => {
+  changeArchiveStateReview: (id: string, review: Review, message: string) => {
     if (!review.archivedAt) {
       dispatch(
         notificationSlice.actions.deleteNotifications({
@@ -45,9 +49,9 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
         }),
       );
     } else {
-      addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
-        dispatch,
-      );
+      addReviewScheduledNotification(
+        mapReviewToNotificationPayload(review, message),
+      )(dispatch);
     }
     return changeArchiveStateReview(id)(dispatch);
   },

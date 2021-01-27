@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { createSelector } from 'reselect';
 import { SectionListData } from 'react-native';
+import { Locale } from 'react-native-localize';
 
 import { Review } from 'src/@types/index';
 import { Store, SettingsState } from 'src/@types/store';
@@ -13,6 +14,7 @@ import {
 } from 'src/store/selectors';
 
 import { mapReviewsListToSectionList, sortDatedSectionList } from './utils';
+import { getLanguage } from '../settings/selectors';
 
 export const getReviewList = createSelector(reviewsStoreSelector, store => {
   return Object.keys(store.reviews)
@@ -54,17 +56,23 @@ export const getReviewListAsDatedSectionList = createSelector<
 export const getReviewListAsSectionList = createSelector<
   Store,
   { [key: string]: Review[] },
+  Locale,
   SectionListData<Review>[]
->(getReviewListAsDatedSectionList, reviews => {
-  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
+>(getReviewListAsDatedSectionList, getLanguage, (reviews, locale) => {
+  return sortDatedSectionList(
+    getSectionsFromReviewDates(reviews, locale.languageCode),
+  );
 });
 
 export const getArchivedReviewListAsSectionList = createSelector<
   Store,
   { [key: string]: Review[] },
+  Locale,
   SectionListData<Review>[]
->(getArchivedReviewListAsDatedSectionList, reviews => {
-  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
+>(getArchivedReviewListAsDatedSectionList, getLanguage, (reviews, locale) => {
+  return sortDatedSectionList(
+    getSectionsFromReviewDates(reviews, locale.languageCode),
+  );
 });
 
 export const getArchivedReviewListLength = createSelector<

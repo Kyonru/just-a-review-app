@@ -10,6 +10,7 @@ import EmptyState from 'src/components/empty-state';
 import resources from 'src/resources';
 import colors from 'src/theme/colors';
 import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 import { BaseReviewListProps } from '../props';
@@ -36,7 +37,7 @@ class SectionReviewList extends PureComponent<Props, State> {
   renderHeader = ({ section }: { section: SectionListData<Review> }) => {
     return (
       <View style={styles.sectionTitle}>
-        <List.Subheader>{section.title}</List.Subheader>
+        <List.Subheader>{capitalize(section.title)}</List.Subheader>
       </View>
     );
   };

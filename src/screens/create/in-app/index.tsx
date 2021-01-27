@@ -30,6 +30,7 @@ import { createQuestion } from 'src/utils/questions';
 import { createReview, updateReview } from 'src/utils/reviews';
 import { withThrottle } from 'src/utils/timers';
 import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import {
   CreateInAppState,
@@ -58,6 +59,10 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
   keyboardDidHideListener?: EmitterSubscription;
 
+  days: any[] = [];
+
+  types: any[] = [];
+
   constructor(props: CreateInAppProps) {
     super(props);
 
@@ -69,6 +74,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       review = (props as any).route.params.review;
     }
 
+    const { translate, strings } = props.context;
     if (editModeEnabled && review) {
       let day: any = moment()
         .format('dddd')
@@ -90,11 +96,23 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         currentQuestion: '',
       };
 
-      const { translate, strings } = props.context;
-      props.navigation.setOptions({ title: translate(strings.editReview) });
+      props.navigation.setOptions({
+        title: translate(strings.editReview),
+      });
     } else {
       this.state = DEFAULT_STATE;
     }
+
+    // TODO: Move this into a helper function
+    this.days = daysOfTheWeek.map(d => ({
+      ...d,
+      label: capitalize(translate(d.label.toLowerCase())),
+    }));
+
+    this.types = ReviewTypesAsOptions.map(t => ({
+      ...t,
+      label: capitalize(translate(t.label.toLowerCase())),
+    }));
   }
 
   componentDidMount() {
@@ -131,7 +149,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
     const add = (state: CreateInAppState) => {
       const { name, type, questions, date, day, time, monthlyDay } = state;
-
+      const { translate, strings } = this.props.context;
       if (editModeEnabled && review) {
         editReview(
           review.id,
@@ -144,6 +162,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             time,
             monthlyDay: monthlyDay as number,
           }),
+          translate(strings.timeForReviewProcess),
         );
       } else {
         addReview(
@@ -156,6 +175,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             time,
             monthlyDay: monthlyDay as number,
           }),
+          translate(strings.timeForReviewProcess),
         );
       }
       navigation.pop();
@@ -410,7 +430,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         <View key="dayPicker">
           <Dropdown
             label={translate(strings.day)}
-            options={daysOfTheWeek}
+            options={this.days}
             onSelect={this.onDaySelect}
             selectedValue={day}
           />
@@ -450,7 +470,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       >
         <Dropdown
           label={translate(strings.reviewType)}
-          options={ReviewTypesAsOptions}
+          options={this.types}
           onSelect={this.onTypeSelect}
           selectedValue={type}
         />

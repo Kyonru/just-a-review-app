@@ -8,16 +8,26 @@ import { mapReviewToNotificationPayload } from 'src/utils/notifications';
 export interface EndProcessProps {
   navigation: any;
   route: any;
-  addLog: (review: Review, duration: number, startDate: string) => Promise<any>;
+  addLog: (
+    review: Review,
+    duration: number,
+    startDate: string,
+    message: string,
+  ) => Promise<any>;
   review: Review;
 }
 
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addLog: (review: Review, duration: number, startDate: string) => {
+  addLog: (
+    review: Review,
+    duration: number,
+    startDate: string,
+    message: string,
+  ) => {
     addReviewScheduledNotification(
-      mapReviewToNotificationPayload(review, true),
+      mapReviewToNotificationPayload(review, message, true),
     )(dispatch);
     return addLog(review, duration, startDate)(dispatch);
   },

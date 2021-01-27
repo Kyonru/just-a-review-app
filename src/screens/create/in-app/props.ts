@@ -20,8 +20,8 @@ export interface CreateInAppProps
   > {
   context: any;
   navigation: any;
-  addReview: (review: Review) => Promise<any>;
-  editReview: (id: string, review: Review) => Promise<any>;
+  addReview: (review: Review, message: string) => Promise<any>;
+  editReview: (id: string, review: Review, message: string) => Promise<any>;
 }
 
 export interface CreateInAppState {
@@ -39,17 +39,17 @@ export interface CreateInAppState {
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addReview: (review: Review) => {
-    addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
-      dispatch,
-    );
+  addReview: (review: Review, message: string) => {
+    addReviewScheduledNotification(
+      mapReviewToNotificationPayload(review, message),
+    )(dispatch);
     return addReview(review)(dispatch);
   },
-  editReview: (id: string, review: Review) => {
+  editReview: (id: string, review: Review, message: string) => {
     dispatch(notificationSlice.actions.deleteNotifications({ reviewId: id }));
-    addReviewScheduledNotification(mapReviewToNotificationPayload(review))(
-      dispatch,
-    );
+    addReviewScheduledNotification(
+      mapReviewToNotificationPayload(review, message),
+    )(dispatch);
     return editReview(id, review)(dispatch);
   },
 });

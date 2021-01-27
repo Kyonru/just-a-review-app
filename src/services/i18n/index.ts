@@ -16,6 +16,14 @@ const translationGetters: { [key: string]: any } = {
   en: () => require('./translations/english.json'),
 };
 
+// ISO-8601, Europe
+export const momentLangConfig = {
+  week: {
+    dow: 1, // First day of week is Monday
+    doy: 4, // First week of year must contain 4 January (7 + 1 - 4)
+  },
+};
+
 export const translate = memoize(
   (key: string, config: any) => i18n.t(key, config),
   (key: string, config: any) => (config ? key + JSON.stringify(config) : key),
@@ -34,7 +42,7 @@ export const updateLanguage = (languague: RNLocalize.Locale) => {
       : defaultLanguage.languageTag,
   };
   i18n.locale = languageTag;
-  moment.locale(languageTag);
+  moment.locale(languageTag, momentLangConfig);
 };
 
 export const Init = (): Partial<RNLocalize.Locale> => {
@@ -56,7 +64,7 @@ export const Init = (): Partial<RNLocalize.Locale> => {
       : defaultLanguage.languageTag,
   };
   i18n.locale = languageTag;
-  moment.locale(languageTag);
+  moment.locale(languageTag, momentLangConfig);
   return { languageTag, isRTL };
 };
 

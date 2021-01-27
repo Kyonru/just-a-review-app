@@ -40,6 +40,7 @@ import {
 import { convertMinutesToHourString } from 'src/utils/time';
 import { withThrottle } from 'src/utils/timers';
 import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 
@@ -361,6 +362,7 @@ class ReviewProcessQuestions extends React.PureComponent<
   };
 
   renderAnswerType = (question: ReviewQuestion, index: number) => {
+    const { translate, strings } = this.context;
     if (question.type === ReviewQuestionType.Choice) {
       return (
         <FlatList
@@ -390,7 +392,7 @@ class ReviewProcessQuestions extends React.PureComponent<
               style={styles.listAnswerInput}
               mode="outlined"
               selectionColor={colors.lynch}
-              label="Item"
+              label={capitalize(translate(strings.item))}
               value={question.answer?.content}
               onChangeText={this.updateQuestionAnswer(question)}
               theme={{ colors: { primary: colors.lynch } }}
@@ -474,6 +476,7 @@ class ReviewProcessQuestions extends React.PureComponent<
 
   renderQuestion = (question: ReviewQuestion, index: number) => {
     const { questions } = this.state;
+    const { translate, strings } = this.context;
     return (
       <KeyboardAwareScrollView
         key={question.id}
@@ -485,7 +488,7 @@ class ReviewProcessQuestions extends React.PureComponent<
           <View style={styles.flex}>
             <Headline style={styles.title}>{question.q}</Headline>
             <Caption style={styles.averageText}>
-              {question.required ? 'required' : ''}
+              {question.required ? translate(strings.required) : ''}
             </Caption>
 
             <Card style={styles.card} onPress={this.onInputFocus(index)}>

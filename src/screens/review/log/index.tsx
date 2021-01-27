@@ -187,7 +187,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
               ]}
               visible
             >
-              {capitalize(review.type)}
+              {capitalize(translate(review.type))}
             </Badge>
             <ListSeparator />
             <Subheading>{translate(strings.duration)}</Subheading>
