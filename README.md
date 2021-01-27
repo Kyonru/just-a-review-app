@@ -1,8 +1,11 @@
 ![Node.js CI](https://github.com/Kyonru/just-a-review-app/workflows/Node.js%20CI/badge.svg)
 
-# Just-a-review-app
+# Retrospectives & Self-evaluations
 
 Productivity app focused on survey reviews.
+
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" style="float: left; padding-right: 10px;" height="88">](https://play.google.com/store/apps/details?id=com.kyonru.justareviewapp)
 
 ## Getting Started
 
