@@ -39,7 +39,7 @@ export enum LanguageSource {
   noLog = 'noLog',
   completeThisReview = 'completeThisReview',
   noReviews = 'noReviews',
-  completeAReview = 'CompleteAReview',
+  completeAReview = 'completeAReview',
   delete = 'delete',
   edit = 'edit',
   archive = 'archive',

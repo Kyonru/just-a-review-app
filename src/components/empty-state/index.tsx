@@ -22,9 +22,9 @@ function EmptyState({ art, title, description, onPress, viewProps }: Props) {
         resizeMethod="scale"
         source={art}
       />
-      <Headline>{title}</Headline>
+      <Headline style={{ textAlign: 'center' }}>{title}</Headline>
       <TouchableOpacity onPress={onPress}>
-        <Paragraph>{description}</Paragraph>
+        <Paragraph style={{ textAlign: 'center' }}>{description}</Paragraph>
       </TouchableOpacity>
     </View>
   );

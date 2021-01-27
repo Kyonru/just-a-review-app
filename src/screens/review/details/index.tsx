@@ -213,7 +213,7 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
   renderEmptyLogList = () => {
     const { translate, strings } = this.context;
     return (
-      <View key="2">
+      <View style={{ paddingHorizontal: 20 }} key="2">
         {this.renderSwipeDown()}
         <EmptyState
           title={translate(strings.noLog)}
