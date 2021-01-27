@@ -15,7 +15,8 @@
     "test-detox-android-windows": "detox test -c android.emu.debug.windows",
     "bump-patch": "npm version patch --no-git-tag-version && bundle exec fastlane bump",
     "bump-minor": "npm version minor --no-git-tag-version && bundle exec fastlane bump",
-    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump"
+    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump",
+    "create-android-bundle": "cd android && ./gradlew bundleRelease && cd .."
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
