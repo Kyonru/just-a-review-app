@@ -1,6 +1,6 @@
 {
   "name": "justAReviewApp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -15,7 +15,8 @@
     "test-detox-android-windows": "detox test -c android.emu.debug.windows",
     "bump-patch": "npm version patch --no-git-tag-version && bundle exec fastlane bump",
     "bump-minor": "npm version minor --no-git-tag-version && bundle exec fastlane bump",
-    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump"
+    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump",
+    "create-android-bundle": "cd android && ./gradlew bundleRelease && cd .."
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
@@ -33,8 +34,11 @@
     "appcenter": "^4.0.0",
     "appcenter-analytics": "^4.0.0",
     "appcenter-crashes": "^4.0.0",
+    "i18n-js": "^3.8.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.memoize": "^4.1.2",
     "lodash.throttle": "^4.1.1",
+    "matter-js": "^0.14.2",
     "moment": "^2.29.1",
     "query-string": "^6.13.7",
     "react": "16.13.1",
@@ -44,9 +48,11 @@
     "react-native-config": "^1.4.1",
     "react-native-dotenv": "^2.4.3",
     "react-native-draggable-flatlist": "^2.5.0",
+    "react-native-game-engine": "^1.2.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-get-random-values": "^1.5.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-localize": "^2.0.1",
     "react-native-masked-text": "^1.13.0",
     "react-native-paper": "^4.3.1",
     "react-native-push-notification": "^6.1.3",
@@ -67,7 +73,9 @@
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
+    "@types/i18n-js": "^3.8.0",
     "@types/jest": "^25.1.3",
+    "@types/matter-js": "^0.14.10",
     "@types/react": "^16.9.56",
     "@types/react-native": "^0.63.33",
     "@types/react-native-push-notification": "^5.0.5",

@@ -7,7 +7,16 @@ import { withThrottle } from 'src/utils/timers';
 import styles from './styles';
 
 class AppHeader extends Component<Props> {
-  goBack = withThrottle(() => this.props.navigation.pop());
+  goBack = withThrottle(
+    () => {
+      if (this.props.navigation.canGoBack()) {
+        this.props.navigation.pop();
+      }
+    },
+    1,
+    true,
+    false,
+  );
 
   openDrawer = () => (this.props.navigation as any).toggleDrawer();
 

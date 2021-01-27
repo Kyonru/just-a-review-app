@@ -1,11 +1,20 @@
 /* eslint-disable @typescript-eslint/indent */
 import { createSelector } from 'reselect';
 import { SectionListData } from 'react-native';
-import { reviewsStoreSelector } from 'src/store/selectors';
+import { Locale } from 'react-native-localize';
+
 import { Review } from 'src/@types/index';
-import { Store } from 'src/@types/store';
+import { Store, SettingsState } from 'src/@types/store';
+
 import { getSectionsFromReviewDates } from 'src/utils/reviews';
+
+import {
+  reviewsStoreSelector,
+  settingsStoreSelector,
+} from 'src/store/selectors';
+
 import { mapReviewsListToSectionList, sortDatedSectionList } from './utils';
+import { getLanguage } from '../settings/selectors';
 
 export const getReviewList = createSelector(reviewsStoreSelector, store => {
   return Object.keys(store.reviews)
@@ -23,37 +32,47 @@ export const getReview = createSelector(
 export const getArchivedReviewListAsDatedSectionList = createSelector<
   Store,
   Review[],
+  SettingsState,
   { [key: string]: Review[] }
->(getReviewList, reviews => {
+>(getReviewList, settingsStoreSelector, (reviews, settings) => {
   return mapReviewsListToSectionList(
     reviews.filter(review => !!review.archivedAt),
+    settings.language.languageCode,
   );
 });
 
 export const getReviewListAsDatedSectionList = createSelector<
   Store,
   Review[],
+  SettingsState,
   { [key: string]: Review[] }
->(getReviewList, reviews => {
+>(getReviewList, settingsStoreSelector, (reviews, settings) => {
   return mapReviewsListToSectionList(
     reviews.filter(review => !review.archivedAt),
+    settings.language.languageCode,
   );
 });
 
 export const getReviewListAsSectionList = createSelector<
   Store,
   { [key: string]: Review[] },
+  Locale,
   SectionListData<Review>[]
->(getReviewListAsDatedSectionList, reviews => {
-  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
+>(getReviewListAsDatedSectionList, getLanguage, (reviews, locale) => {
+  return sortDatedSectionList(
+    getSectionsFromReviewDates(reviews, locale.languageCode),
+  );
 });
 
 export const getArchivedReviewListAsSectionList = createSelector<
   Store,
   { [key: string]: Review[] },
+  Locale,
   SectionListData<Review>[]
->(getArchivedReviewListAsDatedSectionList, reviews => {
-  return sortDatedSectionList(getSectionsFromReviewDates(reviews));
+>(getArchivedReviewListAsDatedSectionList, getLanguage, (reviews, locale) => {
+  return sortDatedSectionList(
+    getSectionsFromReviewDates(reviews, locale.languageCode),
+  );
 });
 
 export const getArchivedReviewListLength = createSelector<

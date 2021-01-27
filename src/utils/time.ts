@@ -1,5 +1,7 @@
 import { DayOfTheWeek } from 'src/@types/index';
+
 import moment from 'moment';
+import { translate } from 'src/services/i18n/index';
 
 export const convertMinutesToHourString = (mins: number): string => {
   let hours = `${parseInt(`${mins / 60}`, 10)}`;
@@ -36,7 +38,9 @@ export const getNextDayOfWeek = (
   nextReminder: string,
   ignoreToday: boolean = true,
 ) => {
-  const dayDate = moment(ignoreToday ? nextReminder : undefined).day(day);
+  const dayDate = moment(ignoreToday ? nextReminder : undefined).day(
+    translate(day as string),
+  );
 
   if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
     dayDate.add(1, 'weeks');
@@ -49,12 +53,14 @@ export const getNextDayOfMonth = (
   nextReminder: string,
   ignoreToday: boolean = true,
 ) => {
-  const dayDate = moment(ignoreToday ? nextReminder : undefined)
-    .set('date', day)
-    .set('month', moment().month());
+  const dayDate = moment(ignoreToday ? nextReminder : undefined);
+
+  if (!ignoreToday) {
+    dayDate.set('date', day).set('month', moment().month());
+  }
 
   if (ignoreToday || dayDate.isBefore(moment().startOf('day'))) {
-    dayDate.add(1, 'month'); // TODO: FIX ME! Adding a year instead of a month
+    dayDate.add(moment.duration({ M: 1 }), 'M');
   }
 
   return dayDate;
@@ -76,12 +82,17 @@ export const getNextDayOfYear = (
   return dayDate;
 };
 
-export const formatReviewDate = (date: string): string => {
+const languageSplitter: { [key: string]: string } = {
+  en: 'at',
+  es: 'a las',
+};
+
+export const formatReviewDate = (date: string, locale: string): string => {
   const dateValue = moment(date);
 
   if (Math.abs(moment().diff(dateValue, 'days')) > 7) {
     return dateValue.format('LL');
   }
 
-  return dateValue.calendar().split('at')[0];
+  return dateValue.calendar().split(languageSplitter[locale])[0];
 };

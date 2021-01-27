@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import {
@@ -21,8 +21,13 @@ import ListSeparator from 'src/components/separator';
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { convertMinutesToAverageTime } from 'src/utils/time';
 import { capitalize } from 'src/utils/strings';
-import { ReviewQuestion, ReviewQuestionType } from 'src/@types/index';
+import {
+  ReviewQuestion,
+  ReviewQuestionOption,
+  ReviewQuestionType,
+} from 'src/@types/index';
 import { deleteLog } from 'src/store/logs/actions';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 import {
@@ -59,6 +64,34 @@ const formatAnswer = (type: ReviewQuestionType, value?: string) => {
   return value;
 };
 
+const renderOption = (log: ReviewQuestion) => (
+  option: ReviewQuestionOption,
+) => {
+  if (!option.value) {
+    return null;
+  }
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <MaterialIcon
+        color="black"
+        name={option.value ? IconNameOn[log.type] : IconNameOff[log.type]}
+        size={24}
+        style={{ marginRight: 8 }}
+      />
+      <Paragraph
+        style={{
+          textDecorationLine:
+            option.value || log.type === ReviewQuestionType.List
+              ? 'none'
+              : 'line-through',
+        }}
+      >
+        {option.label}
+      </Paragraph>
+    </View>
+  );
+};
+
 function LogQuestion(log: ReviewQuestion) {
   if (
     log.type === ReviewQuestionType.Choice ||
@@ -69,26 +102,7 @@ function LogQuestion(log: ReviewQuestion) {
       <View key={log.id}>
         <ListSeparator />
         <Title>{log.q}</Title>
-        {log.answer?.options?.map(op => (
-          <View style={{ flexDirection: 'row' }}>
-            <MaterialIcon
-              color="black"
-              name={op.value ? IconNameOn[log.type] : IconNameOff[log.type]}
-              size={24}
-              style={{ marginRight: 8 }}
-            />
-            <Paragraph
-              style={{
-                textDecorationLine:
-                  op.value || log.type === ReviewQuestionType.List
-                    ? 'none'
-                    : 'line-through',
-              }}
-            >
-              {op.label}
-            </Paragraph>
-          </View>
-        ))}
+        {log.answer?.options?.map(renderOption(log))}
       </View>
     );
   }
@@ -110,6 +124,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
   const { review, log } = params;
   const { showActionSheetWithOptions } = useActionSheet();
   const dispatch = useDispatch();
+  const { translate, strings } = React.useContext(LocalizationContext);
 
   const onDelete = () => {
     deleteLog(review.id, log.id)(dispatch);
@@ -124,7 +139,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
       0: onDelete,
     };
 
-    const contextMenuOptions = ['Delete'];
+    const contextMenuOptions = [translate(strings.delete)];
 
     const contextMenuOptionIcons = [
       <MaterialIcon color="red" name="delete" size={24} />,
@@ -172,10 +187,10 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
               ]}
               visible
             >
-              {capitalize(review.type)}
+              {capitalize(translate(review.type))}
             </Badge>
             <ListSeparator />
-            <Subheading>Duration</Subheading>
+            <Subheading>{translate(strings.duration)}</Subheading>
             <Caption style={styles.averageText}>
               {convertMinutesToAverageTime(log.duration)}
             </Caption>
@@ -194,4 +209,4 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ReviewLogScreenProcess);
+)(memo(ReviewLogScreenProcess));

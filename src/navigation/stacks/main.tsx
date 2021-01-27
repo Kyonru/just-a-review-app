@@ -1,7 +1,11 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import { LocalizationContext } from 'src/services/i18n/index';
 
 import NavHeader from 'src/components/nav-header';
 
@@ -18,6 +22,7 @@ import QuestionEdit from 'src/screens/create/in-app/question-edit';
 const StackCreator = createStackNavigator();
 
 export default () => {
+  const { translate, strings } = React.useContext(LocalizationContext);
   return (
     <StackCreator.Navigator
       screenOptions={{
@@ -28,35 +33,37 @@ export default () => {
     >
       <StackCreator.Screen
         options={{
-          title: 'Reviews',
+          title: translate(strings.reviews),
         }}
         name={SCREEN_NAMES.reviewList}
         component={ReviewList}
       />
       <StackCreator.Screen
         options={{
-          title: 'Archive reviews',
+          title: translate(strings.archivedList),
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.archivedReviewList}
         component={ArchivedReviewList}
       />
       <StackCreator.Screen
         options={{
-          title: 'Add review',
+          title: translate(strings.addReview),
         }}
         name={SCREEN_NAMES.createInApp}
         component={CreateInApp}
       />
       <StackCreator.Screen
         options={{
-          title: 'Add review',
+          title: translate(strings.addReview),
         }}
         name={SCREEN_NAMES.createExternalForm}
         component={CreateExternalForm}
       />
       <StackCreator.Screen
         options={{
-          title: 'Edit Question',
+          title: translate(strings.editQuestion),
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.questionEdit}
         component={QuestionEdit}
@@ -64,6 +71,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewDetails}
         component={ReviewDetails}
@@ -71,6 +79,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewLogDetail}
         component={ReviewLogDetail}
@@ -87,6 +96,7 @@ export default () => {
       <StackCreator.Screen
         options={{
           title: '',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         name={SCREEN_NAMES.reviewProcessEnd}
         component={ReviewProcessEnd}

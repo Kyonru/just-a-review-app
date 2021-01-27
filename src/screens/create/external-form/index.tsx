@@ -20,10 +20,6 @@ class CreateGoogleFormReview extends Component<any> {
   };
 
   onSave = () => {
-    // const { name, type, questions, date, day, time, monthlyDay } = this.state;
-    // // console.log(
-    // //   createExternalReview({ name, type, questions, date, day, time, monthlyDay }),
-    // // );
     this.props.navigation.pop();
   };
 

@@ -9,6 +9,8 @@ import { SCREEN_NAMES } from 'src/navigation/constants';
 import EmptyState from 'src/components/empty-state';
 import resources from 'src/resources';
 import colors from 'src/theme/colors';
+import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 import { BaseReviewListProps } from '../props';
@@ -35,7 +37,7 @@ class SectionReviewList extends PureComponent<Props, State> {
   renderHeader = ({ section }: { section: SectionListData<Review> }) => {
     return (
       <View style={styles.sectionTitle}>
-        <List.Subheader>{section.title}</List.Subheader>
+        <List.Subheader>{capitalize(section.title)}</List.Subheader>
       </View>
     );
   };
@@ -66,14 +68,15 @@ class SectionReviewList extends PureComponent<Props, State> {
 
   renderEmpty = () => {
     const { onPressEmptyState, header } = this.props;
+    const { translate, strings } = this.context;
 
     return (
       <>
         {!!header && header.displayWhenEmpty ? this.renderListHeader() : null}
         <EmptyState
           viewProps={{ testID: 'emptyState' }}
-          title="There are no reviews."
-          description="Create a review and it will show up here! ✏️"
+          title={translate(strings.noReviews)}
+          description={translate(strings.completeAReview)}
           art={resources.images.emptyStates.start}
           onPress={onPressEmptyState}
         />
@@ -122,5 +125,7 @@ interface Props extends BaseReviewListProps {
 interface State {
   showHeader?: boolean;
 }
+
+SectionReviewList.contextType = LocalizationContext;
 
 export default SectionReviewList;

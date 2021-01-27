@@ -1,16 +1,17 @@
 import moment from 'moment';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { Card, Title, Paragraph, Badge } from 'react-native-paper';
 
 import { getReviewTypeColor } from 'src/theme/helpers';
 import { ReviewType } from 'src/@types';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
 
 import { ReviewListItemProps } from './props';
 import styles from './styles';
 
-class ReviewListItem extends Component<ReviewListItemProps> {
+class ReviewListItem extends PureComponent<ReviewListItemProps> {
   style: any;
 
   onPress = withThrottle(
@@ -32,10 +33,15 @@ class ReviewListItem extends Component<ReviewListItemProps> {
 
   renderRight = () => {
     const { data } = this.props;
-    if (moment(data.nextReminder).isBefore(moment())) {
+    if (
+      moment(data.nextReminder)
+        .add(1, 'hour')
+        .isBefore(moment())
+    ) {
+      const { translate, strings } = this.context;
       return (
         <Badge style={styles.expiredBadge} visible>
-          Expired
+          {translate(strings.expired)}
         </Badge>
       );
     }
@@ -54,5 +60,7 @@ class ReviewListItem extends Component<ReviewListItemProps> {
     );
   }
 }
+
+ReviewListItem.contextType = LocalizationContext;
 
 export default ReviewListItem;

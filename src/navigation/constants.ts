@@ -12,6 +12,7 @@ export enum SCREEN_NAMES {
   reviewProcessEnd = 'app.main.reviews.process.end',
   reviewLogDetail = 'app.main.reviews.logs.details',
   aboutApp = 'app.about',
+  easterEgg = 'app.about.surprise',
   settings = 'app.settings',
   avatarEdit = 'app.settings.avatar.edit',
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment';
 import * as React from 'react';
-import { Alert, View, FlatList } from 'react-native';
+import { Alert, View, FlatList, Keyboard } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import {
   Headline,
@@ -39,6 +39,8 @@ import {
 } from 'src/utils/questions';
 import { convertMinutesToHourString } from 'src/utils/time';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 
@@ -116,19 +118,24 @@ class ReviewProcessQuestions extends React.PureComponent<
     // Prevent default behavior of leaving the screen
     e.preventDefault();
 
+    const { translate, strings } = this.context;
     // Prompt the user before leaving the screen
     Alert.alert(
-      'Discard review?',
-      'You are in middle of a review, are you sure you want to leave?',
+      translate(strings.discardReview),
+      translate(strings.discardReviewMessage),
       [
         {
-          text: 'Discard',
+          text: translate(strings.discard),
           style: 'destructive',
           // If the user confirmed, then we dispatch the action we blocked earlier
           // This will continue the action that had triggered the removal of the screen
           onPress: () => this.props.navigation.dispatch(e.data.action),
         },
-        { text: "Don't leave", style: 'cancel', onPress: () => {} },
+        {
+          text: translate(strings.dontLeave),
+          style: 'cancel',
+          onPress: () => {},
+        },
       ],
     );
   };
@@ -146,6 +153,7 @@ class ReviewProcessQuestions extends React.PureComponent<
   onBlur = () => {
     clearInterval(this.counter);
     this.counter = 0;
+    Keyboard.dismiss();
     this.setState({
       leaveConfirm: false,
     });
@@ -159,8 +167,9 @@ class ReviewProcessQuestions extends React.PureComponent<
       question => question.required && isAnswerEmpty(question.answer),
     );
 
+    const { translate, strings } = this.context;
     if (isInvalidReview) {
-      return Alert.alert('', 'You need to fill all the required questions.');
+      return Alert.alert('', translate(strings.needToBeFilled));
     }
 
     return navigation.push(SCREEN_NAMES.reviewProcessEnd, {
@@ -353,6 +362,7 @@ class ReviewProcessQuestions extends React.PureComponent<
   };
 
   renderAnswerType = (question: ReviewQuestion, index: number) => {
+    const { translate, strings } = this.context;
     if (question.type === ReviewQuestionType.Choice) {
       return (
         <FlatList
@@ -382,7 +392,7 @@ class ReviewProcessQuestions extends React.PureComponent<
               style={styles.listAnswerInput}
               mode="outlined"
               selectionColor={colors.lynch}
-              label="Question"
+              label={capitalize(translate(strings.item))}
               value={question.answer?.content}
               onChangeText={this.updateQuestionAnswer(question)}
               theme={{ colors: { primary: colors.lynch } }}
@@ -466,6 +476,7 @@ class ReviewProcessQuestions extends React.PureComponent<
 
   renderQuestion = (question: ReviewQuestion, index: number) => {
     const { questions } = this.state;
+    const { translate, strings } = this.context;
     return (
       <KeyboardAwareScrollView
         key={question.id}
@@ -477,7 +488,7 @@ class ReviewProcessQuestions extends React.PureComponent<
           <View style={styles.flex}>
             <Headline style={styles.title}>{question.q}</Headline>
             <Caption style={styles.averageText}>
-              {question.required ? 'required' : ''}
+              {question.required ? translate(strings.required) : ''}
             </Caption>
 
             <Card style={styles.card} onPress={this.onInputFocus(index)}>
@@ -524,5 +535,7 @@ class ReviewProcessQuestions extends React.PureComponent<
     );
   }
 }
+
+ReviewProcessQuestions.contextType = LocalizationContext;
 
 export default ReviewProcessQuestions;

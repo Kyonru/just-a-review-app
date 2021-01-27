@@ -5,19 +5,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './styles';
 
-function EmptyState({
-  art,
-  title,
-  description,
-  onPress,
-  viewProps,
-}: {
+interface Props {
   title: string;
   description: string;
   art: ImageSourcePropType;
   onPress?(): void;
   viewProps?: ViewProps;
-}) {
+}
+
+function EmptyState({ art, title, description, onPress, viewProps }: Props) {
   return (
     <View style={styles.emptyState} {...viewProps}>
       <Image
@@ -26,9 +22,9 @@ function EmptyState({
         resizeMethod="scale"
         source={art}
       />
-      <Headline>{title}</Headline>
+      <Headline style={{ textAlign: 'center' }}>{title}</Headline>
       <TouchableOpacity onPress={onPress}>
-        <Paragraph>{description}</Paragraph>
+        <Paragraph style={{ textAlign: 'center' }}>{description}</Paragraph>
       </TouchableOpacity>
     </View>
   );

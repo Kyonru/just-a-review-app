@@ -29,6 +29,8 @@ import { getReviewTypeColor } from 'src/theme/helpers';
 import { createQuestion } from 'src/utils/questions';
 import { createReview, updateReview } from 'src/utils/reviews';
 import { withThrottle } from 'src/utils/timers';
+import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import {
   CreateInAppState,
@@ -57,6 +59,10 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
   keyboardDidHideListener?: EmitterSubscription;
 
+  days: any[] = [];
+
+  types: any[] = [];
+
   constructor(props: CreateInAppProps) {
     super(props);
 
@@ -68,6 +74,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       review = (props as any).route.params.review;
     }
 
+    const { translate, strings } = props.context;
     if (editModeEnabled && review) {
       let day: any = moment()
         .format('dddd')
@@ -89,10 +96,23 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
         currentQuestion: '',
       };
 
-      props.navigation.setOptions({ title: 'Edit Review' });
+      props.navigation.setOptions({
+        title: translate(strings.editReview),
+      });
     } else {
       this.state = DEFAULT_STATE;
     }
+
+    // TODO: Move this into a helper function
+    this.days = daysOfTheWeek.map(d => ({
+      ...d,
+      label: capitalize(translate(d.label.toLowerCase())),
+    }));
+
+    this.types = ReviewTypesAsOptions.map(t => ({
+      ...t,
+      label: capitalize(translate(t.label.toLowerCase())),
+    }));
   }
 
   componentDidMount() {
@@ -129,7 +149,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
     const add = (state: CreateInAppState) => {
       const { name, type, questions, date, day, time, monthlyDay } = state;
-
+      const { translate, strings } = this.props.context;
       if (editModeEnabled && review) {
         editReview(
           review.id,
@@ -142,6 +162,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             time,
             monthlyDay: monthlyDay as number,
           }),
+          translate(strings.timeForReviewProcess),
         );
       } else {
         addReview(
@@ -154,24 +175,22 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             time,
             monthlyDay: monthlyDay as number,
           }),
+          translate(strings.timeForReviewProcess),
         );
       }
       navigation.pop();
     };
 
     if (currentQuestion) {
-      Alert.alert(
-        'Wait!',
-        'Did you forgot to add that las question? Want to add it before continue?',
-        [
-          { text: 'No, continue', onPress: () => add(this.state) },
-          { text: 'Wait, cancel' },
-          {
-            text: 'Yes, Add it!',
-            onPress: () => this.onAddQuestion(undefined, add),
-          },
-        ],
-      );
+      const { translate, strings } = this.props.context;
+      Alert.alert(translate(strings.wait), translate(strings.lastQuestion), [
+        { text: translate(strings.noContinue), onPress: () => add(this.state) },
+        { text: translate(strings.waitCancel) },
+        {
+          text: translate(strings.yesAddIt),
+          onPress: () => this.onAddQuestion(undefined, add),
+        },
+      ]);
     } else {
       add(this.state);
     }
@@ -281,10 +300,16 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       });
     };
 
-    Alert.alert('Delete question', "This action can't be undone.", [
-      { text: 'Yes', onPress: action },
-      { text: 'No' },
-    ]);
+    const { translate, strings } = this.props.context;
+
+    Alert.alert(
+      translate(strings.deleteQuestion),
+      translate(strings.cantBeUndone),
+      [
+        { text: translate(strings.yes), onPress: action },
+        { text: translate(strings.no) },
+      ],
+    );
   };
 
   openQuestion = (item: ReviewQuestion) => () => {
@@ -358,11 +383,12 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   renderExtraInputs = () => {
     const { type, date, day, time, monthlyDay } = this.state;
     const fields: any[] = [];
+    const { translate, strings } = this.props.context;
     if (type === ReviewType.yearly) {
       fields.push(
         <View key="dateTimePicker">
           <DatePicker
-            label="Date"
+            label={translate(strings.date)}
             testID="dateTimePicker"
             value={moment(date).toDate()}
             is24Hour
@@ -388,7 +414,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           <TextInput
             mode="outlined"
             selectionColor={colors.lynch}
-            label="Review Day"
+            label={translate(strings.reviewDay)}
             value={`${monthlyDay}`}
             keyboardType="number-pad"
             onChangeText={this.onMonthlyDayChange}
@@ -403,8 +429,8 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
       fields.push(
         <View key="dayPicker">
           <Dropdown
-            label="Day"
-            options={daysOfTheWeek}
+            label={translate(strings.day)}
+            options={this.days}
             onSelect={this.onDaySelect}
             selectedValue={day}
           />
@@ -416,7 +442,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
     fields.push(
       <View key="timePicker">
         <DatePicker
-          label="Time"
+          label={translate(strings.time)}
           mode="time"
           testID="dateTimePicker"
           value={moment(time).toDate()}
@@ -435,14 +461,16 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
 
   render() {
     const { type, name, currentQuestion, questions, showFAB } = this.state;
+    const { context } = this.props;
+    const { translate, strings } = context;
     return (
       <ScreenContainer
         containerProps={{ testID: 'create_screen' }}
         containerStyle={styles.container}
       >
         <Dropdown
-          label="Review Type"
-          options={ReviewTypesAsOptions}
+          label={translate(strings.reviewType)}
+          options={this.types}
           onSelect={this.onTypeSelect}
           selectedValue={type}
         />
@@ -451,7 +479,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
           testID="name_text_input"
           mode="outlined"
           selectionColor={colors.lynch}
-          label="Name"
+          label={translate(strings.name)}
           value={name}
           onChangeText={reviewName => this.setState({ name: reviewName })}
           theme={{ colors: { primary: colors.lynch, background: 'white' } }}
@@ -464,7 +492,7 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
             style={styles.questionInput}
             mode="outlined"
             selectionColor={colors.lynch}
-            label="Question"
+            label={translate(strings.question)}
             value={currentQuestion}
             onChangeText={newQuestion =>
               this.setState({ currentQuestion: newQuestion })
@@ -503,4 +531,10 @@ class CreateInAppReview extends Component<CreateInAppProps, CreateInAppState> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateInAppReview);
+const CreateWithContext = (props: any) => (
+  <LocalizationContext.Consumer>
+    {context => <CreateInAppReview context={context} {...props} />}
+  </LocalizationContext.Consumer>
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateWithContext);

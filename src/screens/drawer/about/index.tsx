@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, View, Linking } from 'react-native';
 import { List, Subheading, DataTable } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ART_URL, CHANNEL_URL, PAY_URL, GITHUB_URL } from '@env';
 
-import app from 'src/data/app';
 import ScreenContainer from 'src/components/screen-container';
-import colors from 'src/theme/colors';
+import app from 'src/data/app';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 import resources from 'src/resources';
+import colors from 'src/theme/colors';
+import { getRandomColor } from 'src/utils/colors';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 
 function Legal() {
+  const { translate, strings } = React.useContext(LocalizationContext);
+
   return (
     <List.Accordion
-      title="Legal"
+      title={translate(strings.credits)}
       style={styles.legal}
       theme={{ colors: { primary: colors.black } }}
     >
       <DataTable>
         <DataTable.Header>
           <DataTable.Title> </DataTable.Title>
-          <DataTable.Title numeric>Source</DataTable.Title>
+          <DataTable.Title numeric>{translate(strings.source)}</DataTable.Title>
         </DataTable.Header>
 
-        <DataTable.Row onPress={() => Linking.openURL(ART_URL) as any}>
-          <DataTable.Cell>Art</DataTable.Cell>
+        <DataTable.Row
+          rippleColor={`${colors.pistonBlue}22`}
+          onPress={() => Linking.openURL(ART_URL) as any}
+        >
+          <DataTable.Cell>{translate(strings.art)}</DataTable.Cell>
           <DataTable.Cell numeric>ls.graphics</DataTable.Cell>
         </DataTable.Row>
       </DataTable>
@@ -33,7 +41,23 @@ function Legal() {
   );
 }
 
-function AboutApp() {
+function AboutApp(props: any) {
+  const [easterEggCount, setCount] = useState(0);
+  const { navigation } = props;
+
+  const { translate, strings } = React.useContext(LocalizationContext);
+
+  useEffect(() => {
+    if (easterEggCount > 10) {
+      setCount(0);
+      navigation.navigate(SCREEN_NAMES.easterEgg);
+    }
+  }, [easterEggCount]);
+
+  const incrementAppTouchesCount = () => {
+    setCount(easterEggCount + 1);
+  };
+
   return (
     <ScreenContainer
       containerProps={{ testID: 'about_screen' }}
@@ -44,22 +68,26 @@ function AboutApp() {
           <View>
             <List.Item
               style={styles.item}
-              title="App version"
+              title={translate(strings.appVersion)}
               description={app.version}
+              onPress={incrementAppTouchesCount}
+              rippleColor={`${getRandomColor()}22`}
             />
             <List.Item
               onPress={() => Linking.openURL(CHANNEL_URL) as any}
               style={styles.item}
-              title="Visit my channel!"
+              title={translate(strings.twitchChannel)}
+              rippleColor={`${colors.yearly}22`}
             />
             <List.Item
               onPress={() => Linking.openURL(PAY_URL) as any}
               style={styles.item}
-              title="Invite a ☕"
+              title={translate(strings.invitePizza)}
+              rippleColor={`${colors.shamrock}22`}
             />
             <Legal />
           </View>
-          <View>
+          <View style={styles.bottom}>
             <Image
               style={styles.bottomImage}
               resizeMethod="scale"
@@ -67,16 +95,17 @@ function AboutApp() {
               source={resources.images.emptyStates.coding}
             />
             <Subheading style={styles.message}>
-              Hi, my name is{' '}
+              {translate(strings.hiMyNameIs)}
               <Subheading
                 onPress={() => Linking.openURL(GITHUB_URL) as any}
                 style={styles.kyonru}
               >
                 kyonru!{' '}
               </Subheading>
-              {'\n'}This app was made with
+              {'\n'}
+              {translate(strings.appMadeWith)}
               <Subheading style={styles.love}>{`${' 💗 '}`}</Subheading>
-              and react native.
+              {translate(strings.andReactNative)}
             </Subheading>
           </View>
         </View>
@@ -85,4 +114,4 @@ function AboutApp() {
   );
 }
 
-export default AboutApp;
+export default React.memo(AboutApp);

@@ -14,6 +14,8 @@ import {
 import colors from 'src/theme/colors';
 import { questionTypes } from 'src/data/question';
 import { createReviewQuestionOption } from 'src/utils/questions';
+import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import styles from './styles';
 
@@ -24,6 +26,7 @@ function QuestionEditScreen(props: any) {
 
   const [value, setValue] = useState<ReviewQuestion>(question);
   const [option, setOption] = useState('');
+  const { translate, strings } = React.useContext(LocalizationContext);
 
   const onSave = () => {
     onSaveChanges(value);
@@ -41,6 +44,11 @@ function QuestionEditScreen(props: any) {
     setOption('');
   };
 
+  const types = questionTypes.map(t => ({
+    ...t,
+    label: capitalize(translate(t.translateKey)),
+  }));
+
   const onDeleteOption = (item: ReviewQuestionOption) => () => {
     const action = () => {
       const index = value.options!.findIndex(
@@ -56,10 +64,14 @@ function QuestionEditScreen(props: any) {
       });
     };
 
-    Alert.alert('Delete option', "This action can't be undone.", [
-      { text: 'Yes', onPress: action },
-      { text: 'No' },
-    ]);
+    Alert.alert(
+      translate(strings.deleteOption),
+      translate(strings.cantBeUndone),
+      [
+        { text: translate(strings.yes), onPress: action },
+        { text: translate(strings.no) },
+      ],
+    );
   };
 
   const shouldRenderList =
@@ -78,12 +90,7 @@ function QuestionEditScreen(props: any) {
               size={28}
             />
 
-            <Text
-              style={styles.question}
-              textBreakStrategy="simple"
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
+            <Text style={styles.question} textBreakStrategy="simple">
               {item.label}
             </Text>
           </View>
@@ -108,9 +115,10 @@ function QuestionEditScreen(props: any) {
         <View style={styles.content}>
           <View style={styles.header} />
           <TextInput
+            multiline
             mode="outlined"
             selectionColor={colors.lynch}
-            label="Question"
+            label={translate(strings.question)}
             value={`${value.q}`}
             onChangeText={q => setValue({ ...value, q })}
             theme={{
@@ -119,8 +127,8 @@ function QuestionEditScreen(props: any) {
           />
           <View style={{ paddingVertical: 16 }}>
             <Dropdown
-              label="Type"
-              options={questionTypes}
+              label={translate(strings.type)}
+              options={types}
               onSelect={(type: string) =>
                 setValue({ ...value, type: type as ReviewQuestionType })
               }
@@ -129,7 +137,7 @@ function QuestionEditScreen(props: any) {
           </View>
           <List.Item
             style={styles.item}
-            title="Required"
+            title={translate(strings.required)}
             right={() => (
               <Switch
                 value={value.required}
@@ -150,7 +158,7 @@ function QuestionEditScreen(props: any) {
                   style={styles.questionInput}
                   mode="outlined"
                   selectionColor={colors.lynch}
-                  label="Add an option"
+                  label={translate(strings.addAnOption)}
                   value={option}
                   onChangeText={op => setOption(op)}
                   onSubmitEditing={onAddOption}

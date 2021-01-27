@@ -8,6 +8,7 @@ import SectionReviewList from 'src/containers/review-list/section';
 
 import colors from 'src/theme/colors';
 import { SCREEN_NAMES } from 'src/navigation/constants';
+import { LocalizationContext } from 'src/services/i18n';
 import { withThrottle } from 'src/utils/timers';
 
 import {
@@ -34,6 +35,10 @@ class MainScreen extends Component<
     this.props.navigation.push(SCREEN_NAMES.createInApp);
   });
 
+  openArchivedList = withThrottle(() => {
+    this.props.navigation.push(SCREEN_NAMES.archivedReviewList);
+  });
+
   componentDidMount() {
     const { navigation } = this.props;
     this.unsubscribeFocus = navigation.addListener('focus', () => {
@@ -53,13 +58,10 @@ class MainScreen extends Component<
     this.props.navigation.push(SCREEN_NAMES.createExternalForm);
   };
 
-  openArchivedList = () => {
-    this.props.navigation.push(SCREEN_NAMES.archivedReviewList);
-  };
-
   render() {
     const { showFAB } = this.state;
     const { navigation, reviews, archiveCount } = this.props;
+    const { translate, strings } = this.context;
     return (
       <ScreenContainer
         containerProps={{ testID: 'review_list_screen' }}
@@ -71,7 +73,7 @@ class MainScreen extends Component<
           data={[...reviews]}
           navigation={navigation}
           header={{
-            title: 'Archived List',
+            title: translate(strings.archivedList),
             subtitle: `${archiveCount}`,
             icon: 'archive',
             displayWhenEmpty: true,
@@ -83,7 +85,7 @@ class MainScreen extends Component<
           options={[
             {
               icon: 'cellphone',
-              label: 'in App',
+              label: translate(strings.inApp),
               onPress: this.openCreateInApp,
               color: colors.white,
               style: { backgroundColor: colors.pistonBlue },
@@ -102,5 +104,7 @@ class MainScreen extends Component<
     );
   }
 }
+
+MainScreen.contextType = LocalizationContext;
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

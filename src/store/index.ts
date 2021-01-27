@@ -16,27 +16,28 @@ import storage from '@react-native-async-storage/async-storage';
 import logger from 'redux-logger';
 
 import { Store } from 'src/@types/store';
-import { clearDeliveredNotifcations } from 'src/services/notifications/triggers';
+import { clearDeliveredNotifications } from 'src/services/notifications/triggers';
+import { Init as codePushInit } from 'src/services/versioning/code-push';
 
 import reviewsSlice from './reviews/reducer';
-import logsSclice from './logs/reducer';
-import settingsSclice from './settings/reducer';
+import logsSlice from './logs/reducer';
+import settingsSlice from './settings/reducer';
 import notificationsSlice from './notifications/reducer';
 
 import migrations from './migrations';
 import { getDevelopment, getNotificationsSettings } from './settings/selectors';
 
 export const reducers = combineReducers<Store>({
-  logs: logsSclice.reducer,
+  logs: logsSlice.reducer,
   reviews: reviewsSlice.reducer,
-  settings: settingsSclice.reducer,
+  settings: settingsSlice.reducer,
   notifications: notificationsSlice.reducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  version: 1,
+  version: 2,
   migrate: createMigrate(migrations as any, { debug: false }),
 };
 
@@ -63,8 +64,10 @@ export const persistor = persistStore(store, {}, () => {
   }
 
   if (clearDelivered) {
-    clearDeliveredNotifcations();
+    clearDeliveredNotifications();
   }
+
+  codePushInit();
 });
 
 export default () => {

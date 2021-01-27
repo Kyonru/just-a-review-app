@@ -1,6 +1,6 @@
 import {
   TopType,
-  AvartarStyle,
+  AvatarStyle,
   AccessoriesType,
   HairColor,
   FacialHairType,
@@ -62,8 +62,8 @@ export const topTypes = [
 ];
 
 export const avatarStyle = [
-  { label: 'Circle', value: AvartarStyle.Circle, id: 0 },
-  { label: 'Transparent', value: AvartarStyle.Transparent, id: 1 },
+  { label: 'Circle', value: AvatarStyle.Circle, id: 0 },
+  { label: 'Transparent', value: AvatarStyle.Transparent, id: 1 },
 ];
 
 export const accessoriesTypes = [

@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { defaultLanguage } from 'src/data/language';
+
 import { SettingsState } from 'src/@types/store';
 import { createRandomAvatar } from 'src/utils/avatar';
 
@@ -12,7 +14,7 @@ export const SettingsInitialState: SettingsState = {
   development: {
     showYellowBox: false,
   },
-  language: 'english',
+  language: defaultLanguage,
   useDarkMode: false,
   showOnBoarding: false,
   useRewards: false,

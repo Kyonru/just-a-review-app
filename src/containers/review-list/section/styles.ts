@@ -10,5 +10,6 @@ export default StyleSheet.create<{
   },
   sectionTitle: {
     backgroundColor: colors.white,
+    paddingHorizontal: 20,
   },
 });

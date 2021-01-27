@@ -6,10 +6,17 @@ import { SvgUri } from 'react-native-svg';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ScreenContainer from 'src/components/screen-container';
+import Dropdown from 'src/components/dropdown/with-description';
+
+import { DropdownOption } from 'src/@types';
+import { SCREEN_NAMES } from 'src/navigation/constants';
 import { settingsStoreSelector } from 'src/store/selectors';
 import settingsSlice from 'src/store/settings/reducer';
-import { SCREEN_NAMES } from 'src/navigation/constants';
+import LanguageName, { AvailableLanguages } from 'src/data/language';
+
 import colors from 'src/theme/colors';
+import { compareLanguageOptions } from 'src/utils/language';
+import { LocalizationContext } from 'src/services/i18n';
 
 import styles from './styles';
 
@@ -19,6 +26,9 @@ function Setting({ navigation }: any) {
     settingsStoreSelector,
   );
 
+  const { setLocale, translate, strings } = React.useContext(
+    LocalizationContext,
+  );
   return (
     <ScreenContainer
       containerProps={{ testID: 'setting_screen' }}
@@ -43,7 +53,7 @@ function Setting({ navigation }: any) {
               <TextInput
                 mode="outlined"
                 selectionColor={colors.lynch}
-                label="Name"
+                label={translate(strings.name)}
                 value={`${user.name}`}
                 onChangeText={name =>
                   dispatch(
@@ -57,10 +67,17 @@ function Setting({ navigation }: any) {
                 }}
               />
             </View>
-            <List.Item
+            <Dropdown
+              label={translate(strings.language)}
+              options={AvailableLanguages}
+              value={LanguageName[language.languageCode]}
+              optionSelected={language.languageCode}
+              onSelect={(option: DropdownOption) => {
+                setLocale(option.value);
+                dispatch(settingsSlice.actions.changeLanguage(option.value));
+              }}
               style={styles.item}
-              title="Language"
-              description={language}
+              comparisonMapper={compareLanguageOptions}
             />
             {__DEV__ ? (
               <List.Item
@@ -78,8 +95,8 @@ function Setting({ navigation }: any) {
             ) : null}
             <List.Item
               style={styles.item}
-              title="Clear notification"
-              description="When the app is opened, all the delivered notifications will be removed."
+              title={translate(strings.clearNotifications)}
+              description={translate(strings.clearNotificationsDescription)}
               right={() => (
                 <Switch
                   value={notifications.clearDelivered}
@@ -95,7 +112,7 @@ function Setting({ navigation }: any) {
             />
             <List.Item
               style={styles.item}
-              title="Reminder Notifications"
+              title={translate(strings.reminderNotifications)}
               right={() => (
                 <Switch
                   value={notifications.enabled}

@@ -1,3 +1,4 @@
+import { Locale } from 'react-native-localize';
 import { Review, ReviewLog, User, Token, Notification } from 'src/@types/index';
 
 export interface Store {
@@ -21,7 +22,7 @@ export interface SettingsState {
   development: {
     showYellowBox: boolean;
   };
-  language: string;
+  language: Locale;
   useDarkMode: boolean;
   showOnBoarding: boolean;
   useRewards: boolean;

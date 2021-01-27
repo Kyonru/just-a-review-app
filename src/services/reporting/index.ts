@@ -1,4 +1,6 @@
 import * as Sentry from '@sentry/react-native';
+import codePush from 'react-native-code-push';
+
 import { SENTRY } from '@env';
 
 import { ErrorPayload } from 'src/@types';
@@ -9,6 +11,16 @@ export const Init = () => {
   }
   Sentry.init({
     dsn: SENTRY,
+  });
+
+  codePush.getUpdateMetadata().then(update => {
+    if (update) {
+      /**
+       * This is kinda broken u..u Keep an eye on this:
+       * @url https://forum.sentry.io/t/managing-sentry-releases-for-react-native-codepush-updates-that-use-semantic-version/2793/9
+       */
+      Sentry.setRelease(`${update.appVersion}+codepush:${update.label}`);
+    }
   });
 };
 

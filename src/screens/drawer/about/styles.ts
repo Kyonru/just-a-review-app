@@ -8,6 +8,7 @@ export default StyleSheet.create<{
   fab: ViewStyle;
   legal: ViewStyle;
   item: ViewStyle;
+  bottom: ViewStyle;
   bottomImage: ImageStyle;
   message: TextStyle;
   kyonru: TextStyle;
@@ -35,4 +36,5 @@ export default StyleSheet.create<{
   kyonru: { color: colors.lynch, fontSize: 12 },
   love: { color: 'red', fontSize: 12 },
   legal: { paddingHorizontal: 0 },
+  bottom: { position: 'absolute', bottom: 0, right: 0, left: 0 },
 });
