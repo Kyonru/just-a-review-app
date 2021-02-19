@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ScreenContainer from 'src/components/screen-container';
 import Dropdown from 'src/components/dropdown/with-description';
+import OnBoarding from 'src/containers/onboarding';
 
 import { DropdownOption } from 'src/@types';
 import { SCREEN_NAMES } from 'src/navigation/constants';
@@ -22,9 +23,13 @@ import styles from './styles';
 
 function Setting({ navigation }: any) {
   const dispatch = useDispatch();
-  const { user, development, language, notifications } = useSelector(
-    settingsStoreSelector,
-  );
+  const {
+    user,
+    development,
+    language,
+    notifications,
+    showOnBoarding,
+  } = useSelector(settingsStoreSelector);
 
   const { setLocale, translate, strings } = React.useContext(
     LocalizationContext,
@@ -141,9 +146,22 @@ function Setting({ navigation }: any) {
                 />
               )}
             />
+            <List.Item
+              style={styles.item}
+              title={translate(strings.showOnboarding)}
+              onPress={() =>
+                dispatch(settingsSlice.actions.toggleShowOnBoarding(true))
+              }
+            />
           </View>
         </View>
       </ScrollView>
+      <OnBoarding
+        show={showOnBoarding}
+        onDismiss={() =>
+          dispatch(settingsSlice.actions.toggleShowOnBoarding(false))
+        }
+      />
     </ScreenContainer>
   );
 }

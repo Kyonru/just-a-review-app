@@ -15,7 +15,7 @@ function ScreenContainer(props: Props) {
   const { containerStyle, children, containerProps } = props;
   return (
     <>
-      <StatusBar barStyle="default" backgroundColor={colors.brown} />
+      <StatusBar barStyle="default" backgroundColor={colors.lightBrown} />
       <SafeAreaView style={styles.container}>
         <View
           {...containerProps}
