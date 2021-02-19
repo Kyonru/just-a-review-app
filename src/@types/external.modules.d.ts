@@ -9,4 +9,6 @@ declare module '@env' {
   export const PAY_URL: string;
   export const GITHUB_URL: string;
   export const SENTRY: string;
+  export const TRANSLATIONS_URL: string;
+  export const BUG_REPORTING_URL: string;
 }

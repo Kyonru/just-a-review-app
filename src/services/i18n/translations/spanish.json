@@ -119,5 +119,7 @@
   "onboardingDescription5": "Comienza creando una\nevaluacion semanal de\n\n\"¿Cómo estuvo tu semana?\"\n\n<3",
   "next": "Continuar",
   "close": "Cerrar",
-  "skip": "Saltar"
+  "skip": "Saltar",
+  "helpTranslate": "Ayuda a traducir",
+  "reportBug": "Reporta un problema"
 }

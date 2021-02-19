@@ -122,4 +122,6 @@ export enum LanguageSource {
   next = 'next',
   close = 'close',
   skip = 'skip',
+  helpTranslate = 'helpTranslate',
+  reportBug = 'reportBug',
 }
