@@ -124,5 +124,7 @@
   "reportBug": "Report an issue",
   "nextReminder": "Are you sure you want to skip to the next reminder?",
   "skipToNextDate": "Skip to next date",
-  "seeLogs": "See logs"
+  "seeLogs": "See logs",
+  "showHidden": "Show Empty",
+  "hideHidden": "Hide Empty"
 }

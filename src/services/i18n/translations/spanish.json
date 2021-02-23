@@ -124,5 +124,7 @@
   "reportBug": "Reporta un problema",
   "nextReminder": "¿Quieres saltar al siguiente recordatorio?",
   "skipToNextDate": "Saltar fecha",
-  "seeLogs": "Ver registros"
+  "seeLogs": "Ver registros",
+  "showHidden": "Mostrar vacías",
+  "hideHidden": "Ocultar vacías"
 }

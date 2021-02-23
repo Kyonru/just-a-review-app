@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, memo, useState, useCallback } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import {
@@ -28,6 +28,7 @@ import {
 } from 'src/@types/index';
 import { deleteLog } from 'src/store/logs/actions';
 import { LocalizationContext } from 'src/services/i18n';
+import { isAnswerEmpty } from 'src/utils/questions';
 
 import styles from './styles';
 import {
@@ -64,10 +65,10 @@ const formatAnswer = (type: ReviewQuestionType, value?: string) => {
   return value;
 };
 
-const renderOption = (log: ReviewQuestion) => (
+const renderOption = (log: ReviewQuestion, showHidden: boolean) => (
   option: ReviewQuestionOption,
 ) => {
-  if (!option.value) {
+  if (!option.value && !showHidden && !(log.type === ReviewQuestionType.List)) {
     return null;
   }
   return (
@@ -92,7 +93,11 @@ const renderOption = (log: ReviewQuestion) => (
   );
 };
 
-function LogQuestion(log: ReviewQuestion) {
+function LogQuestion(log: ReviewQuestion, showHidden: boolean = false) {
+  if (!showHidden && isAnswerEmpty(log.answer)) {
+    return null;
+  }
+
   if (
     log.type === ReviewQuestionType.Choice ||
     log.type === ReviewQuestionType.List ||
@@ -102,7 +107,7 @@ function LogQuestion(log: ReviewQuestion) {
       <View key={log.id}>
         <ListSeparator />
         <Title>{log.q}</Title>
-        {log.answer?.options?.map(renderOption(log))}
+        {log.answer?.options?.map(renderOption(log, showHidden))}
       </View>
     );
   }
@@ -125,11 +130,16 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
   const { showActionSheetWithOptions } = useActionSheet();
   const dispatch = useDispatch();
   const { translate, strings } = React.useContext(LocalizationContext);
+  const [showHidden, setShowHidden] = useState(false);
 
   const onDelete = () => {
     deleteLog(review.id, log.id)(dispatch);
     navigation.pop();
   };
+
+  const onToggleHidden = useCallback(() => {
+    setShowHidden(!showHidden);
+  }, [showHidden]);
 
   const openOptionsMenu = () => {
     const destructiveButtonIndex = 0;
@@ -137,12 +147,19 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
 
     const mapOption: { [key: number]: Function } = {
       0: onDelete,
+      1: onToggleHidden,
     };
 
-    const contextMenuOptions = [translate(strings.delete)];
+    const contextMenuOptions = [
+      translate(strings.delete),
+      showHidden
+        ? translate(strings.hideHidden)
+        : translate(strings.showHidden),
+    ];
 
     const contextMenuOptionIcons = [
       <MaterialIcon color="red" name="delete" size={24} />,
+      <MaterialIcon name={showHidden ? 'eye-off' : 'eye'} size={24} />,
     ];
 
     showActionSheetWithOptions(
@@ -166,7 +183,7 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
       headerRightIcon: 'dots-vertical',
       headerRightOnPress: openOptionsMenu,
     });
-  }, []);
+  }, [showHidden]);
 
   return (
     <ScreenContainer
@@ -198,7 +215,9 @@ function ReviewLogScreenProcess(props: ReviewLogScreenProps) {
             <Text style={styles.date}>
               {moment(log.date).format('MMMM Do YYYY, h:mm:ss a')}
             </Text>
-            {log.questions.map(LogQuestion)}
+            {log.questions.map((q: ReviewQuestion) =>
+              LogQuestion(q, showHidden),
+            )}
           </View>
         </View>
       </ScrollView>

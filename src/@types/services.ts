@@ -127,4 +127,6 @@ export enum LanguageSource {
   nextReminder = 'nextReminder',
   skipToNextDate = 'skipToNextDate',
   seeLogs = 'seeLogs',
+  showHidden = 'showHidden',
+  hideHidden = 'hideHidden',
 }
