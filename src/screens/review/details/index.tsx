@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { Component } from 'react';
+import moment from 'moment';
 import { Alert, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
@@ -25,6 +26,7 @@ import resources from 'src/resources';
 import EmptyState from 'src/components/empty-state';
 import { withThrottle } from 'src/utils/timers';
 import { LocalizationContext } from 'src/services/i18n';
+import { capitalize } from 'src/utils/strings';
 
 import {
   ReviewDetailsState,
@@ -210,6 +212,23 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     });
   };
 
+  moveToNextReminder = () => {
+    const { review } = this.state;
+    const { skipToNextReminder } = this.props;
+    const { translate, strings } = this.context;
+    const onAccept = () => {
+      skipToNextReminder(
+        review as Review,
+        translate(strings.timeForReviewProcess),
+      );
+      this.fetchReview();
+    };
+    Alert.alert('', translate(strings.nextReminder), [
+      { text: translate(strings.yes), onPress: onAccept },
+      { text: translate(strings.no) },
+    ]);
+  };
+
   renderEmptyLogList = () => {
     const { translate, strings } = this.context;
     return (
@@ -243,15 +262,51 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
     return <LogListItem data={log} onPress={this.openLogDetail(log)} />;
   };
 
+  renderBadges = () => {
+    const { review } = this.state;
+    const { translate, strings } = this.context;
+    const expired = moment(review.nextReminder)
+      .add(1, 'hour')
+      .isBefore(moment());
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        <Badge
+          style={[
+            styles.badge,
+            {
+              backgroundColor: getReviewTypeColor(review.type!),
+            },
+          ]}
+          visible
+        >
+          {`${capitalize(translate(review.type!.toLowerCase()))}`}
+        </Badge>
+        {review.archivedAt ? (
+          <Badge style={styles.badge} visible={!!review.archivedAt}>
+            {`${translate(strings.archivedAt)} ${review.archivedAt}`}
+          </Badge>
+        ) : null}
+        {expired ? (
+          <Badge style={styles.expiredBadge} visible>
+            {translate(strings.expired)}
+          </Badge>
+        ) : null}
+      </View>
+    );
+  };
+
   renderDetails = () => {
     const { review } = this.state;
     const { logs } = this.props;
     const { translate, strings } = this.context;
     return (
       <View key="1" style={styles.firstPage}>
-        <Badge style={styles.badge} visible={!!review.archivedAt}>
-          {`${translate(strings.archivedAt)} ${review.archivedAt}`}
-        </Badge>
+        {this.renderBadges()}
         <Headline style={styles.title}>{review.title}</Headline>
         <Caption style={styles.averageText}>
           {translate(strings.averageTime)}:{'\n'}
@@ -273,7 +328,23 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
             }}
           />
         </TouchableHighlight>
-
+        <Caption
+          onPress={this.moveToNextReminder}
+          style={[styles.nextDate, { paddingBottom: 20 }]}
+        >
+          {capitalize(
+            moment(review.nextReminder).format('MMMM DD YYYY, h:mm a'),
+          )}
+        </Caption>
+        <Caption
+          onPress={this.moveToNextReminder}
+          style={[
+            styles.averageText,
+            { paddingBottom: 20, textDecorationLine: 'underline' },
+          ]}
+        >
+          {translate(strings.skipToNextDate)}
+        </Caption>
         <View style={styles.swipeUpIndicator}>
           <Animated.View
             style={[
@@ -285,11 +356,14 @@ class ReviewDetails extends Component<ReviewDetailsProps, ReviewDetailsState> {
             <Icon
               testID="show_logs_button"
               onPress={() => this.openLogs(1)}
-              style={{ padding: 20, paddingHorizontal: 80 }}
+              style={{ paddingBottom: 20, paddingHorizontal: 80 }}
               name="keyboard-arrow-up"
               size={38}
             />
           </Animated.View>
+          <Caption onPress={() => this.openLogs(1)} style={styles.averageText}>
+            {translate(strings.seeLogs)}
+          </Caption>
         </View>
       </View>
     );

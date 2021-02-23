@@ -52,7 +52,7 @@
   "required": "requerido",
   "needToBeFilled": "Debe completar todas las preguntas requeridas.",
   "discardReview": "¿Descartar evaluación?",
-  "discardReviewMessage": "Estás en medio de una evaluación, ¿estás seguro de que quieres irte?",
+  "discardReviewMessage": "Estás en medio de una evaluación, ¿Deseas salir?",
   "discard": "Descartar",
   "dontLeave": "Seguir",
   "finish": "Terminar",
@@ -121,5 +121,8 @@
   "close": "Cerrar",
   "skip": "Saltar",
   "helpTranslate": "Ayuda a traducir",
-  "reportBug": "Reporta un problema"
+  "reportBug": "Reporta un problema",
+  "nextReminder": "¿Quieres saltar al siguiente recordatorio?",
+  "skipToNextDate": "Saltar fecha",
+  "seeLogs": "Ver registros"
 }

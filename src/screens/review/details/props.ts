@@ -5,6 +5,7 @@ import { getReview } from 'src/store/reviews/selector';
 import {
   changeArchiveStateReview,
   deleteReview,
+  skipToNextReminder,
 } from 'src/store/reviews/actions';
 
 import { Review, ReviewLog } from 'src/@types/index';
@@ -20,6 +21,7 @@ export interface ReviewDetailsProps extends ActionSheetProps {
   logs: { [key: string]: ReviewLog };
   getReview(id: string): Review;
   deleteReview(id: string): Promise<any>;
+  skipToNextReminder(review: Review, message: string): Promise<any>;
   changeArchiveStateReview(
     id: string,
     review: Review,
@@ -55,4 +57,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
     }
     return changeArchiveStateReview(id)(dispatch);
   },
+  skipToNextReminder: (review: Review, message: string) =>
+    skipToNextReminder(review, message)(dispatch),
 });

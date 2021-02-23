@@ -124,4 +124,7 @@ export enum LanguageSource {
   skip = 'skip',
   helpTranslate = 'helpTranslate',
   reportBug = 'reportBug',
+  nextReminder = 'nextReminder',
+  skipToNextDate = 'skipToNextDate',
+  seeLogs = 'seeLogs',
 }
