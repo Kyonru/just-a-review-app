@@ -7,6 +7,7 @@ export default {
   yearly: '#F8BBD0',
   custom: '#B2DFDB',
   brown: '#5D4037',
+  lightBrown: '#815355',
   lynch: '#607D8B',
   pistonBlue: '#46ADDE',
   shamrock: '#31C4A8',

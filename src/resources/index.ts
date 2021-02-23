@@ -14,5 +14,12 @@ export default {
       design3: require('./images/empty-states/design-3.png'),
       coding: require('./images/empty-states/coding.png'),
     },
+    onBoarding: {
+      illustration1: require('./images/onboarding/1.png'),
+      illustration2: require('./images/onboarding/2.png'),
+      illustration3: require('./images/onboarding/3.png'),
+      illustration4: require('./images/onboarding/4.png'),
+      illustration5: require('./images/onboarding/5.png'),
+    },
   },
 };

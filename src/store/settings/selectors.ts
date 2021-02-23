@@ -23,7 +23,7 @@ export const getUseDarkMode = createSelector(
 
 export const getShowOnBoarding = createSelector(
   settingsStoreSelector,
-  store => store.showOnBoarding || {},
+  store => store.showOnBoarding || false,
 );
 
 export const getUseRewards = createSelector(

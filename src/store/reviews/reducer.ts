@@ -12,6 +12,7 @@ import { ReviewsState } from 'src/@types/store';
 import { Review, ReviewLog } from 'src/@types';
 import { addLogAction, deleteLogAction } from 'src/store/shared/actions';
 import { getNextDate } from 'src/utils/reviews';
+import { moveDateToPresent } from 'src/utils/time';
 
 import { ReviewInitialState } from './state';
 
@@ -54,6 +55,19 @@ function addLog(
   ).format();
 }
 
+function skipToNextReminder(
+  state: ReviewsState,
+  { payload }: PayloadAction<{ id: string; nextReminder: string }>,
+) {
+  state.reviews[payload.id].nextReminder = getNextDate({
+    ...state.reviews[payload.id],
+    nextReminder: moveDateToPresent(
+      payload.nextReminder,
+      state.reviews[payload.id].type,
+    ),
+  }).format();
+}
+
 function deleteLog(
   state: ReviewsState,
   { payload }: PayloadAction<{ reviewId: string; logId: string }>,
@@ -77,6 +91,7 @@ export default createSlice({
     changeArchiveStateReview,
     deleteReview,
     editReview,
+    skipToNextReminder,
   },
   extraReducers: builder => {
     builder.addCase(addLogAction, addLog);

@@ -12,9 +12,11 @@ export default StyleSheet.create<{
   playButton: ViewStyle;
   playButtonContainer: ViewStyle;
   averageText: TextStyle;
+  nextDate: TextStyle;
   title: TextStyle;
   firstPage: ViewStyle;
   badge: ViewStyle;
+  expiredBadge: ViewStyle;
   listHeaderComponent: ViewStyle;
 }>({
   container: { backgroundColor: 'white', flex: 1 },
@@ -43,6 +45,11 @@ export default StyleSheet.create<{
     lineHeight: 24,
     textAlign: 'center',
   },
+  nextDate: {
+    fontSize: 20,
+    lineHeight: 24,
+    textAlign: 'center',
+  },
   title: {
     fontSize: 40,
     lineHeight: 44,
@@ -59,5 +66,14 @@ export default StyleSheet.create<{
     marginVertical: 16,
     backgroundColor: colors.lynch,
     alignSelf: 'center',
+    paddingHorizontal: 8,
+    marginRight: 8,
+  },
+  expiredBadge: {
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    margin: 0,
+    padding: 0,
+    backgroundColor: '#004B67',
   },
 });

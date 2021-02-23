@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Linking } from 'react-native';
 import { List, Subheading, DataTable } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ART_URL, CHANNEL_URL, PAY_URL, GITHUB_URL } from '@env';
+import {
+  ART_URL,
+  CHANNEL_URL,
+  PAY_URL,
+  GITHUB_URL,
+  TRANSLATIONS_URL,
+  BUG_REPORTING_URL,
+} from '@env';
 
 import ScreenContainer from 'src/components/screen-container';
 import app from 'src/data/app';
@@ -83,6 +90,18 @@ function AboutApp(props: any) {
               onPress={() => Linking.openURL(PAY_URL) as any}
               style={styles.item}
               title={translate(strings.invitePizza)}
+              rippleColor={`${colors.shamrock}22`}
+            />
+            <List.Item
+              onPress={() => Linking.openURL(TRANSLATIONS_URL) as any}
+              style={styles.item}
+              title={translate(strings.helpTranslate)}
+              rippleColor={`${colors.shamrock}22`}
+            />
+            <List.Item
+              onPress={() => Linking.openURL(BUG_REPORTING_URL) as any}
+              style={styles.item}
+              title={translate(strings.reportBug)}
               rippleColor={`${colors.shamrock}22`}
             />
             <Legal />

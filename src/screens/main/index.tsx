@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ScreenContainer from 'src/components/screen-container';
 import FABButton from 'src/components/button/fab';
+import OnBoarding from 'src/containers/onboarding';
 import SectionReviewList from 'src/containers/review-list/section';
 
 import colors from 'src/theme/colors';
@@ -60,7 +61,13 @@ class MainScreen extends Component<
 
   render() {
     const { showFAB } = this.state;
-    const { navigation, reviews, archiveCount } = this.props;
+    const {
+      navigation,
+      reviews,
+      archiveCount,
+      showOnboarding,
+      hideOnboarding,
+    } = this.props;
     const { translate, strings } = this.context;
     return (
       <ScreenContainer
@@ -100,6 +107,7 @@ class MainScreen extends Component<
             // },
           ]}
         />
+        <OnBoarding show={showOnboarding} onDismiss={hideOnboarding} />
       </ScreenContainer>
     );
   }
